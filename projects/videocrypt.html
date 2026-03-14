@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>VideoCrypt — Aditya Kumar Mehra</title>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+:root{--accent:#A855F7;--accent2:#4ECDC4;--cream:#FFFBF0;--ink:#1A1A2E;--shadow:5px 5px 0 var(--ink);--shadow-lg:8px 8px 0 var(--ink);}
+*{margin:0;padding:0;box-sizing:border-box;}html{scroll-behavior:smooth;}
+body{background:var(--cream);color:var(--ink);font-family:'Nunito',sans-serif;overflow-x:hidden;cursor:none;}
+#cursor{width:22px;height:22px;background:var(--accent);border:3px solid var(--ink);border-radius:50%;position:fixed;top:0;left:0;pointer-events:none;z-index:9999;transition:transform 0.1s;}
+#cursor.hov{transform:scale(1.8);background:var(--accent2);}
+canvas{position:fixed;inset:0;pointer-events:none;z-index:0;}
+nav{position:fixed;top:0;left:0;right:0;z-index:200;background:var(--accent);border-bottom:3px solid var(--ink);padding:0.8rem 2.5rem;display:flex;align-items:center;gap:1rem;}
+.back-btn{font-family:'Fredoka One',cursive;font-size:0.95rem;color:#fff;text-decoration:none;background:rgba(255,255,255,0.2);border:2px solid #fff;border-radius:100px;padding:0.35rem 1rem;transition:transform 0.15s,box-shadow 0.15s;cursor:none;}
+.back-btn:hover{transform:translate(-2px,-2px);background:rgba(255,255,255,0.3);}
+.nav-title{font-family:'Fredoka One',cursive;font-size:1.1rem;color:#fff;}
+.proj-hero{min-height:55vh;padding:7rem 3rem 3rem;display:flex;align-items:center;position:relative;z-index:1;overflow:hidden;background:#1A1A2E;}
+.proj-hero::before{content:'';position:absolute;top:-80px;right:-80px;width:450px;height:450px;background:var(--accent);opacity:0.15;border-radius:60% 40% 50% 50%/50% 60% 40% 50%;animation:morph 9s ease-in-out infinite;border:none;}
+@keyframes morph{0%,100%{border-radius:60% 40% 50% 50%/50% 60% 40% 50%}50%{border-radius:40% 60% 50% 50%/60% 40% 55% 45%}}
+.proj-hero-inner{max-width:900px;position:relative;z-index:2;}
+.proj-tag{display:inline-block;font-family:'Fredoka One',cursive;font-size:0.85rem;background:var(--accent);color:#fff;border:2px solid rgba(255,255,255,0.3);border-radius:100px;padding:0.2rem 0.9rem;box-shadow:2px 2px 0 rgba(255,255,255,0.1);margin-bottom:1rem;}
+.proj-title{font-family:'Fredoka One',cursive;font-size:clamp(2.5rem,6vw,4.5rem);line-height:1.05;margin-bottom:1rem;color:#fff;}
+.proj-title span{color:var(--accent);}
+.proj-subtitle{font-size:1.1rem;color:#aaa;max-width:600px;line-height:1.7;margin-bottom:1.5rem;}
+.proj-links{display:flex;gap:1rem;flex-wrap:wrap;}
+.plink{font-family:'Fredoka One',cursive;font-size:0.95rem;padding:0.6rem 1.4rem;border-radius:100px;border:3px solid rgba(255,255,255,0.3);text-decoration:none;cursor:none;transition:transform 0.15s,box-shadow 0.15s;box-shadow:3px 3px 0 rgba(255,255,255,0.1);display:inline-flex;align-items:center;gap:0.5rem;color:#fff;}
+.plink:hover{transform:translate(-3px,-3px);}
+.plink-a{background:var(--accent);}.plink-b{background:rgba(255,255,255,0.1);}
+.content{padding:4rem 3rem;max-width:1000px;margin:0 auto;position:relative;z-index:1;}
+.visual-box{background:#fff;border:3px solid var(--ink);border-radius:20px;box-shadow:var(--shadow-lg);overflow:hidden;margin-bottom:3rem;}
+.visual-bar{background:var(--ink);padding:0.6rem 1rem;display:flex;gap:0.5rem;align-items:center;}
+.vdot{width:12px;height:12px;border-radius:50%;}
+.visual-screen{padding:0;background:#0D1117;min-height:300px;}
+.sec{margin-bottom:3rem;}
+.sec-title{font-family:'Fredoka One',cursive;font-size:1.6rem;margin-bottom:1rem;display:flex;align-items:center;gap:0.5rem;}
+.sec-title::before{content:'';display:block;width:6px;height:28px;background:var(--accent);border:2px solid var(--ink);border-radius:3px;}
+.cards-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:1rem;}
+.info-card{background:#fff;border:3px solid var(--ink);border-radius:16px;padding:1.2rem;box-shadow:var(--shadow);transition:transform 0.2s,box-shadow 0.2s;}
+.info-card:hover{transform:translate(-3px,-3px);box-shadow:var(--shadow-lg);}
+.info-card .ic-emoji{font-size:2rem;margin-bottom:0.5rem;}
+.info-card h4{font-family:'Fredoka One',cursive;font-size:1rem;margin-bottom:0.3rem;}
+.info-card p{font-size:0.84rem;color:#555;line-height:1.6;}
+.cl-grid{display:grid;grid-template-columns:1fr 1fr;gap:1.5rem;}
+.cl-card{border:3px solid var(--ink);border-radius:16px;padding:1.4rem;box-shadow:var(--shadow);}
+.cl-card h4{font-family:'Fredoka One',cursive;font-size:1.05rem;margin-bottom:0.8rem;}
+.cl-card li{font-size:0.88rem;line-height:1.65;color:#444;list-style:none;padding-left:1.4rem;position:relative;margin-bottom:0.4rem;}
+.cl-card li::before{position:absolute;left:0;}
+.challenge{background:#FFF0F5;}.challenge li::before{content:'⚡';}
+.learning{background:#F0FFF4;}.learning li::before{content:'💡';}
+.stack-wrap{display:flex;flex-wrap:wrap;gap:0.6rem;}
+.stag{font-family:'Fredoka One',cursive;font-size:0.88rem;padding:0.4rem 1.1rem;border-radius:100px;border:2.5px solid var(--ink);box-shadow:3px 3px 0 var(--ink);transition:transform 0.15s;}
+.stag:hover{transform:translate(-2px,-2px) rotate(-2deg);}
+.next-bar{background:var(--ink);padding:2rem 3rem;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:1rem;position:relative;z-index:1;}
+.next-label{font-family:'Fredoka One',cursive;color:#888;font-size:0.85rem;}
+.next-title{font-family:'Fredoka One',cursive;color:#fff;font-size:1.3rem;}
+.next-btn{font-family:'Fredoka One',cursive;font-size:0.95rem;background:var(--accent);color:#fff;border:3px solid var(--accent);border-radius:100px;padding:0.6rem 1.4rem;text-decoration:none;box-shadow:3px 3px 0 rgba(255,255,255,0.2);transition:transform 0.15s;cursor:none;display:inline-flex;align-items:center;gap:0.5rem;}
+.next-btn:hover{transform:translate(-2px,-2px);}
+.reveal{opacity:0;transform:translateY(24px);transition:opacity 0.5s,transform 0.5s;}
+.reveal.on{opacity:1;transform:none;}
+@media(max-width:768px){.proj-hero,.content{padding-left:1.5rem;padding-right:1.5rem;}.cl-grid{grid-template-columns:1fr;}.next-bar{flex-direction:column;text-align:center;}}
+</style>
+</head>
+<body>
+<canvas id="noteCanvas"></canvas>
+<div id="cursor"></div>
+<nav>
+  <a href="../index.html" class="back-btn">← Back</a>
+  <span class="nav-title">🔐 VideoCrypt</span>
+</nav>
+
+<section class="proj-hero">
+  <div class="proj-hero-inner">
+    <div><span class="proj-tag">Full-Stack · MERN</span></div>
+    <h1 class="proj-title">Video<span>Crypt</span></h1>
+    <p class="proj-subtitle">A production-grade secure video streaming platform built with the full MERN stack — featuring role-based authentication, SQL integration, and collaborative team delivery.</p>
+    <div class="proj-links">
+      <a href="https://github.com" target="_blank" class="plink plink-a">
+        <svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z"/></svg>
+        GitHub
+      </a>
+      <a href="#" class="plink plink-b">🌐 Live App</a>
+    </div>
+  </div>
+</section>
+
+<div class="content">
+
+  <!-- UI MOCKUP -->
+  <div class="visual-box reveal">
+    <div class="visual-bar">
+      <div class="vdot" style="background:#FF5F57"></div>
+      <div class="vdot" style="background:#FFBD2E"></div>
+      <div class="vdot" style="background:#28CA41"></div>
+      <span style="color:#888;font-size:0.75rem;margin-left:0.5rem;font-family:'Courier New',monospace;">videocrypt.app — dashboard</span>
+    </div>
+    <div class="visual-screen" style="display:flex;min-height:300px;">
+      <!-- Sidebar -->
+      <div style="width:180px;background:#111;border-right:2px solid #222;padding:1rem;flex-shrink:0;">
+        <div style="font-family:'Fredoka One',cursive;color:#A855F7;font-size:0.9rem;margin-bottom:1.2rem;">🔐 VideoCrypt</div>
+        <div style="display:flex;flex-direction:column;gap:0.4rem;">
+          <div style="background:#A855F7;color:#fff;font-family:'Fredoka One',cursive;font-size:0.75rem;padding:0.4rem 0.7rem;border-radius:8px;">📺 My Videos</div>
+          <div style="color:#666;font-family:'Fredoka One',cursive;font-size:0.75rem;padding:0.4rem 0.7rem;border-radius:8px;">📂 Browse</div>
+          <div style="color:#666;font-family:'Fredoka One',cursive;font-size:0.75rem;padding:0.4rem 0.7rem;border-radius:8px;">⬆️ Upload</div>
+          <div style="color:#666;font-family:'Fredoka One',cursive;font-size:0.75rem;padding:0.4rem 0.7rem;border-radius:8px;">👥 Users</div>
+          <div style="color:#666;font-family:'Fredoka One',cursive;font-size:0.75rem;padding:0.4rem 0.7rem;border-radius:8px;">⚙️ Settings</div>
+        </div>
+        <div style="margin-top:auto;padding-top:2rem;">
+          <div style="background:#1A2E1A;border:1px solid #4ECDC4;border-radius:8px;padding:0.5rem;text-align:center;">
+            <div style="color:#4ECDC4;font-size:0.65rem;font-family:'Courier New',monospace;">ROLE: admin</div>
+          </div>
+        </div>
+      </div>
+      <!-- Main content -->
+      <div style="flex:1;padding:1.5rem;">
+        <div style="color:#fff;font-family:'Fredoka One',cursive;font-size:1rem;margin-bottom:1rem;">My Videos</div>
+        <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:0.8rem;">
+          <div style="background:#111;border:1px solid #333;border-radius:10px;overflow:hidden;">
+            <div style="background:#1A1A2E;height:60px;display:flex;align-items:center;justify-content:center;font-size:1.5rem;">🎬</div>
+            <div style="padding:0.5rem;"><div style="color:#fff;font-size:0.7rem;font-family:'Fredoka One',cursive;">Intro.mp4</div><div style="color:#666;font-size:0.6rem;">2.3 MB · Private</div></div>
+          </div>
+          <div style="background:#111;border:2px solid #A855F7;border-radius:10px;overflow:hidden;">
+            <div style="background:#2A1A3E;height:60px;display:flex;align-items:center;justify-content:center;font-size:1.5rem;">▶️</div>
+            <div style="padding:0.5rem;"><div style="color:#A855F7;font-size:0.7rem;font-family:'Fredoka One',cursive;">Demo.mp4</div><div style="color:#666;font-size:0.6rem;">5.1 MB · Public</div></div>
+          </div>
+          <div style="background:#111;border:1px solid #333;border-radius:10px;overflow:hidden;">
+            <div style="background:#1A1A2E;height:60px;display:flex;align-items:center;justify-content:center;font-size:1.5rem;">🔒</div>
+            <div style="padding:0.5rem;"><div style="color:#fff;font-size:0.7rem;font-family:'Fredoka One',cursive;">Secret.mp4</div><div style="color:#666;font-size:0.6rem;">8.7 MB · Encrypted</div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="sec reveal">
+    <h2 class="sec-title">What It Does</h2>
+    <div class="cards-grid">
+      <div class="info-card"><div class="ic-emoji">🔐</div><h4>Role-Based Auth</h4><p>Viewer, Uploader, and Admin roles with JWT — each sees only what they're permitted to access.</p></div>
+      <div class="info-card"><div class="ic-emoji">📺</div><h4>Secure Streaming</h4><p>Videos are served via protected routes — no direct file access, proper token validation on every request.</p></div>
+      <div class="info-card"><div class="ic-emoji">🗄️</div><h4>Dual DB</h4><p>MongoDB handles flexible video metadata; SQL manages structured user data and permissions.</p></div>
+      <div class="info-card"><div class="ic-emoji">👥</div><h4>Team Built</h4><p>Collaborative delivery — Git workflow, code reviews, feature branches, and integration testing.</p></div>
+    </div>
+  </div>
+
+  <div class="sec reveal">
+    <h2 class="sec-title">Challenges & Learnings</h2>
+    <div class="cl-grid">
+      <div class="cl-card challenge">
+        <h4>😤 Challenges</h4>
+        <ul>
+          <li>Syncing MongoDB and SQL — keeping user permissions consistent across both databases.</li>
+          <li>Video streaming performance — buffering and chunked delivery optimisation.</li>
+          <li>JWT token expiry edge cases causing silent auth failures in the frontend.</li>
+          <li>Coordinating team Git workflow without stepping on each other's code.</li>
+        </ul>
+      </div>
+      <div class="cl-card learning">
+        <h4>💡 Learnings</h4>
+        <ul>
+          <li>Middleware-based auth validation scales far better than per-route checks.</li>
+          <li>HTTP range requests are essential for smooth video streaming UX.</li>
+          <li>A clear API contract between frontend and backend prevents most integration bugs.</li>
+          <li>Code review culture improves quality dramatically — even in small teams.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="sec reveal">
+    <h2 class="sec-title">Tech Stack</h2>
+    <div class="stack-wrap">
+      <span class="stag" style="background:#DCFCE7">MongoDB</span>
+      <span class="stag" style="background:#FED7AA">Express.js</span>
+      <span class="stag" style="background:#CCFBF1">React</span>
+      <span class="stag" style="background:#FFD93D">Node.js</span>
+      <span class="stag" style="background:#E9D5FF">SQL</span>
+      <span class="stag" style="background:#FFF0F5">JWT Auth</span>
+      <span class="stag" style="background:#F0FFF4">Git / GitHub</span>
+    </div>
+  </div>
+
+</div>
+
+<div class="next-bar">
+  <div>
+    <div class="next-label">Next Project →</div>
+    <div class="next-title">📊 Student Performance Predictor</div>
+  </div>
+  <a href="student-predictor.html" class="next-btn">View Project →</a>
+</div>
+
+<script>
+const cur=document.getElementById('cursor');
+document.addEventListener('mousemove',e=>{cur.style.left=e.clientX-11+'px';cur.style.top=e.clientY-11+'px';});
+document.querySelectorAll('a,button,.stag,.info-card').forEach(el=>{el.addEventListener('mouseenter',()=>cur.classList.add('hov'));el.addEventListener('mouseleave',()=>cur.classList.remove('hov'));});
+const canvas=document.getElementById('noteCanvas');const ctx=canvas.getContext('2d');
+function resize(){canvas.width=innerWidth;canvas.height=innerHeight;}resize();window.addEventListener('resize',resize);
+const NOTES=['♩','♪','♫','♬'],COLS=['#A855F7','#4ECDC4','#FFD93D','#FF6B9D'];
+const notes=Array.from({length:16},()=>({x:Math.random()*innerWidth,y:Math.random()*innerHeight,sz:12+Math.random()*14,sp:0.25+Math.random()*0.4,t:Math.random()*Math.PI*2,ch:NOTES[Math.floor(Math.random()*4)],cl:COLS[Math.floor(Math.random()*4)],op:0.08+Math.random()*0.12,rot:(Math.random()-.5)*0.3}));
+(function draw(){ctx.clearRect(0,0,canvas.width,canvas.height);notes.forEach(n=>{n.t+=0.01;n.y-=n.sp;n.x+=Math.sin(n.t)*0.3;if(n.y<-30){n.y=canvas.height+10;n.x=Math.random()*canvas.width;}ctx.save();ctx.globalAlpha=n.op;ctx.font=n.sz+'px serif';ctx.fillStyle=n.cl;ctx.translate(n.x,n.y);ctx.rotate(Math.sin(n.t)*n.rot);ctx.fillText(n.ch,0,0);ctx.restore();});requestAnimationFrame(draw);})();
+const obs=new IntersectionObserver(entries=>{entries.forEach((e,i)=>{if(e.isIntersecting)setTimeout(()=>e.target.classList.add('on'),i*80);});},{threshold:0.1});
+document.querySelectorAll('.reveal').forEach(r=>obs.observe(r));
+</script>
+</body>
+</html>
