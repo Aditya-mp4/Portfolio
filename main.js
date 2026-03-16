@@ -1,10 +1,8 @@
-/* ============================================================
-   main.js — Portfolio interactions
-   ============================================================ */
+
 
 document.addEventListener('DOMContentLoaded', () => {
 
-  /* ── FLUTE CURSOR ── */
+
   const cur = document.getElementById('cursor');
 
   document.addEventListener('mousemove', e => {
@@ -18,7 +16,7 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
 
-  /* ── FLOATING MUSIC NOTES ── */
+  
   const canvas = document.getElementById('noteCanvas');
   const ctx    = canvas.getContext('2d');
 
@@ -64,7 +62,7 @@ document.addEventListener('DOMContentLoaded', () => {
   })();
 
 
-  /* ── PARALLAX ── */
+  /* PARALLAX */
   const parallaxItems = [
     { el: document.querySelector('.hero-blob-1'), speed: 0.12 },
     { el: document.querySelector('.hero-blob-2'), speed: 0.07 },
@@ -79,7 +77,7 @@ document.addEventListener('DOMContentLoaded', () => {
   }, { passive: true });
 
 
-  /* ── SCROLL REVEAL ── */
+  
   const obs = new IntersectionObserver(entries => {
     entries.forEach((e, i) => {
       if (e.isIntersecting) {
@@ -91,7 +89,7 @@ document.addEventListener('DOMContentLoaded', () => {
   document.querySelectorAll('.reveal').forEach(r => obs.observe(r));
 
 
-  /* ── ACTIVE NAV ── */
+  /*ACTIVE NAV */
   const sections = document.querySelectorAll('section[id]');
   const navLinks = document.querySelectorAll('.nav-links a');
 
