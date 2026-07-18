@@ -1,110 +1,160 @@
 /* ============================================================
-   main.js — Portfolio interactions
+   main.js — shared interactions for every page
+   cursor · nav overlay · marquee · clock · reveal · magnetic · ambient canvas
    ============================================================ */
 
 document.addEventListener('DOMContentLoaded', () => {
 
-  /* ── FLUTE CURSOR ── */
-  const cur = document.getElementById('cursor');
+  /* ── CUSTOM CURSOR ── */
+  const dot  = document.getElementById('cursor');
+  const ring = document.getElementById('cursorRing');
 
-  document.addEventListener('mousemove', e => {
-    cur.style.left = (e.clientX - 2)  + 'px';
-    cur.style.top  = (e.clientY - 6)  + 'px';
-  });
+  if (dot && ring && window.matchMedia('(pointer: fine)').matches) {
+    let mx = 0, my = 0, rx = 0, ry = 0;
 
-  document.querySelectorAll('a, button, .bub, .pcard, .acard').forEach(el => {
-    el.addEventListener('mouseenter', () => cur.classList.add('hov'));
-    el.addEventListener('mouseleave', () => cur.classList.remove('hov'));
-  });
+    document.addEventListener('mousemove', e => {
+      mx = e.clientX; my = e.clientY;
+      dot.style.left = mx + 'px';
+      dot.style.top  = my + 'px';
+      if (!dot.classList.contains('seen')) {
+        rx = mx; ry = my;
+        dot.classList.add('seen');
+        ring.classList.add('seen');
+      }
+    });
 
+    (function followRing() {
+      rx += (mx - rx) * 0.18;
+      ry += (my - ry) * 0.18;
+      ring.style.left = rx + 'px';
+      ring.style.top  = ry + 'px';
+      requestAnimationFrame(followRing);
+    })();
 
-  /* ── FLOATING MUSIC NOTES ── */
-  const canvas = document.getElementById('noteCanvas');
-  const ctx    = canvas.getContext('2d');
+    document.querySelectorAll('a, button, .bub, .card, .pcard-l, .job-card, .info-card, .stag').forEach(el => {
+      el.addEventListener('mouseenter', () => ring.classList.add('hov'));
+      el.addEventListener('mouseleave', () => ring.classList.remove('hov'));
+    });
 
-  function resizeCanvas() {
-    canvas.width  = window.innerWidth;
-    canvas.height = window.innerHeight;
+    document.querySelectorAll('[data-cursor="note"]').forEach(el => {
+      el.addEventListener('mouseenter', () => ring.classList.add('note'));
+      el.addEventListener('mouseleave', () => ring.classList.remove('note'));
+    });
+  } else {
+    if (dot) dot.style.display = 'none';
+    if (ring) ring.style.display = 'none';
   }
-  resizeCanvas();
-  window.addEventListener('resize', resizeCanvas);
 
-  const NOTES = ['♩','♪','♫','♬','𝄞'];
-  const COLS  = ['#FFD93D','#FF6B9D','#4ECDC4','#A855F7','#6BCB77','#FF9F43'];
 
-  const notes = Array.from({ length: 24 }, () => ({
-    x:   Math.random() * window.innerWidth,
-    y:   Math.random() * window.innerHeight,
-    sz:  14 + Math.random() * 18,
-    sp:  0.3 + Math.random() * 0.5,
-    t:   Math.random() * Math.PI * 2,
-    ch:  NOTES[Math.floor(Math.random() * NOTES.length)],
-    cl:  COLS [Math.floor(Math.random() * COLS.length)],
-    op:  0.1  + Math.random() * 0.15,
-    rot: (Math.random() - 0.5) * 0.4
-  }));
+  /* ── NAV OVERLAY (fullscreen menu) ── */
+  const burger  = document.getElementById('navBurger');
+  const overlay = document.getElementById('navOverlay');
+  const closeBtn = document.getElementById('navClose');
 
-  (function drawNotes() {
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-    notes.forEach(n => {
-      n.t += 0.012;
-      n.y -= n.sp;
-      n.x += Math.sin(n.t) * 0.4;
-      if (n.y < -40) { n.y = canvas.height + 20; n.x = Math.random() * canvas.width; }
-      ctx.save();
-      ctx.globalAlpha = n.op;
-      ctx.font        = n.sz + 'px serif';
-      ctx.fillStyle   = n.cl;
-      ctx.translate(n.x, n.y);
-      ctx.rotate(Math.sin(n.t) * n.rot);
-      ctx.fillText(n.ch, 0, 0);
-      ctx.restore();
+  function openNav() {
+    overlay.classList.add('open');
+    burger.classList.add('open');
+    burger.setAttribute('aria-expanded', 'true');
+    document.body.classList.add('nav-locked');
+  }
+  function closeNav() {
+    overlay.classList.remove('open');
+    burger.classList.remove('open');
+    burger.setAttribute('aria-expanded', 'false');
+    document.body.classList.remove('nav-locked');
+  }
+  if (burger && overlay) {
+    burger.addEventListener('click', () => {
+      overlay.classList.contains('open') ? closeNav() : openNav();
     });
-    requestAnimationFrame(drawNotes);
-  })();
+    if (closeBtn) closeBtn.addEventListener('click', closeNav);
+    overlay.querySelectorAll('a').forEach(a => a.addEventListener('click', closeNav));
+    document.addEventListener('keydown', e => { if (e.key === 'Escape') closeNav(); });
+  }
 
 
-  /* ── PARALLAX ── */
-  const parallaxItems = [
-    { el: document.querySelector('.hero-blob-1'), speed: 0.12 },
-    { el: document.querySelector('.hero-blob-2'), speed: 0.07 },
-    { el: document.querySelector('.hero-visual'), speed: 0.06 },
-  ].filter(p => p.el);
-
-  window.addEventListener('scroll', () => {
-    const sy = window.scrollY;
-    parallaxItems.forEach(({ el, speed }) => {
-      el.style.transform = `translateY(${sy * speed}px)`;
-    });
-  }, { passive: true });
+  /* ── LIVE CLOCK (IST) ── */
+  const clockEl = document.getElementById('clock');
+  if (clockEl) {
+    function tick() {
+      const now = new Date().toLocaleTimeString('en-GB', { timeZone: 'Asia/Kolkata', hour12: false });
+      clockEl.textContent = now + ' IST';
+    }
+    tick();
+    setInterval(tick, 1000);
+  }
 
 
   /* ── SCROLL REVEAL ── */
   const obs = new IntersectionObserver(entries => {
     entries.forEach((e, i) => {
       if (e.isIntersecting) {
-        setTimeout(() => e.target.classList.add('on'), i * 70);
+        setTimeout(() => e.target.classList.add('on'), i * 60);
+        obs.unobserve(e.target);
       }
     });
-  }, { threshold: 0.05 });
-
+  }, { threshold: 0.08 });
   document.querySelectorAll('.reveal').forEach(r => obs.observe(r));
 
 
-  /* ── ACTIVE NAV ── */
-  const sections = document.querySelectorAll('section[id]');
-  const navLinks = document.querySelectorAll('.nav-links a');
+  /* ── KINETIC TYPE DRIFT (hero lines shear apart on scroll) ── */
+  const drifters = document.querySelectorAll('[data-drift]');
+  if (drifters.length) {
+    window.addEventListener('scroll', () => {
+      const sy = window.scrollY;
+      drifters.forEach(el => {
+        el.style.transform = `translateX(${sy * parseFloat(el.dataset.drift)}px)`;
+      });
+    }, { passive: true });
+  }
 
-  window.addEventListener('scroll', () => {
-    let current = '';
-    sections.forEach(s => {
-      if (window.scrollY >= s.offsetTop - 220) current = s.id;
+
+  /* ── MAGNETIC BUTTONS ── */
+  document.querySelectorAll('.magnetic').forEach(el => {
+    el.addEventListener('mousemove', e => {
+      const r = el.getBoundingClientRect();
+      const x = e.clientX - r.left - r.width / 2;
+      const y = e.clientY - r.top - r.height / 2;
+      el.style.transform = `translate(${x * 0.18}px, ${y * 0.35}px)`;
     });
-    navLinks.forEach(a => {
-      const active = a.getAttribute('href') === '#' + current;
-      a.style.background = active ? 'var(--ink)'    : '';
-      a.style.color      = active ? 'var(--yellow)' : '';
-    });
-  }, { passive: true });
+    el.addEventListener('mouseleave', () => { el.style.transform = ''; });
+  });
+
+
+  /* ── AMBIENT PARTICLE CANVAS ── */
+  const canvas = document.getElementById('ambientCanvas');
+  if (canvas) {
+    const ctx = canvas.getContext('2d');
+    function resize() { canvas.width = innerWidth; canvas.height = innerHeight; }
+    resize();
+    window.addEventListener('resize', resize);
+
+    const COLORS = ['#7C5CFF', '#2FE6C7', '#FF6B6B'];
+    const particles = Array.from({ length: 34 }, () => ({
+      x: Math.random() * innerWidth,
+      y: Math.random() * innerHeight,
+      r: 1 + Math.random() * 1.8,
+      sp: 0.12 + Math.random() * 0.22,
+      t: Math.random() * Math.PI * 2,
+      cl: COLORS[Math.floor(Math.random() * COLORS.length)],
+      op: 0.15 + Math.random() * 0.25
+    }));
+
+    (function draw() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      particles.forEach(p => {
+        p.t += 0.006;
+        p.y -= p.sp;
+        p.x += Math.sin(p.t) * 0.25;
+        if (p.y < -10) { p.y = canvas.height + 10; p.x = Math.random() * canvas.width; }
+        ctx.beginPath();
+        ctx.globalAlpha = p.op;
+        ctx.fillStyle = p.cl;
+        ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+        ctx.fill();
+      });
+      requestAnimationFrame(draw);
+    })();
+  }
 
 });

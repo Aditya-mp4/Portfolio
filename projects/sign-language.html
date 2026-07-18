@@ -4,92 +4,57 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Sign Language to Speech — Aditya Kumar Mehra</title>
-<link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet">
-<style>
-:root{--accent:#4ECDC4;--accent2:#6BCB77;--cream:#FFFBF0;--ink:#1A1A2E;--shadow:5px 5px 0 var(--ink);--shadow-lg:8px 8px 0 var(--ink);}
-*{margin:0;padding:0;box-sizing:border-box;}html{scroll-behavior:smooth;}
-body{background:var(--cream);color:var(--ink);font-family:'Nunito',sans-serif;overflow-x:hidden;cursor:none;}
-#cursor{width:22px;height:22px;background:var(--accent);border:3px solid var(--ink);border-radius:50%;position:fixed;top:0;left:0;pointer-events:none;z-index:9999;transition:transform 0.1s;}
-#cursor.hov{transform:scale(1.8);background:var(--accent2);}
-canvas{position:fixed;inset:0;pointer-events:none;z-index:0;}
-nav{position:fixed;top:0;left:0;right:0;z-index:200;background:var(--accent);border-bottom:3px solid var(--ink);padding:0.8rem 2.5rem;display:flex;align-items:center;gap:1rem;}
-.back-btn{font-family:'Fredoka One',cursive;font-size:0.95rem;color:var(--ink);text-decoration:none;background:#fff;border:2px solid var(--ink);border-radius:100px;padding:0.35rem 1rem;box-shadow:3px 3px 0 var(--ink);transition:transform 0.15s,box-shadow 0.15s;cursor:none;}
-.back-btn:hover{transform:translate(-2px,-2px);box-shadow:5px 5px 0 var(--ink);}
-.nav-title{font-family:'Fredoka One',cursive;font-size:1.1rem;}
-.proj-hero{min-height:55vh;padding:7rem 3rem 3rem;display:flex;align-items:center;position:relative;z-index:1;overflow:hidden;}
-.proj-hero::before{content:'';position:absolute;top:-80px;right:-80px;width:450px;height:450px;background:var(--accent);opacity:0.18;border-radius:50% 50% 40% 60%/40% 60% 50% 50%;animation:morph 9s ease-in-out infinite;border:3px solid var(--ink);}
-@keyframes morph{0%,100%{border-radius:50% 50% 40% 60%/40% 60% 50% 50%}50%{border-radius:40% 60% 55% 45%/60% 40% 50% 50%}}
-.proj-hero-inner{max-width:900px;position:relative;z-index:2;}
-.proj-tag{display:inline-block;font-family:'Fredoka One',cursive;font-size:0.85rem;background:var(--accent);color:var(--ink);border:2px solid var(--ink);border-radius:100px;padding:0.2rem 0.9rem;box-shadow:2px 2px 0 var(--ink);margin-bottom:1rem;}
-.proj-title{font-family:'Fredoka One',cursive;font-size:clamp(2.5rem,6vw,4.5rem);line-height:1.05;margin-bottom:1rem;}
-.proj-title span{color:var(--accent);}
-.proj-subtitle{font-size:1.1rem;color:#555;max-width:600px;line-height:1.7;margin-bottom:1.5rem;}
-.proj-links{display:flex;gap:1rem;flex-wrap:wrap;}
-.plink{font-family:'Fredoka One',cursive;font-size:0.95rem;padding:0.6rem 1.4rem;border-radius:100px;border:3px solid var(--ink);text-decoration:none;cursor:none;transition:transform 0.15s,box-shadow 0.15s;box-shadow:var(--shadow);display:inline-flex;align-items:center;gap:0.5rem;}
-.plink:hover{transform:translate(-3px,-3px);box-shadow:var(--shadow-lg);}
-.plink-a{background:var(--accent);color:var(--ink);}.plink-b{background:#fff;color:var(--ink);}
-.content{padding:4rem 3rem;max-width:1000px;margin:0 auto;position:relative;z-index:1;}
-.visual-box{background:#fff;border:3px solid var(--ink);border-radius:20px;box-shadow:var(--shadow-lg);overflow:hidden;margin-bottom:3rem;}
-.visual-bar{background:var(--ink);padding:0.6rem 1rem;display:flex;gap:0.5rem;align-items:center;}
-.vdot{width:12px;height:12px;border-radius:50%;}
-.visual-screen{padding:2rem;background:#0D1117;min-height:280px;}
-.sec{margin-bottom:3rem;}
-.sec-title{font-family:'Fredoka One',cursive;font-size:1.6rem;margin-bottom:1rem;display:flex;align-items:center;gap:0.5rem;}
-.sec-title::before{content:'';display:block;width:6px;height:28px;background:var(--accent);border:2px solid var(--ink);border-radius:3px;}
-.cards-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:1rem;}
-.info-card{background:#fff;border:3px solid var(--ink);border-radius:16px;padding:1.2rem;box-shadow:var(--shadow);transition:transform 0.2s,box-shadow 0.2s;}
-.info-card:hover{transform:translate(-3px,-3px);box-shadow:var(--shadow-lg);}
-.info-card .ic-emoji{font-size:2rem;margin-bottom:0.5rem;}
-.info-card h4{font-family:'Fredoka One',cursive;font-size:1rem;margin-bottom:0.3rem;}
-.info-card p{font-size:0.84rem;color:#555;line-height:1.6;}
-.cl-grid{display:grid;grid-template-columns:1fr 1fr;gap:1.5rem;}
-.cl-card{border:3px solid var(--ink);border-radius:16px;padding:1.4rem;box-shadow:var(--shadow);}
-.cl-card h4{font-family:'Fredoka One',cursive;font-size:1.05rem;margin-bottom:0.8rem;}
-.cl-card li{font-size:0.88rem;line-height:1.65;color:#444;list-style:none;padding-left:1.4rem;position:relative;margin-bottom:0.4rem;}
-.cl-card li::before{position:absolute;left:0;}
-.challenge{background:#FFF0F5;}.challenge li::before{content:'⚡';}
-.learning{background:#F0FFF4;}.learning li::before{content:'💡';}
-.stack-wrap{display:flex;flex-wrap:wrap;gap:0.6rem;}
-.stag{font-family:'Fredoka One',cursive;font-size:0.88rem;padding:0.4rem 1.1rem;border-radius:100px;border:2.5px solid var(--ink);box-shadow:3px 3px 0 var(--ink);transition:transform 0.15s;}
-.stag:hover{transform:translate(-2px,-2px) rotate(-2deg);}
-.flow{display:flex;align-items:center;flex-wrap:wrap;gap:0;}
-.flow-step{background:#fff;border:3px solid var(--ink);border-radius:14px;padding:0.9rem 1.2rem;box-shadow:var(--shadow);text-align:center;flex:1;min-width:110px;}
-.flow-step .fs-emoji{font-size:1.6rem;display:block;margin-bottom:0.3rem;}
-.flow-step .fs-label{font-family:'Fredoka One',cursive;font-size:0.8rem;}
-.flow-arrow{font-size:1.5rem;padding:0 0.4rem;color:var(--accent);font-weight:900;}
-.next-bar{background:var(--ink);padding:2rem 3rem;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:1rem;position:relative;z-index:1;}
-.next-label{font-family:'Fredoka One',cursive;color:#888;font-size:0.85rem;}
-.next-title{font-family:'Fredoka One',cursive;color:#fff;font-size:1.3rem;}
-.next-btn{font-family:'Fredoka One',cursive;font-size:0.95rem;background:var(--accent);color:var(--ink);border:3px solid var(--accent);border-radius:100px;padding:0.6rem 1.4rem;text-decoration:none;box-shadow:3px 3px 0 rgba(255,255,255,0.2);transition:transform 0.15s;cursor:none;display:inline-flex;align-items:center;gap:0.5rem;}
-.next-btn:hover{transform:translate(-2px,-2px);}
-.reveal{opacity:0;transform:translateY(24px);transition:opacity 0.5s,transform 0.5s;}
-.reveal.on{opacity:1;transform:none;}
-/* impact banner */
-.impact-banner{background:var(--accent);border:3px solid var(--ink);border-radius:20px;padding:1.5rem 2rem;box-shadow:var(--shadow-lg);text-align:center;margin-bottom:2rem;}
-.impact-banner p{font-family:'Fredoka One',cursive;font-size:1.1rem;}
-.impact-banner strong{font-size:1.4rem;}
-@media(max-width:768px){.proj-hero,.content{padding-left:1.5rem;padding-right:1.5rem;}.cl-grid{grid-template-columns:1fr;}.flow{flex-direction:column;}.flow-arrow{transform:rotate(90deg);}.next-bar{flex-direction:column;text-align:center;}}
-</style>
+<meta name="description" content="A real-time computer vision system that recognizes sign language gestures and converts them into spoken audio for accessible communication.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../style.css">
 </head>
 <body>
-<canvas id="noteCanvas"></canvas>
-<div id="cursor"></div>
-<nav>
-  <a href="../index.html" class="back-btn">← Back</a>
-  <span class="nav-title">🤟 Sign Language to Speech</span>
-</nav>
 
+<canvas id="ambientCanvas"></canvas>
+<div id="cursor"></div>
+<div id="cursorRing"></div>
+
+<header class="nav">
+  <a href="../index.html" class="nav-logo">[ak]</a>
+  <div class="nav-right">
+    <span class="nav-clock" id="clock"></span>
+    <a href="../index.html#contact" class="nav-cta magnetic">say hi</a>
+    <button class="nav-burger" id="navBurger" aria-label="Open menu" aria-expanded="false"><span></span><span></span></button>
+  </div>
+</header>
+
+<div class="nav-overlay" id="navOverlay">
+  <button class="nav-close" id="navClose" aria-label="Close menu">&times;</button>
+  <nav class="nav-overlay-links">
+    <a href="../index.html"><span class="idx">01</span>Home</a>
+    <a href="index.html" class="current"><span class="idx">02</span>Projects</a>
+    <a href="../experience/index.html"><span class="idx">03</span>Experience</a>
+    <a href="../certifications.html"><span class="idx">04</span>Certifications</a>
+    <a href="../extracurricular.html"><span class="idx">05</span>Extracurricular</a>
+    <a href="../index.html#contact"><span class="idx">06</span>Contact</a>
+  </nav>
+  <div class="nav-overlay-foot">
+    <a href="mailto:Adityak.mehra0@gmail.com">Email</a>
+    <a href="https://www.linkedin.com/in/adityakmehra/" target="_blank" rel="noopener">LinkedIn</a>
+    <a href="tel:+919318301878">+91 93183 01878</a>
+  </div>
+</div>
+
+<!-- HERO -->
 <section class="proj-hero">
   <div class="proj-hero-inner">
-    <div><span class="proj-tag">Assistive Technology</span></div>
-    <h1 class="proj-title">Sign Language<br><span>to Speech</span></h1>
-    <p class="proj-subtitle">Breaking communication barriers in real-time. A computer vision system that recognises hand gestures for sign language and converts them into spoken audio output.</p>
+    <a href="index.html" class="back-btn magnetic">← All projects</a>
+    <div style="margin-top:1.6rem;">
+      <span class="eyebrow proj-tag"><span class="dot"></span> Computer Vision · Accessibility</span>
+    </div>
+    <h1 class="proj-title">Sign Language<br><span class="grad-text">to Speech</span></h1>
+    <p class="proj-subtitle">Real-time gesture recognition that turns sign language into spoken audio — accessible communication, no interpreter needed.</p>
     <div class="proj-links">
-      <a href="https://github.com" target="_blank" class="plink plink-a">
+      <a href="https://github.com/Aditya-mp4" target="_blank" rel="noopener" class="plink plink-a">
         <svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z"/></svg>
         GitHub
       </a>
-      <a href="#" class="plink plink-b">📱 App Demo</a>
     </div>
   </div>
 </section>
@@ -97,112 +62,122 @@ nav{position:fixed;top:0;left:0;right:0;z-index:200;background:var(--accent);bor
 <div class="content">
 
   <div class="impact-banner reveal">
-    <p>🌍 Built to help <strong>70M+ deaf people</strong> worldwide communicate more freely — no interpreter needed.</p>
+    <p>🤟 <strong>Real-time</strong> sign-to-speech — no interpreter in the loop, no round-trip lag.</p>
   </div>
 
   <!-- VISUAL MOCKUP -->
-  <div class="visual-box reveal">
-    <div class="visual-bar">
-      <div class="vdot" style="background:#FF5F57"></div>
-      <div class="vdot" style="background:#FFBD2E"></div>
-      <div class="vdot" style="background:#28CA41"></div>
-      <span style="color:#888;font-size:0.75rem;margin-left:0.5rem;font-family:'Courier New',monospace;">sign_to_speech — live camera feed</span>
-    </div>
-    <div class="visual-screen" style="display:flex;gap:2rem;align-items:center;justify-content:center;flex-wrap:wrap;padding:2rem;">
-      <!-- Camera view simulation -->
-      <div style="background:#111;border:3px solid #4ECDC4;border-radius:14px;width:220px;height:200px;display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden;">
-        <svg width="120" height="150" viewBox="0 0 120 150">
-          <ellipse cx="60" cy="105" rx="35" ry="38" fill="#FFD93D" stroke="#4ECDC4" stroke-width="2"/>
-          <rect x="25" y="45" width="14" height="55" rx="7" fill="#FFD93D" stroke="#4ECDC4" stroke-width="2"/>
-          <rect x="44" y="30" width="14" height="60" rx="7" fill="#FF6B9D" stroke="#4ECDC4" stroke-width="2"/>
-          <rect x="63" y="28" width="14" height="62" rx="7" fill="#FF6B9D" stroke="#4ECDC4" stroke-width="2"/>
-          <rect x="82" y="40" width="14" height="52" rx="7" fill="#FFD93D" stroke="#4ECDC4" stroke-width="2"/>
-          <!-- Tracking dots -->
-          <circle cx="32" cy="47" r="4" fill="#4ECDC4"/><circle cx="51" cy="32" r="4" fill="#4ECDC4"/>
-          <circle cx="70" cy="30" r="4" fill="#4ECDC4"/><circle cx="89" cy="42" r="4" fill="#4ECDC4"/>
-          <circle cx="60" cy="82" r="5" fill="#FFD93D" stroke="#4ECDC4" stroke-width="2"/>
-        </svg>
-        <div style="position:absolute;bottom:8px;left:50%;transform:translateX(-50%);background:rgba(0,0,0,0.7);color:#4ECDC4;font-family:'Courier New',monospace;font-size:0.65rem;padding:2px 8px;border-radius:100px;">TRACKING ●</div>
+  <div class="sec reveal">
+    <h2 class="sec-title">How it sees a sign and says it out loud</h2>
+    <div class="visual-box">
+      <div class="visual-bar">
+        <div class="vdot" style="background:#FF5F57"></div>
+        <div class="vdot" style="background:#FFBD2E"></div>
+        <div class="vdot" style="background:#28CA41"></div>
+        <span style="color:#888;font-size:0.75rem;margin-left:0.5rem;font-family:'Space Mono',monospace;">sign_to_speech.py — live camera feed</span>
       </div>
-
-      <div style="font-size:2rem;color:#4ECDC4;">→</div>
-
-      <!-- Recognition output -->
-      <div style="display:flex;flex-direction:column;gap:0.8rem;min-width:180px;">
-        <div style="background:#0D1117;border:2px solid #4ECDC4;border-radius:12px;padding:0.8rem 1rem;">
-          <div style="color:#6272A4;font-family:'Courier New',monospace;font-size:0.7rem;margin-bottom:0.3rem;">// Detected gesture</div>
-          <div style="color:#50FA7B;font-family:'Fredoka One',cursive;font-size:1.2rem;">✋ "HELLO"</div>
-          <div style="color:#888;font-size:0.72rem;font-family:'Courier New',monospace;">conf: 94.2%</div>
-        </div>
-        <div style="display:flex;align-items:center;gap:0.6rem;background:#0D1117;border:2px solid #FFD93D;border-radius:12px;padding:0.8rem 1rem;">
-          <div style="width:32px;height:32px;background:#FFD93D;border-radius:50%;border:2px solid #1A1A2E;display:flex;align-items:center;justify-content:center;font-size:1rem;animation:speakPulse 1s ease-in-out infinite;">🔊</div>
-          <div>
-            <div style="color:#FFD93D;font-family:'Fredoka One',cursive;font-size:0.85rem;">Speaking...</div>
-            <div style="color:#888;font-size:0.7rem;font-family:'Courier New',monospace;">"Hello"</div>
+      <div class="visual-screen">
+        <div style="display:flex;justify-content:space-around;align-items:center;flex:1;flex-wrap:wrap;gap:2rem;padding:1rem;">
+          <div style="text-align:center;">
+            <div style="background:#000;border:1px solid rgba(47,230,199,0.4);border-radius:14px;width:180px;height:170px;display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden;">
+              <svg width="100" height="130" viewBox="0 0 120 150">
+                <ellipse cx="60" cy="105" rx="35" ry="38" fill="#7C5CFF" stroke="#2FE6C7" stroke-width="2" opacity="0.85"/>
+                <rect x="25" y="45" width="14" height="55" rx="7" fill="#7C5CFF" stroke="#2FE6C7" stroke-width="2" opacity="0.85"/>
+                <rect x="44" y="30" width="14" height="60" rx="7" fill="#2FE6C7" stroke="#2FE6C7" stroke-width="2" opacity="0.85"/>
+                <rect x="63" y="28" width="14" height="62" rx="7" fill="#2FE6C7" stroke="#2FE6C7" stroke-width="2" opacity="0.85"/>
+                <rect x="82" y="40" width="14" height="52" rx="7" fill="#7C5CFF" stroke="#2FE6C7" stroke-width="2" opacity="0.85"/>
+                <circle cx="32" cy="47" r="4" fill="#FFD93D"/><circle cx="51" cy="32" r="4" fill="#FFD93D"/>
+                <circle cx="70" cy="30" r="4" fill="#FFD93D"/><circle cx="89" cy="42" r="4" fill="#FFD93D"/>
+                <circle cx="60" cy="82" r="5" fill="#FF6B6B"/>
+              </svg>
+              <div style="position:absolute;bottom:8px;left:50%;transform:translateX(-50%);background:rgba(0,0,0,0.7);color:#2FE6C7;font-family:'Space Mono',monospace;font-size:0.65rem;padding:2px 10px;border-radius:100px;">TRACKING ●</div>
+            </div>
+            <div style="color:#2FE6C7;font-family:'Space Mono',monospace;font-size:0.78rem;margin-top:0.5rem;">camera feed</div>
+          </div>
+          <div style="font-size:1.8rem;color:#7C5CFF;">→</div>
+          <div style="display:flex;flex-direction:column;gap:0.6rem;min-width:180px;">
+            <div style="background:#000;border:1px solid rgba(47,230,199,0.4);border-radius:10px;padding:0.6rem 1rem;">
+              <div style="color:#6272A4;font-family:'Space Mono',monospace;font-size:0.7rem;">// detected gesture</div>
+              <div style="color:#50FA7B;font-family:'Space Grotesk',sans-serif;font-size:1.1rem;">✋ "hello"</div>
+            </div>
+            <div style="background:#000;border:1px solid rgba(255,217,61,0.4);border-radius:10px;padding:0.6rem 1rem;display:flex;align-items:center;gap:0.6rem;">
+              <span style="width:26px;height:26px;border-radius:50%;background:#FFD93D;display:flex;align-items:center;justify-content:center;font-size:0.9rem;animation:blink 1s ease-in-out infinite;">🔊</span>
+              <div>
+                <div style="color:#FFD93D;font-family:'Space Grotesk',sans-serif;font-size:0.82rem;">speaking…</div>
+                <div style="color:#888;font-size:0.68rem;font-family:'Space Mono',monospace;">"hello"</div>
+              </div>
+            </div>
+          </div>
+          <div style="font-size:1.8rem;color:#7C5CFF;">→</div>
+          <div style="text-align:center;">
+            <div style="background:#000;border:1px solid rgba(47,230,199,0.4);border-radius:16px;width:110px;padding:1rem 0.6rem;">
+              <div style="width:28px;height:5px;background:#333;border-radius:3px;margin:0 auto 0.7rem;"></div>
+              <div style="font-size:1.4rem;">📱</div>
+              <div style="font-family:'Space Mono',monospace;font-size:0.62rem;color:#2FE6C7;margin:0.4rem 0;">flutter app</div>
+              <div style="background:rgba(47,230,199,0.1);border:1px solid rgba(47,230,199,0.35);border-radius:8px;padding:0.35rem;font-size:0.6rem;color:#2FE6C7;font-family:'Space Mono',monospace;">"hello" spoken ✓</div>
+            </div>
           </div>
         </div>
       </div>
-
-      <div style="font-size:2rem;color:#4ECDC4;">→</div>
-
-      <!-- Flutter app mockup -->
-      <div style="background:#0D1117;border:3px solid #6BCB77;border-radius:20px;width:100px;padding:1rem 0.6rem;text-align:center;">
-        <div style="width:30px;height:5px;background:#333;border-radius:3px;margin:0 auto 0.8rem;"></div>
-        <div style="font-size:1.5rem;margin-bottom:0.4rem;">📱</div>
-        <div style="font-family:'Fredoka One',cursive;font-size:0.65rem;color:#6BCB77;margin-bottom:0.6rem;">Flutter App</div>
-        <div style="background:#1A3A2A;border:1px solid #6BCB77;border-radius:8px;padding:0.4rem;font-size:0.6rem;color:#6BCB77;font-family:'Courier New',monospace;">"Hello"<br>spoken ✓</div>
-      </div>
     </div>
-    <style>@keyframes speakPulse{0%,100%{transform:scale(1)}50%{transform:scale(1.15)}}</style>
   </div>
 
-  <!-- OVERVIEW -->
+  <!-- WHAT IT DOES -->
   <div class="sec reveal">
-    <h2 class="sec-title">What It Does</h2>
+    <h2 class="sec-title">What it does</h2>
     <div class="cards-grid">
-      <div class="info-card"><div class="ic-emoji">👁️</div><h4>Gesture Recognition</h4><p>OpenCV processes camera frames in real-time; classifier identifies ASL/ISL hand signs with high accuracy.</p></div>
-      <div class="info-card"><div class="ic-emoji">🔊</div><h4>Speech Synthesis</h4><p>Recognised signs are mapped to text, then converted to natural-sounding speech via TTS synthesis.</p></div>
-      <div class="info-card"><div class="ic-emoji">📱</div><h4>Mobile App</h4><p>Flutter frontend provides a clean, accessible mobile interface — camera feed + live transcription view.</p></div>
-      <div class="info-card"><div class="ic-emoji">🌐</div><h4>Flask Backend</h4><p>Python + Flask API handles all CV processing server-side, keeping the mobile client lightweight.</p></div>
+      <div class="info-card"><div class="ic-emoji">👁️</div><h4>Real-time gesture recognition</h4><p>OpenCV processes camera frames live, identifying hand signs frame by frame.</p></div>
+      <div class="info-card"><div class="ic-emoji">🔊</div><h4>Speech synthesis</h4><p>Recognized signs are mapped to text, then converted into natural-sounding spoken audio.</p></div>
+      <div class="info-card"><div class="ic-emoji">📱</div><h4>Flutter mobile app</h4><p>A clean, accessible mobile interface — live camera feed plus transcription, built in Flutter.</p></div>
+      <div class="info-card"><div class="ic-emoji">🌐</div><h4>Flask backend</h4><p>Python and Flask handle the computer vision processing, keeping the mobile client lightweight.</p></div>
     </div>
   </div>
 
-  <!-- FLOW -->
+  <!-- WHY I BUILT THIS -->
   <div class="sec reveal">
-    <h2 class="sec-title">System Architecture</h2>
+    <h2 class="sec-title">Why I built this</h2>
+    <div class="about-text">
+      <p>Most of what I build starts from curiosity, but this one started from something closer to obligation. Accessible tech is one of the few areas where a computer vision project isn't just a cool demo — it can genuinely remove a barrier for someone. That pull toward assistive technology, toward building something that actually helps someone communicate, is what got me into this project in the first place.</p>
+      <p>The gnarliest technical problem was accuracy on visually similar signs. A lot of sign language gestures differ by something as small as finger spacing or a slight wrist rotation, and early on the classifier would confidently get these confused with each other. Getting that right meant paying much closer attention to hand segmentation and landmark precision than I initially expected — this wasn't a project where "mostly right" was good enough, because a wrong word spoken out loud is worse than no word at all.</p>
+      <p>That's also what taught me how much UX simplicity matters here, more than in almost anything else I've built. If someone is relying on this to communicate, every extra tap, every confusing screen, every moment of "wait, did it hear me?" is a real cost, not just a minor annoyance. I ended up stripping the Flutter interface down again and again until it was basically just a camera view and a transcript — nothing to think about, nothing standing between a gesture and a spoken word.</p>
+    </div>
+  </div>
+
+  <!-- SYSTEM ARCHITECTURE -->
+  <div class="sec reveal">
+    <h2 class="sec-title">System architecture</h2>
     <div class="flow">
-      <div class="flow-step"><span class="fs-emoji">📷</span><span class="fs-label">Camera Frame</span></div>
+      <div class="flow-step"><span class="fs-emoji">📷</span><span class="fs-label">Camera<br>frame</span></div>
       <div class="flow-arrow">→</div>
-      <div class="flow-step"><span class="fs-emoji">🖐️</span><span class="fs-label">OpenCV<br>Detection</span></div>
+      <div class="flow-step"><span class="fs-emoji">🖐️</span><span class="fs-label">OpenCV<br>detection</span></div>
       <div class="flow-arrow">→</div>
-      <div class="flow-step"><span class="fs-emoji">🧠</span><span class="fs-label">Sign<br>Classifier</span></div>
+      <div class="flow-step"><span class="fs-emoji">🧠</span><span class="fs-label">Sign<br>classifier</span></div>
       <div class="flow-arrow">→</div>
-      <div class="flow-step"><span class="fs-emoji">📝</span><span class="fs-label">Text<br>Output</span></div>
+      <div class="flow-step"><span class="fs-emoji">📝</span><span class="fs-label">Text<br>output</span></div>
       <div class="flow-arrow">→</div>
-      <div class="flow-step"><span class="fs-emoji">🔊</span><span class="fs-label">TTS<br>Engine</span></div>
+      <div class="flow-step"><span class="fs-emoji">🔊</span><span class="fs-label">Speech<br>synthesis</span></div>
     </div>
   </div>
 
   <!-- CHALLENGES & LEARNINGS -->
   <div class="sec reveal">
-    <h2 class="sec-title">Challenges & Learnings</h2>
+    <h2 class="sec-title">Challenges &amp; learnings</h2>
     <div class="cl-grid">
       <div class="cl-card challenge">
         <h4>😤 Challenges</h4>
         <ul>
-          <li>Similar-looking signs (e.g. "A" vs "S" in ASL) causing misclassification.</li>
-          <li>Latency across the Python → Flask → Flutter pipeline was initially too high for real use.</li>
-          <li>Background clutter confusing the hand segmentation in complex environments.</li>
-          <li>Building a training dataset for regional sign language variants was time-consuming.</li>
+          <li>Visually similar signs were easy for the classifier to confuse with each other.</li>
+          <li>Latency across the Python → Flask → Flutter pipeline was initially too high for natural use.</li>
+          <li>Cluttered backgrounds made hand segmentation less reliable outside controlled lighting.</li>
+          <li>Designing a UX simple enough to not get in the way of the person actually using it.</li>
         </ul>
       </div>
       <div class="cl-card learning">
         <h4>💡 Learnings</h4>
         <ul>
-          <li>Background subtraction + skin tone segmentation dramatically improved accuracy.</li>
-          <li>Caching frequently used sign-to-text mappings on the client cuts round-trip latency.</li>
-          <li>Assistive tech needs ruthlessly simple UX — every extra tap is a barrier.</li>
-          <li>Cross-platform development with Flutter saved significant time vs native iOS/Android.</li>
+          <li>Tighter hand segmentation and landmark precision cut down misclassification significantly.</li>
+          <li>Caching frequent sign-to-text mappings on the client trimmed round-trip latency.</li>
+          <li>Assistive tech needs ruthlessly simple UX — every extra tap is a barrier, not a feature.</li>
+          <li>Cross-platform development with Flutter saved real time versus building native apps twice.</li>
         </ul>
       </div>
     </div>
@@ -210,38 +185,43 @@ nav{position:fixed;top:0;left:0;right:0;z-index:200;background:var(--accent);bor
 
   <!-- TECH STACK -->
   <div class="sec reveal">
-    <h2 class="sec-title">Tech Stack</h2>
+    <h2 class="sec-title">Tech stack</h2>
     <div class="stack-wrap">
-      <span class="stag" style="background:#FFD93D">Python</span>
-      <span class="stag" style="background:#CCFBF1">OpenCV</span>
-      <span class="stag" style="background:#DCFCE7">Flutter</span>
-      <span class="stag" style="background:#FED7AA">Flask</span>
-      <span class="stag" style="background:#E9D5FF">TTS Engine</span>
-      <span class="stag" style="background:#FFF0F5">Dart</span>
+      <span class="stag">Python</span><span class="stag">OpenCV</span><span class="stag">Flutter</span>
+      <span class="stag">Dart</span><span class="stag">Flask</span><span class="stag">Text-to-Speech</span>
     </div>
   </div>
 
 </div>
 
 <div class="next-bar">
-  <div>
-    <div class="next-label">Next Project →</div>
-    <div class="next-title">🔐 VideoCrypt</div>
+  <div class="next-bar-inner">
+    <div>
+      <div class="next-label">Next project →</div>
+      <div class="next-title">VideoCrypt</div>
+    </div>
+    <a href="videocrypt.html" class="next-btn">View project →</a>
   </div>
-  <a href="videocrypt.html" class="next-btn">View Project →</a>
 </div>
 
-<script>
-const cur=document.getElementById('cursor');
-document.addEventListener('mousemove',e=>{cur.style.left=e.clientX-11+'px';cur.style.top=e.clientY-11+'px';});
-document.querySelectorAll('a,button,.stag,.info-card').forEach(el=>{el.addEventListener('mouseenter',()=>cur.classList.add('hov'));el.addEventListener('mouseleave',()=>cur.classList.remove('hov'));});
-const canvas=document.getElementById('noteCanvas');const ctx=canvas.getContext('2d');
-function resize(){canvas.width=innerWidth;canvas.height=innerHeight;}resize();window.addEventListener('resize',resize);
-const NOTES=['♩','♪','♫','♬'],COLS=['#4ECDC4','#6BCB77','#FFD93D','#A855F7'];
-const notes=Array.from({length:16},()=>({x:Math.random()*innerWidth,y:Math.random()*innerHeight,sz:12+Math.random()*14,sp:0.25+Math.random()*0.4,t:Math.random()*Math.PI*2,ch:NOTES[Math.floor(Math.random()*4)],cl:COLS[Math.floor(Math.random()*4)],op:0.08+Math.random()*0.12,rot:(Math.random()-.5)*0.3}));
-(function draw(){ctx.clearRect(0,0,canvas.width,canvas.height);notes.forEach(n=>{n.t+=0.01;n.y-=n.sp;n.x+=Math.sin(n.t)*0.3;if(n.y<-30){n.y=canvas.height+10;n.x=Math.random()*canvas.width;}ctx.save();ctx.globalAlpha=n.op;ctx.font=n.sz+'px serif';ctx.fillStyle=n.cl;ctx.translate(n.x,n.y);ctx.rotate(Math.sin(n.t)*n.rot);ctx.fillText(n.ch,0,0);ctx.restore();});requestAnimationFrame(draw);})();
-const obs=new IntersectionObserver(entries=>{entries.forEach((e,i)=>{if(e.isIntersecting)setTimeout(()=>e.target.classList.add('on'),i*80);});},{threshold:0.1});
-document.querySelectorAll('.reveal').forEach(r=>obs.observe(r));
-</script>
+<footer class="site-footer">
+  <div class="wrap">
+    <div class="footer-top">
+      <div class="footer-cta">Let's make something<br>that feels alive.</div>
+      <div class="footer-links">
+        <a href="index.html" class="tag">Projects</a>
+        <a href="../experience/index.html" class="tag">Experience</a>
+        <a href="../certifications.html" class="tag">Certifications</a>
+        <a href="../extracurricular.html" class="tag">Extracurricular</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>Made with <em>♥</em> by Aditya Kumar Mehra · New Delhi, India</span>
+      <span>© 2026</span>
+    </div>
+  </div>
+</footer>
+
+<script src="../main.js"></script>
 </body>
 </html>

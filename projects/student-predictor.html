@@ -3,238 +3,226 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Student Performance Predictor — Aditya Kumar Mehra</title>
-<link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet">
-<style>
-:root{--accent:#6BCB77;--accent2:#FFD93D;--cream:#FFFBF0;--ink:#1A1A2E;--shadow:5px 5px 0 var(--ink);--shadow-lg:8px 8px 0 var(--ink);}
-*{margin:0;padding:0;box-sizing:border-box;}html{scroll-behavior:smooth;}
-body{background:var(--cream);color:var(--ink);font-family:'Nunito',sans-serif;overflow-x:hidden;cursor:none;}
-#cursor{width:22px;height:22px;background:var(--accent);border:3px solid var(--ink);border-radius:50%;position:fixed;top:0;left:0;pointer-events:none;z-index:9999;transition:transform 0.1s;}
-#cursor.hov{transform:scale(1.8);background:var(--accent2);}
-canvas{position:fixed;inset:0;pointer-events:none;z-index:0;}
-nav{position:fixed;top:0;left:0;right:0;z-index:200;background:var(--accent);border-bottom:3px solid var(--ink);padding:0.8rem 2.5rem;display:flex;align-items:center;gap:1rem;}
-.back-btn{font-family:'Fredoka One',cursive;font-size:0.95rem;color:var(--ink);text-decoration:none;background:#fff;border:2px solid var(--ink);border-radius:100px;padding:0.35rem 1rem;box-shadow:3px 3px 0 var(--ink);transition:transform 0.15s,box-shadow 0.15s;cursor:none;}
-.back-btn:hover{transform:translate(-2px,-2px);box-shadow:5px 5px 0 var(--ink);}
-.nav-title{font-family:'Fredoka One',cursive;font-size:1.1rem;}
-.proj-hero{min-height:55vh;padding:7rem 3rem 3rem;display:flex;align-items:center;position:relative;z-index:1;overflow:hidden;}
-.proj-hero::before{content:'';position:absolute;top:-80px;right:-80px;width:450px;height:450px;background:var(--accent);opacity:0.18;border-radius:50% 50% 40% 60%/40% 60% 50% 50%;animation:morph 9s ease-in-out infinite;border:3px solid var(--ink);}
-@keyframes morph{0%,100%{border-radius:50% 50% 40% 60%/40% 60% 50% 50%}50%{border-radius:40% 60% 55% 45%/60% 40% 50% 50%}}
-.proj-hero-inner{max-width:900px;position:relative;z-index:2;}
-.proj-tag{display:inline-block;font-family:'Fredoka One',cursive;font-size:0.85rem;background:var(--accent);color:var(--ink);border:2px solid var(--ink);border-radius:100px;padding:0.2rem 0.9rem;box-shadow:2px 2px 0 var(--ink);margin-bottom:1rem;}
-.proj-title{font-family:'Fredoka One',cursive;font-size:clamp(2.5rem,6vw,4.5rem);line-height:1.05;margin-bottom:1rem;}
-.proj-title span{color:var(--accent);}
-.proj-subtitle{font-size:1.1rem;color:#555;max-width:600px;line-height:1.7;margin-bottom:1.5rem;}
-.proj-links{display:flex;gap:1rem;flex-wrap:wrap;}
-.plink{font-family:'Fredoka One',cursive;font-size:0.95rem;padding:0.6rem 1.4rem;border-radius:100px;border:3px solid var(--ink);text-decoration:none;cursor:none;transition:transform 0.15s,box-shadow 0.15s;box-shadow:var(--shadow);display:inline-flex;align-items:center;gap:0.5rem;}
-.plink:hover{transform:translate(-3px,-3px);box-shadow:var(--shadow-lg);}
-.plink-a{background:var(--accent);color:var(--ink);}.plink-b{background:#fff;color:var(--ink);}
-.content{padding:4rem 3rem;max-width:1000px;margin:0 auto;position:relative;z-index:1;}
-.visual-box{background:#fff;border:3px solid var(--ink);border-radius:20px;box-shadow:var(--shadow-lg);overflow:hidden;margin-bottom:3rem;}
-.visual-bar{background:var(--ink);padding:0.6rem 1rem;display:flex;gap:0.5rem;align-items:center;}
-.vdot{width:12px;height:12px;border-radius:50%;}
-.sec{margin-bottom:3rem;}
-.sec-title{font-family:'Fredoka One',cursive;font-size:1.6rem;margin-bottom:1rem;display:flex;align-items:center;gap:0.5rem;}
-.sec-title::before{content:'';display:block;width:6px;height:28px;background:var(--accent);border:2px solid var(--ink);border-radius:3px;}
-.cards-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:1rem;}
-.info-card{background:#fff;border:3px solid var(--ink);border-radius:16px;padding:1.2rem;box-shadow:var(--shadow);transition:transform 0.2s,box-shadow 0.2s;}
-.info-card:hover{transform:translate(-3px,-3px);box-shadow:var(--shadow-lg);}
-.info-card .ic-emoji{font-size:2rem;margin-bottom:0.5rem;}
-.info-card h4{font-family:'Fredoka One',cursive;font-size:1rem;margin-bottom:0.3rem;}
-.info-card p{font-size:0.84rem;color:#555;line-height:1.6;}
-.cl-grid{display:grid;grid-template-columns:1fr 1fr;gap:1.5rem;}
-.cl-card{border:3px solid var(--ink);border-radius:16px;padding:1.4rem;box-shadow:var(--shadow);}
-.cl-card h4{font-family:'Fredoka One',cursive;font-size:1.05rem;margin-bottom:0.8rem;}
-.cl-card li{font-size:0.88rem;line-height:1.65;color:#444;list-style:none;padding-left:1.4rem;position:relative;margin-bottom:0.4rem;}
-.cl-card li::before{position:absolute;left:0;}
-.challenge{background:#FFF0F5;}.challenge li::before{content:'⚡';}
-.learning{background:#F0FFF4;}.learning li::before{content:'💡';}
-.stack-wrap{display:flex;flex-wrap:wrap;gap:0.6rem;}
-.stag{font-family:'Fredoka One',cursive;font-size:0.88rem;padding:0.4rem 1.1rem;border-radius:100px;border:2.5px solid var(--ink);box-shadow:3px 3px 0 var(--ink);transition:transform 0.15s;}
-.stag:hover{transform:translate(-2px,-2px) rotate(-2deg);}
-/* Pipeline steps */
-.pipeline{display:flex;flex-direction:column;gap:0.8rem;max-width:600px;}
-.pipe-step{background:#fff;border:3px solid var(--ink);border-radius:14px;padding:1rem 1.2rem;box-shadow:var(--shadow);display:flex;align-items:center;gap:1rem;transition:transform 0.2s,box-shadow 0.2s;}
-.pipe-step:hover{transform:translate(-3px,-3px);box-shadow:var(--shadow-lg);}
-.pipe-num{font-family:'Fredoka One',cursive;font-size:1.1rem;width:36px;height:36px;border-radius:50%;border:3px solid var(--ink);display:flex;align-items:center;justify-content:center;flex-shrink:0;}
-.pipe-step h4{font-family:'Fredoka One',cursive;font-size:0.95rem;}
-.pipe-step p{font-size:0.82rem;color:#666;}
-.end-banner{background:var(--accent);border:3px solid var(--ink);border-radius:20px;padding:2rem;box-shadow:var(--shadow-lg);text-align:center;margin-bottom:3rem;}
-.end-banner h3{font-family:'Fredoka One',cursive;font-size:1.3rem;margin-bottom:0.5rem;}
-.end-banner p{font-size:0.95rem;color:#1A1A2E;}
-.back-home-btn{display:inline-flex;align-items:center;gap:0.5rem;font-family:'Fredoka One',cursive;font-size:1rem;background:var(--ink);color:#fff;border:3px solid var(--ink);border-radius:100px;padding:0.7rem 1.6rem;text-decoration:none;box-shadow:var(--shadow);transition:transform 0.15s,box-shadow 0.15s;cursor:none;margin-top:1rem;}
-.back-home-btn:hover{transform:translate(-3px,-3px);box-shadow:var(--shadow-lg);}
-.reveal{opacity:0;transform:translateY(24px);transition:opacity 0.5s,transform 0.5s;}
-.reveal.on{opacity:1;transform:none;}
-@media(max-width:768px){.proj-hero,.content{padding-left:1.5rem;padding-right:1.5rem;}.cl-grid{grid-template-columns:1fr;}}
-</style>
+<title>Student Performance Prediction System — Aditya Kumar Mehra</title>
+<meta name="description" content="A machine learning system that predicts academic performance from historical student data — preprocessing, feature engineering, and model evaluation with Python, Pandas, and Scikit-learn.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../style.css">
 </head>
 <body>
-<canvas id="noteCanvas"></canvas>
-<div id="cursor"></div>
-<nav>
-  <a href="../index.html" class="back-btn">← Back</a>
-  <span class="nav-title">📊 Student Performance Predictor</span>
-</nav>
 
+<canvas id="ambientCanvas"></canvas>
+<div id="cursor"></div>
+<div id="cursorRing"></div>
+
+<header class="nav">
+  <a href="../index.html" class="nav-logo">[ak]</a>
+  <div class="nav-right">
+    <span class="nav-clock" id="clock"></span>
+    <a href="../index.html#contact" class="nav-cta magnetic">say hi</a>
+    <button class="nav-burger" id="navBurger" aria-label="Open menu" aria-expanded="false"><span></span><span></span></button>
+  </div>
+</header>
+
+<div class="nav-overlay" id="navOverlay">
+  <button class="nav-close" id="navClose" aria-label="Close menu">&times;</button>
+  <nav class="nav-overlay-links">
+    <a href="../index.html"><span class="idx">01</span>Home</a>
+    <a href="index.html" class="current"><span class="idx">02</span>Projects</a>
+    <a href="../experience/index.html"><span class="idx">03</span>Experience</a>
+    <a href="../certifications.html"><span class="idx">04</span>Certifications</a>
+    <a href="../extracurricular.html"><span class="idx">05</span>Extracurricular</a>
+    <a href="../index.html#contact"><span class="idx">06</span>Contact</a>
+  </nav>
+  <div class="nav-overlay-foot">
+    <a href="mailto:Adityak.mehra0@gmail.com">Email</a>
+    <a href="https://www.linkedin.com/in/adityakmehra/" target="_blank" rel="noopener">LinkedIn</a>
+    <a href="tel:+919318301878">+91 93183 01878</a>
+  </div>
+</div>
+
+<!-- HERO -->
 <section class="proj-hero">
   <div class="proj-hero-inner">
-    <div><span class="proj-tag">Machine Learning</span></div>
-    <h1 class="proj-title">Student <span>Performance</span> Predictor</h1>
-    <p class="proj-subtitle">A machine learning pipeline that predicts student academic outcomes from historical data — helping educators identify at-risk students before it's too late.</p>
+    <a href="index.html" class="back-btn magnetic">← All projects</a>
+    <div style="margin-top:1.6rem;">
+      <span class="eyebrow proj-tag"><span class="dot"></span> Machine Learning</span>
+    </div>
+    <h1 class="proj-title">Student Performance<br><span class="grad-text">Prediction System</span></h1>
+    <p class="proj-subtitle">A machine learning pipeline that predicts academic performance from historical student data — from raw records through preprocessing, feature engineering, and honest model evaluation.</p>
     <div class="proj-links">
-      <a href="https://github.com" target="_blank" class="plink plink-a">
+      <a href="https://github.com/Aditya-mp4" target="_blank" rel="noopener" class="plink plink-a">
         <svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z"/></svg>
         GitHub
       </a>
-      <a href="#" class="plink plink-b">📓 Notebook</a>
     </div>
   </div>
 </section>
 
 <div class="content">
 
-  <!-- CHART MOCKUP -->
-  <div class="visual-box reveal">
-    <div class="visual-bar">
-      <div class="vdot" style="background:#FF5F57"></div>
-      <div class="vdot" style="background:#FFBD2E"></div>
-      <div class="vdot" style="background:#28CA41"></div>
-      <span style="color:#888;font-size:0.75rem;margin-left:0.5rem;font-family:'Courier New',monospace;">student_predictor.ipynb — results</span>
-    </div>
-    <div style="padding:2rem;background:#0D1117;display:flex;gap:2rem;flex-wrap:wrap;align-items:flex-end;justify-content:center;min-height:260px;">
-      <!-- Bar chart -->
-      <div style="display:flex;flex-direction:column;align-items:center;gap:1rem;">
-        <div style="font-family:'Fredoka One',cursive;color:#6BCB77;font-size:0.8rem;margin-bottom:0.5rem;">Model Accuracy</div>
-        <div style="display:flex;align-items:flex-end;gap:0.8rem;height:160px;">
-          <div style="display:flex;flex-direction:column;align-items:center;gap:0.3rem;">
-            <span style="color:#888;font-size:0.65rem;font-family:'Courier New',monospace;">72%</span>
-            <div style="width:40px;height:115px;background:#FF9F43;border:2px solid #1A1A2E;border-radius:6px 6px 0 0;"></div>
-            <span style="color:#888;font-size:0.65rem;font-family:'Courier New',monospace;">LR</span>
-          </div>
-          <div style="display:flex;flex-direction:column;align-items:center;gap:0.3rem;">
-            <span style="color:#6BCB77;font-size:0.65rem;font-family:'Courier New',monospace;">87%</span>
-            <div style="width:40px;height:139px;background:#6BCB77;border:2px solid #1A1A2E;border-radius:6px 6px 0 0;animation:barGrow 2s ease-in-out infinite alternate;"></div>
-            <span style="color:#6BCB77;font-size:0.65rem;font-family:'Courier New',monospace;">RF ★</span>
-          </div>
-          <div style="display:flex;flex-direction:column;align-items:center;gap:0.3rem;">
-            <span style="color:#888;font-size:0.65rem;font-family:'Courier New',monospace;">81%</span>
-            <div style="width:40px;height:130px;background:#4ECDC4;border:2px solid #1A1A2E;border-radius:6px 6px 0 0;"></div>
-            <span style="color:#888;font-size:0.65rem;font-family:'Courier New',monospace;">SVM</span>
-          </div>
-          <div style="display:flex;flex-direction:column;align-items:center;gap:0.3rem;">
-            <span style="color:#888;font-size:0.65rem;font-family:'Courier New',monospace;">84%</span>
-            <div style="width:40px;height:134px;background:#A855F7;border:2px solid #1A1A2E;border-radius:6px 6px 0 0;"></div>
-            <span style="color:#888;font-size:0.65rem;font-family:'Courier New',monospace;">XGB</span>
-          </div>
-        </div>
-        <style>@keyframes barGrow{0%{height:139px}100%{height:148px}}</style>
+  <!-- CONCEPT WALKTHROUGH -->
+  <div class="sec reveal">
+    <h2 class="sec-title">How it works</h2>
+    <div class="visual-box">
+      <div class="visual-bar">
+        <div class="vdot" style="background:#FF5F57"></div>
+        <div class="vdot" style="background:#FFBD2E"></div>
+        <div class="vdot" style="background:#28CA41"></div>
+        <span style="color:#888;font-size:0.75rem;margin-left:0.5rem;font-family:'Space Mono',monospace;">student_performance.ipynb — pipeline</span>
       </div>
-      <!-- Feature importance -->
-      <div style="min-width:200px;">
-        <div style="font-family:'Fredoka One',cursive;color:#6BCB77;font-size:0.8rem;margin-bottom:0.8rem;">Top Features</div>
-        <div style="display:flex;flex-direction:column;gap:0.5rem;">
-          <div>
-            <div style="display:flex;justify-content:space-between;margin-bottom:2px;"><span style="color:#fff;font-size:0.7rem;font-family:'Courier New',monospace;">attendance</span><span style="color:#6BCB77;font-size:0.7rem;font-family:'Courier New',monospace;">0.31</span></div>
-            <div style="height:6px;background:#333;border-radius:3px;"><div style="height:100%;width:31%;background:#6BCB77;border-radius:3px;"></div></div>
+      <div class="visual-screen">
+        <div style="display:flex;justify-content:space-around;align-items:center;flex:1;flex-wrap:wrap;gap:2rem;padding:1rem;">
+          <div style="text-align:center;">
+            <div style="display:grid;grid-template-columns:repeat(3,26px);grid-auto-rows:20px;gap:3px;">
+              <div style="background:#7C5CFF;opacity:0.85;border-radius:3px;"></div><div style="background:#2FE6C7;opacity:0.55;border-radius:3px;"></div><div style="background:#FFD93D;opacity:0.4;border-radius:3px;"></div>
+              <div style="background:#2FE6C7;opacity:0.7;border-radius:3px;"></div><div style="background:#7C5CFF;opacity:0.3;border-radius:3px;"></div><div style="background:#FF6B6B;opacity:0.5;border-radius:3px;"></div>
+              <div style="background:#FFD93D;opacity:0.6;border-radius:3px;"></div><div style="background:#FF6B6B;opacity:0.35;border-radius:3px;"></div><div style="background:#2FE6C7;opacity:0.8;border-radius:3px;"></div>
+              <div style="background:#7C5CFF;opacity:0.45;border-radius:3px;"></div><div style="background:#FFD93D;opacity:0.7;border-radius:3px;"></div><div style="background:#2FE6C7;opacity:0.3;border-radius:3px;"></div>
+            </div>
+            <div style="color:#2FE6C7;font-family:'Space Mono',monospace;font-size:0.8rem;margin-top:0.5rem;">Raw student records</div>
           </div>
-          <div>
-            <div style="display:flex;justify-content:space-between;margin-bottom:2px;"><span style="color:#fff;font-size:0.7rem;font-family:'Courier New',monospace;">prev_grades</span><span style="color:#FFD93D;font-size:0.7rem;font-family:'Courier New',monospace;">0.28</span></div>
-            <div style="height:6px;background:#333;border-radius:3px;"><div style="height:100%;width:28%;background:#FFD93D;border-radius:3px;"></div></div>
+          <div style="font-size:1.8rem;color:#7C5CFF;">→</div>
+          <div style="display:flex;flex-direction:column;gap:0.6rem;min-width:210px;">
+            <div style="background:#000;border:1px solid rgba(47,230,199,0.4);border-radius:10px;padding:0.5rem 1rem;font-family:'Space Mono',monospace;font-size:0.72rem;">
+              <span style="color:#6272A4;"># preprocessing</span><br>
+              <span style="color:#50FA7B;">df</span><span style="color:#fff;">.fillna(</span><span style="color:#F1FA8C;">strategy</span><span style="color:#fff;">)</span>
+            </div>
+            <div style="background:#000;border:1px solid rgba(124,92,255,0.4);border-radius:10px;padding:0.5rem 1rem;font-family:'Space Mono',monospace;font-size:0.72rem;">
+              <span style="color:#6272A4;"># feature engineering</span><br>
+              <span style="color:#8BE9FD;">attendance_rate</span><span style="color:#fff;"> = ...</span>
+            </div>
           </div>
-          <div>
-            <div style="display:flex;justify-content:space-between;margin-bottom:2px;"><span style="color:#fff;font-size:0.7rem;font-family:'Courier New',monospace;">study_hours</span><span style="color:#FF9F43;font-size:0.7rem;font-family:'Courier New',monospace;">0.21</span></div>
-            <div style="height:6px;background:#333;border-radius:3px;"><div style="height:100%;width:21%;background:#FF9F43;border-radius:3px;"></div></div>
-          </div>
-          <div>
-            <div style="display:flex;justify-content:space-between;margin-bottom:2px;"><span style="color:#fff;font-size:0.7rem;font-family:'Courier New',monospace;">assignments</span><span style="color:#4ECDC4;font-size:0.7rem;font-family:'Courier New',monospace;">0.14</span></div>
-            <div style="height:6px;background:#333;border-radius:3px;"><div style="height:100%;width:14%;background:#4ECDC4;border-radius:3px;"></div></div>
-          </div>
-          <div>
-            <div style="display:flex;justify-content:space-between;margin-bottom:2px;"><span style="color:#fff;font-size:0.7rem;font-family:'Courier New',monospace;">parental_edu</span><span style="color:#A855F7;font-size:0.7rem;font-family:'Courier New',monospace;">0.06</span></div>
-            <div style="height:6px;background:#333;border-radius:3px;"><div style="height:100%;width:6%;background:#A855F7;border-radius:3px;"></div></div>
+          <div style="font-size:1.8rem;color:#7C5CFF;">→</div>
+          <div style="display:flex;flex-direction:column;gap:0.5rem;min-width:180px;">
+            <div style="background:#000;border:1px solid rgba(255,217,61,0.5);border-radius:10px;padding:0.5rem 0.9rem;font-family:'Space Mono',monospace;font-size:0.7rem;color:#FFD93D;">Logistic Regression <span style="color:#6272A4;">— baseline</span></div>
+            <div style="background:#000;border:1px solid rgba(47,230,199,0.6);border-radius:10px;padding:0.5rem 0.9rem;font-family:'Space Mono',monospace;font-size:0.7rem;color:#2FE6C7;">Random Forest <span style="color:#6272A4;">— best fit</span></div>
+            <div style="background:#000;border:1px solid rgba(255,107,107,0.5);border-radius:10px;padding:0.5rem 0.9rem;font-family:'Space Mono',monospace;font-size:0.7rem;color:#FF6B6B;">SVM <span style="color:#6272A4;">— needed scaling</span></div>
           </div>
         </div>
       </div>
     </div>
   </div>
 
+  <!-- WHAT IT DOES -->
   <div class="sec reveal">
-    <h2 class="sec-title">What It Does</h2>
+    <h2 class="sec-title">What it does</h2>
     <div class="cards-grid">
-      <div class="info-card"><div class="ic-emoji">🧹</div><h4>Data Preprocessing</h4><p>Handles missing values, encodes categorical features, and normalises numeric columns for clean model input.</p></div>
-      <div class="info-card"><div class="ic-emoji">🔧</div><h4>Feature Engineering</h4><p>Creates derived features like attendance rate and assignment completion ratio to improve model signal.</p></div>
-      <div class="info-card"><div class="ic-emoji">🤖</div><h4>Multi-Model Evaluation</h4><p>Trains and benchmarks Logistic Regression, Random Forest, SVM, and XGBoost — picks the best performer.</p></div>
-      <div class="info-card"><div class="ic-emoji">📈</div><h4>87% Accuracy</h4><p>Random Forest achieved 87% accuracy on the test set with solid precision and recall across grade tiers.</p></div>
+      <div class="info-card"><div class="ic-emoji">🧹</div><h4>Data preprocessing</h4><p>Handles missing values, encodes categorical fields, and scales numeric columns before anything touches a model.</p></div>
+      <div class="info-card"><div class="ic-emoji">🔧</div><h4>Feature engineering</h4><p>Derives new signals from raw records — the kind of features that don't exist until you go looking for them.</p></div>
+      <div class="info-card"><div class="ic-emoji">🤖</div><h4>Model comparison</h4><p>Trains and evaluates several classic algorithms against the same data to see how each one actually performs.</p></div>
+      <div class="info-card"><div class="ic-emoji">📊</div><h4>Honest evaluation</h4><p>Picks a model based on how it holds up on held-out data, not just how good it looks on the training set.</p></div>
     </div>
   </div>
 
+  <!-- MY STORY -->
   <div class="sec reveal">
-    <h2 class="sec-title">ML Pipeline</h2>
-    <div class="pipeline">
-      <div class="pipe-step"><div class="pipe-num" style="background:#FED7AA">1</div><div><h4>Data Collection</h4><p>Historical student records — grades, attendance, assignments, demographics.</p></div></div>
-      <div class="pipe-step"><div class="pipe-num" style="background:#FFD93D">2</div><div><h4>Preprocessing</h4><p>Handle nulls, encode categoricals, scale numerics with StandardScaler.</p></div></div>
-      <div class="pipe-step"><div class="pipe-num" style="background:#CCFBF1">3</div><div><h4>Feature Engineering</h4><p>Create meaningful derived features, drop low-importance columns.</p></div></div>
-      <div class="pipe-step"><div class="pipe-num" style="background:#E9D5FF">4</div><div><h4>Model Training</h4><p>Train LR, RF, SVM, XGB with cross-validation on 80% training split.</p></div></div>
-      <div class="pipe-step"><div class="pipe-num" style="background:#DCFCE7">5</div><div><h4>Evaluation</h4><p>Accuracy, precision, recall, F1, confusion matrix on 20% test split.</p></div></div>
+    <h2 class="sec-title">Why I built this</h2>
+    <div class="about-text">
+      <p>I wanted to sit down and build the classic machine learning pipeline end to end, not just the model-fitting part everyone jumps to. It's easy to call <code>.fit()</code> on a dataset someone else already cleaned for you — it's a different thing entirely to start from a messy pile of student records and get it into something a model can actually learn from.</p>
+      <p>Most of the real work turned out to live in preprocessing and feature engineering, not in the modeling step itself. Real student data has missing values, inconsistent categorical labels, and numeric columns on wildly different scales — attendance percentages next to raw assignment counts next to grade letters. Getting that into a clean, consistent shape, and then engineering features that actually carried signal instead of just noise, took far longer than picking an algorithm ever did.</p>
+      <p>Comparing models honestly was its own lesson. It's tempting to just pick whichever one gives the highest number and call it done, but that's not really evaluation — that's just chasing a metric. I paid attention to how each model behaved, not only what it scored: some handled the noisier, more inconsistent features a lot better than others, some needed their inputs carefully scaled first or they fell apart, and some were more stable across different train/test splits than others. That process of actually comparing, not just running one model and stopping, is what made this feel like a real ML project instead of a tutorial exercise.</p>
+      <p>If I revisited this, I'd want to spend even more time on the feature engineering side — that's where I saw the biggest swings in how well a model could actually generalize.</p>
     </div>
   </div>
 
+  <!-- PIPELINE FLOW -->
   <div class="sec reveal">
-    <h2 class="sec-title">Challenges & Learnings</h2>
+    <h2 class="sec-title">Pipeline flow</h2>
+    <div class="flow">
+      <div class="flow-step"><span class="fs-emoji">🗂️</span><span class="fs-label">Raw student<br>data</span></div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-step"><span class="fs-emoji">🧹</span><span class="fs-label">Preprocessing</span></div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-step"><span class="fs-emoji">🔧</span><span class="fs-label">Feature<br>engineering</span></div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-step"><span class="fs-emoji">🤖</span><span class="fs-label">Model<br>training</span></div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-step"><span class="fs-emoji">📊</span><span class="fs-label">Evaluation &amp;<br>selection</span></div>
+    </div>
+  </div>
+
+  <!-- CODE PEEK -->
+  <div class="sec reveal">
+    <h2 class="sec-title">Code peek</h2>
+    <div class="code-block">
+<span class="cm"># Preprocessing + feature engineering, simplified</span><br>
+<span class="var">df</span>[<span class="str">'attendance_rate'</span>] = <span class="var">df</span>[<span class="str">'days_present'</span>] / <span class="var">df</span>[<span class="str">'total_days'</span>]<br>
+<span class="var">df</span>[<span class="str">'grade_band'</span>] = <span class="var">LabelEncoder</span>().fit_transform(<span class="var">df</span>[<span class="str">'grade_band'</span>])<br>
+<span class="var">num_cols</span> = [<span class="str">'attendance_rate'</span>, <span class="str">'study_hours'</span>, <span class="str">'prev_score'</span>]<br>
+<span class="var">df</span>[<span class="var">num_cols</span>] = <span class="var">StandardScaler</span>().fit_transform(<span class="var">df</span>[<span class="var">num_cols</span>])<br>
+<br>
+<span class="var">X_train</span>, <span class="var">X_test</span>, <span class="var">y_train</span>, <span class="var">y_test</span> = <span class="fn">train_test_split</span>(<span class="var">X</span>, <span class="var">y</span>, <span class="var">test_size</span>=<span class="num">0.2</span>)<br>
+<span class="kw">for</span> <span class="var">model</span> <span class="kw">in</span> [<span class="var">LogisticRegression</span>(), <span class="var">RandomForestClassifier</span>(), <span class="var">SVC</span>()]:<br>
+&nbsp;&nbsp;<span class="var">model</span>.fit(<span class="var">X_train</span>, <span class="var">y_train</span>)<br>
+&nbsp;&nbsp;<span class="fn">evaluate</span>(<span class="var">model</span>, <span class="var">X_test</span>, <span class="var">y_test</span>)
+    </div>
+  </div>
+
+  <!-- CHALLENGES & LEARNINGS -->
+  <div class="sec reveal">
+    <h2 class="sec-title">Challenges &amp; learnings</h2>
     <div class="cl-grid">
       <div class="cl-card challenge">
         <h4>😤 Challenges</h4>
         <ul>
-          <li>Class imbalance — far more average students than failing/exceptional ones.</li>
-          <li>Deciding which features to keep vs. drop without overfitting the training data.</li>
-          <li>Hyperparameter tuning was time-consuming without GPU acceleration.</li>
-          <li>Interpreting model results in a meaningful way for non-technical educators.</li>
+          <li>Real student data arrived messy — missing values, inconsistent categorical labels, mismatched scales.</li>
+          <li>Deciding which engineered features actually helped versus which just added noise.</li>
+          <li>Comparing models fairly without letting one lucky train/test split skew the picture.</li>
+          <li>Balancing how much time to spend on preprocessing versus modeling itself.</li>
         </ul>
       </div>
       <div class="cl-card learning">
         <h4>💡 Learnings</h4>
         <ul>
-          <li>SMOTE oversampling helped significantly with class imbalance.</li>
-          <li>Feature importance plots from Random Forest revealed attendance as the strongest predictor.</li>
-          <li>Cross-validation is non-negotiable — single train/test splits can be highly misleading.</li>
-          <li>Explainability matters as much as accuracy when presenting to stakeholders.</li>
+          <li>Preprocessing and feature engineering are where most of the real work in ML actually lives.</li>
+          <li>Different models handle noisy or inconsistent features very differently — worth testing more than one.</li>
+          <li>Evaluating on held-out data honestly matters more than chasing the best training score.</li>
+          <li>Simpler models are sometimes more robust than complex ones when the data itself is imperfect.</li>
         </ul>
       </div>
     </div>
   </div>
 
+  <!-- TECH STACK -->
   <div class="sec reveal">
-    <h2 class="sec-title">Tech Stack</h2>
+    <h2 class="sec-title">Tech stack</h2>
     <div class="stack-wrap">
-      <span class="stag" style="background:#FFD93D">Python</span>
-      <span class="stag" style="background:#FED7AA">Pandas</span>
-      <span class="stag" style="background:#DCFCE7">Scikit-Learn</span>
-      <span class="stag" style="background:#CCFBF1">NumPy</span>
-      <span class="stag" style="background:#FFF0F5">Matplotlib</span>
-      <span class="stag" style="background:#E9D5FF">Jupyter Notebook</span>
+      <span class="stag">Python</span><span class="stag">Pandas</span><span class="stag">Scikit-learn</span>
+      <span class="stag">Feature Engineering</span><span class="stag">Model Evaluation</span>
     </div>
-  </div>
-
-  <!-- END BANNER -->
-  <div class="end-banner reveal">
-    <h3>🎉 You've seen all 5 projects!</h3>
-    <p>Want to build something together? Let's chat.</p>
-    <a href="../index.html#contact" class="back-home-btn">👋 Get in Touch</a>
   </div>
 
 </div>
 
-<script>
-const cur=document.getElementById('cursor');
-document.addEventListener('mousemove',e=>{cur.style.left=e.clientX-11+'px';cur.style.top=e.clientY-11+'px';});
-document.querySelectorAll('a,button,.stag,.info-card,.pipe-step').forEach(el=>{el.addEventListener('mouseenter',()=>cur.classList.add('hov'));el.addEventListener('mouseleave',()=>cur.classList.remove('hov'));});
-const canvas=document.getElementById('noteCanvas');const ctx=canvas.getContext('2d');
-function resize(){canvas.width=innerWidth;canvas.height=innerHeight;}resize();window.addEventListener('resize',resize);
-const NOTES=['♩','♪','♫','♬'],COLS=['#6BCB77','#FFD93D','#4ECDC4','#A855F7'];
-const notes=Array.from({length:16},()=>({x:Math.random()*innerWidth,y:Math.random()*innerHeight,sz:12+Math.random()*14,sp:0.25+Math.random()*0.4,t:Math.random()*Math.PI*2,ch:NOTES[Math.floor(Math.random()*4)],cl:COLS[Math.floor(Math.random()*4)],op:0.08+Math.random()*0.12,rot:(Math.random()-.5)*0.3}));
-(function draw(){ctx.clearRect(0,0,canvas.width,canvas.height);notes.forEach(n=>{n.t+=0.01;n.y-=n.sp;n.x+=Math.sin(n.t)*0.3;if(n.y<-30){n.y=canvas.height+10;n.x=Math.random()*canvas.width;}ctx.save();ctx.globalAlpha=n.op;ctx.font=n.sz+'px serif';ctx.fillStyle=n.cl;ctx.translate(n.x,n.y);ctx.rotate(Math.sin(n.t)*n.rot);ctx.fillText(n.ch,0,0);ctx.restore();});requestAnimationFrame(draw);})();
-const obs=new IntersectionObserver(entries=>{entries.forEach((e,i)=>{if(e.isIntersecting)setTimeout(()=>e.target.classList.add('on'),i*80);});},{threshold:0.1});
-document.querySelectorAll('.reveal').forEach(r=>obs.observe(r));
-</script>
+<div class="next-bar">
+  <div class="next-bar-inner">
+    <div>
+      <div class="next-label">Back to where it started →</div>
+      <div class="next-title">Gesture-Controlled Music System</div>
+    </div>
+    <a href="gesture-music.html" class="next-btn">View project →</a>
+  </div>
+</div>
+
+<footer class="site-footer">
+  <div class="wrap">
+    <div class="footer-top">
+      <div class="footer-cta">Let's make something<br>that feels alive.</div>
+      <div class="footer-links">
+        <a href="index.html" class="tag">Projects</a>
+        <a href="../experience/index.html" class="tag">Experience</a>
+        <a href="../certifications.html" class="tag">Certifications</a>
+        <a href="../extracurricular.html" class="tag">Extracurricular</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>Made with <em>♥</em> by Aditya Kumar Mehra · New Delhi, India</span>
+      <span>© 2026</span>
+    </div>
+  </div>
+</footer>
+
+<script src="../main.js"></script>
 </body>
 </html>

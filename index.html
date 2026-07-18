@@ -3,498 +3,369 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Aditya Kumar Mehra — AI/ML Developer</title>
-<link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+<title>Aditya Kumar Mehra — AI/ML Developer &amp; Creative Coder</title>
+<meta name="description" content="Portfolio of Aditya Kumar Mehra — AI/ML developer and full-stack builder exploring the space where art, music, and machines meet.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-<canvas id="noteCanvas"></canvas>
+<canvas id="ambientCanvas"></canvas>
+<div id="cursor"></div>
+<div id="cursorRing"></div>
 
-<!-- FLUTE CURSOR -->
-<div id="cursor">
-  <svg width="52" height="14" viewBox="0 0 52 14" xmlns="http://www.w3.org/2000/svg">
-    <rect x="1" y="5" width="50" height="4" rx="2" fill="#FFD93D" stroke="#1A1A2E" stroke-width="1.5"/>
-    <rect x="0" y="4" width="6" height="6" rx="2" fill="#FF9F43" stroke="#1A1A2E" stroke-width="1.5"/>
-    <circle cx="16" cy="7" r="1.8" fill="#1A1A2E"/>
-    <circle cx="22" cy="7" r="1.8" fill="#1A1A2E"/>
-    <circle cx="28" cy="7" r="1.8" fill="#1A1A2E"/>
-    <circle cx="34" cy="7" r="1.5" fill="#1A1A2E"/>
-    <circle cx="39" cy="7" r="1.5" fill="#1A1A2E"/>
-    <ellipse cx="22" cy="4.5" rx="2.2" ry="1.2" fill="#FF6B9D" stroke="#1A1A2E" stroke-width="0.8"/>
-    <ellipse cx="28" cy="4.5" rx="2.2" ry="1.2" fill="#FF6B9D" stroke="#1A1A2E" stroke-width="0.8"/>
-  </svg>
+<header class="nav">
+  <a href="index.html" class="nav-logo">[ak]</a>
+  <div class="nav-right">
+    <span class="nav-clock" id="clock"></span>
+    <a href="#contact" class="nav-cta magnetic">say hi</a>
+    <button class="nav-burger" id="navBurger" aria-label="Open menu" aria-expanded="false"><span></span><span></span></button>
+  </div>
+</header>
+
+<div class="nav-overlay" id="navOverlay">
+  <button class="nav-close" id="navClose" aria-label="Close menu">&times;</button>
+  <nav class="nav-overlay-links">
+    <a href="index.html" class="current"><span class="idx">01</span>Home</a>
+    <a href="projects/index.html"><span class="idx">02</span>Projects</a>
+    <a href="experience/index.html"><span class="idx">03</span>Experience</a>
+    <a href="certifications.html"><span class="idx">04</span>Certifications</a>
+    <a href="extracurricular.html"><span class="idx">05</span>Extracurricular</a>
+    <a href="#contact"><span class="idx">06</span>Contact</a>
+  </nav>
+  <div class="nav-overlay-foot">
+    <a href="mailto:Adityak.mehra0@gmail.com">Email</a>
+    <a href="https://www.linkedin.com/in/adityakmehra/" target="_blank" rel="noopener">LinkedIn</a>
+    <a href="tel:+919318301878">+91 93183 01878</a>
+  </div>
 </div>
 
-<!-- NAV -->
-<nav>
-  <div class="nav-logo">AKM <sup>dev</sup></div>
-  <ul class="nav-links">
-    <li><a href="#about">About</a></li>
-    <li><a href="#skills">Skills</a></li>
-    <li><a href="#projects">Projects</a></li>
-    <li><a href="#experience">Experience</a></li>
-    <li><a href="#contact">Contact</a></li>
-  </ul>
-</nav>
-
 <!-- HERO -->
-<section class="hero parallax-wrap" id="home">
-  <div class="parallax-blob hero-blob-1"></div>
-  <div class="parallax-blob hero-blob-2"></div>
+<section class="hero" id="home">
   <div class="hero-inner">
-    <div class="hero-text">
-      <div class="hero-badge"><span class="pulse"></span> Open to opportunities</div>
-      <h1 class="hero-name">
-        <span class="stroke">Aditya</span>
-        <span class="filled">Kumar Mehra</span>
-      </h1>
-      <p class="hero-subtitle">AI/ML Developer &nbsp;·&nbsp; Full-Stack Builder &nbsp;·&nbsp; Creative Coder</p>
-      <div class="hero-bio">
-        Passionate media creator blending <strong>technology, design, and sound</strong>. Exploring the intersection of AI, interactive systems, and music to craft innovative <strong>human-machine experiences</strong>.
-      </div>
-      <div class="hero-btns">
-        <a href="#projects" class="btn btn-y">See My Work</a>
-        <a href="#contact" class="btn btn-p">Say Hello</a>
-      </div>
-      <div class="hero-stats">
-        <div class="stat-pill"><span class="n">5+</span><span class="l">Projects</span></div>
-        <div class="stat-pill"><span class="n">10+</span><span class="l">Tech Stack</span></div>
-        <div class="stat-pill"><span class="n">B.Tech</span><span class="l">CSE · IPU</span></div>
-        <div class="stat-pill"><span class="n">2026</span><span class="l">Graduating</span></div>
+    <div class="hero-mega-top">
+      <div class="eyebrow"><span class="dot"></span> New Delhi, India · open to internships &amp; roles</div>
+      <span class="hero-mega-meta">[ ai/ml developer · full-stack builder · creative coder ]</span>
+    </div>
+    <h1 class="mega-name" aria-label="Aditya Kumar Mehra">
+      <span class="mega-clip" data-drift="-0.07"><span class="mega-line">Aditya</span></span>
+      <span class="mega-clip" data-drift="0.05"><span class="mega-line stroke">Kumar</span></span>
+      <span class="mega-clip" data-drift="-0.03"><span class="mega-line grad">Mehra</span></span>
+    </h1>
+    <div class="hero-mega-bottom">
+      <p class="hero-mega-bio">I build things where <strong>art, sound, and machines collide</strong> — trying to make computers feel less like tools and more like <strong>instruments</strong>.</p>
+      <div class="hero-actions">
+        <a href="projects/index.html" class="btn btn-primary magnetic">See my work →</a>
+        <a href="#about" class="btn btn-ghost magnetic">More about me</a>
       </div>
     </div>
-    <div class="hero-visual">
-      <div style="position:relative">
-        <div class="vinyl">
-          <div class="vinyl-label"><span>ADITYA<br>K.M.<br>★ AI ★</span></div>
-        </div>
-        <div class="vinyl-arm"></div>
-      </div>
+    <div class="hero-stats">
+      <div class="stat"><b>5+</b><span>projects shipped</span></div>
+      <div class="stat"><b>3</b><span>internships</span></div>
+      <div class="stat"><b>B.Tech</b><span>CSE · GGSIPU</span></div>
+      <div class="stat"><b>2026</b><span>graduating</span></div>
     </div>
   </div>
+  <div class="hero-scroll"><span>scroll</span><span class="line"></span></div>
 </section>
 
-<div class="wavy"><svg viewBox="0 0 1440 40" xmlns="http://www.w3.org/2000/svg"><path d="M0,20 C180,40 360,0 540,20 C720,40 900,0 1080,20 C1260,40 1380,10 1440,20 L1440,40 L0,40 Z" fill="#FFF5FF"/><path d="M0,20 C180,40 360,0 540,20 C720,40 900,0 1080,20 C1260,40 1380,10 1440,20" fill="none" stroke="#1A1A2E" stroke-width="3"/></svg></div>
+<!-- MARQUEE -->
+<div class="marquee">
+  <div class="marquee-track">
+    <span>gesture-controlled music <em>·</em> computer vision <em>·</em> prompt engineering <em>·</em> full-stack builds <em>·</em> human-computer interaction <em>·</em> night-owl side projects <em>·</em></span>
+    <span>gesture-controlled music <em>·</em> computer vision <em>·</em> prompt engineering <em>·</em> full-stack builds <em>·</em> human-computer interaction <em>·</em> night-owl side projects <em>·</em></span>
+  </div>
+</div>
 
 <!-- ABOUT -->
-<section class="about" id="about">
-  <div class="sec-head">
-    <div class="sec-tag">who's this guy?</div>
-    <h2 class="sec-title">About <span>Me</span></h2>
-    <div class="sec-squiggle"></div>
-  </div>
-  <div class="about-grid">
-    <div class="reveal">
-      <div class="speech-bubble">
-        <p>I'm <strong>Aditya</strong>, a CS student in New Delhi, graduating in 2026. Creative at heart who just happens to write code.</p>
-        <p>What gets me excited is the space where <strong>art, music, and technology collide</strong>. I believe code and AI can be a creative medium just as much as a paintbrush or a piano. I'm deeply drawn to <strong>human-computer interaction</strong> and how we can make machines feel more alive, more expressive, more human.</p>
-        <p>Right now I'm building things with AI, computer vision, and interactive systems. My goal is to create experiences that sit at the edge of <strong>art and AI</strong>, where the line between the two gets beautifully blurry.</p>
-        <p>Currently interning at <strong>Trendsoft Technologies</strong>, building web apps and redesigning products from the ground up.</p>
+<section id="about">
+  <div class="wrap">
+    <div class="sec-head">
+      <div>
+        <span class="eyebrow">who's this</span>
+        <h2 class="sec-title">A bit about <span class="grad-text">me</span></h2>
       </div>
-      <div class="speech-sig">— Aditya, probably at 2am</div>
     </div>
-    <div class="about-cards reveal">
-      <div class="acard"><div class="acard-icon">🤖</div><div><h4>AI & Machine Learning</h4><p>Data Analysis · Scikit-Learn · Prompt Engineering · LLMs</p></div></div>
-      <div class="acard"><div class="acard-icon">👁️</div><div><h4>Computer Vision</h4><p>OpenCV · MediaPipe · Gesture Recognition</p></div></div>
-      <div class="acard"><div class="acard-icon">🌐</div><div><h4>Full-Stack Dev</h4><p>MERN · Flutter · PHP · .NET · Firebase</p></div></div>
-      <div class="acard"><div class="acard-icon">🎵</div><div><h4>Human-Computer Interaction</h4><p>Touchless control · Assistive tech · Creative AI</p></div></div>
+    <div class="about-grid">
+      <div class="reveal">
+        <!--
+          PHOTO SLOT — swap this placeholder for a real headshot once you share the file:
+          replace the inner markup with <img src="assets/your-photo.jpg" alt="Aditya Kumar Mehra">
+          (drop the image in an /assets folder alongside index.html).
+        -->
+        <div class="photo-slot">
+          <div class="ph-label">📷<br>photo coming soon —<br>drop a headshot in<br><code>/assets</code> to replace this</div>
+        </div>
+      </div>
+      <div class="about-text reveal">
+        <p>I'm <strong>Aditya</strong>, a computer science student in New Delhi, graduating in 2026 — creative at heart who just happens to write code.</p>
+        <p>What gets me excited is the space where <strong>art, music, and technology collide</strong>. I think code and AI can be a creative medium just as much as a paintbrush or a piano, and I'm endlessly drawn to <strong>human-computer interaction</strong> — making machines feel a little more alive, a little more expressive.</p>
+        <p>Right now I build with AI, computer vision, and interactive systems. My favorite projects sit right at the edge of <strong>art and engineering</strong>, where the line between the two gets beautifully blurry — like teaching a webcam to read a hand and turn it into music.</p>
+        <p>I'm currently interning at <strong>Trendsoft Technologies</strong>, leading a UI/UX redesign from the ground up.</p>
+        <div class="about-facts">
+          <div class="fact"><b>New Delhi</b><span>based in</span></div>
+          <div class="fact"><b>VIPS-TC</b><span>GGSIPU · CSE</span></div>
+          <div class="fact"><b>Trendsoft</b><span>currently at</span></div>
+          <div class="fact"><b>music + CV</b><span>favorite intersection</span></div>
+        </div>
+      </div>
     </div>
   </div>
 </section>
-
-<div class="wavy" style="background:#FFF5FF"><svg viewBox="0 0 1440 40" xmlns="http://www.w3.org/2000/svg"><path d="M0,20 C240,0 480,40 720,20 C960,0 1200,40 1440,20 L1440,40 L0,40 Z" fill="#FFFBF0"/><path d="M0,20 C240,0 480,40 720,20 C960,0 1200,40 1440,20" fill="none" stroke="#1A1A2E" stroke-width="3"/></svg></div>
 
 <!-- SKILLS -->
 <section id="skills">
-  <div class="sec-head">
-    <div class="sec-tag">toolbox</div>
-    <h2 class="sec-title">My <span>Skills</span></h2>
-    <div class="sec-squiggle"></div>
+  <div class="wrap">
+    <div class="sec-head">
+      <div>
+        <span class="eyebrow">toolbox</span>
+        <h2 class="sec-title">What I <span class="grad-text">build with</span></h2>
+      </div>
+    </div>
+    <div class="bento-grid">
+      <div class="bento-tile featured reveal">
+        <div class="bento-head">
+          <span class="bento-icon">🤖</span>
+          <span class="bento-count">6 tools</span>
+        </div>
+        <div class="bento-title">AI / Machine Learning</div>
+        <div class="skill-bubbles">
+          <span class="bub">Pandas</span><span class="bub">Model Training &amp; Evaluation</span><span class="bub">LLM App Design</span>
+          <span class="bub">Prompt Engineering</span><span class="bub">Claude API</span><span class="bub">Scikit-Learn</span>
+        </div>
+      </div>
+      <div class="bento-tile featured reveal">
+        <div class="bento-head">
+          <span class="bento-icon">👁️</span>
+          <span class="bento-count">5 tools</span>
+        </div>
+        <div class="bento-title">Computer Vision</div>
+        <div class="skill-bubbles">
+          <span class="bub">OpenCV</span><span class="bub">MediaPipe</span><span class="bub">Real-Time Hand Tracking</span>
+          <span class="bub">Gesture Recognition</span><span class="bub">Image &amp; Video Processing</span>
+        </div>
+      </div>
+      <div class="bento-tile span-1 reveal">
+        <div class="bento-head">
+          <span class="bento-icon">🌐</span>
+          <span class="bento-count">7 tools</span>
+        </div>
+        <div class="bento-title">Full-Stack / Web</div>
+        <div class="skill-bubbles">
+          <span class="bub">MongoDB</span><span class="bub">Express</span><span class="bub">React</span><span class="bub">Node.js</span>
+          <span class="bub">PHP</span><span class="bub">JavaScript</span><span class="bub">HTML / CSS</span>
+        </div>
+      </div>
+      <div class="bento-tile span-1 reveal">
+        <div class="bento-head">
+          <span class="bento-icon">📱</span>
+          <span class="bento-count">5 tools</span>
+        </div>
+        <div class="bento-title">Mobile &amp; Design</div>
+        <div class="skill-bubbles">
+          <span class="bub">Flutter</span><span class="bub">Dart</span><span class="bub">Firebase</span><span class="bub">UI/UX Design</span><span class="bub">Figma</span>
+        </div>
+      </div>
+      <div class="bento-tile span-2 reveal">
+        <div class="bento-head">
+          <span class="bento-icon">🛠️</span>
+          <span class="bento-count">9 tools</span>
+        </div>
+        <div class="bento-title">Languages &amp; Tools</div>
+        <div class="skill-bubbles">
+          <span class="bub">Python</span><span class="bub">C++</span><span class="bub">Java</span><span class="bub">C#</span><span class="bub">SQL</span>
+          <span class="bub">Git / GitHub</span><span class="bub">Linux</span><span class="bub">Jupyter</span><span class="bub">Google Colab</span>
+        </div>
+      </div>
+    </div>
   </div>
-  <div class="skills-wrapper">
-    <div class="reveal">
-      <div class="skill-row-label"><span class="skill-dot" style="background:var(--yellow)"></span> AI / Machine Learning</div>
-      <div class="skill-bubbles">
-        <span class="bub b-y">Machine Learning</span>
-        <span class="bub b-y">Computer Vision</span>
-        <span class="bub b-y">Deep Learning</span>
-        <span class="bub b-y">LLMs</span>
-        <span class="bub b-y">OpenCV</span>
-        <span class="bub b-y">PyTorch</span>
-        <span class="bub b-y">TensorFlow</span>
-        <span class="bub b-y">Prompting</span>
-        <span class="bub b-y">Claude API</span>
-        <span class="bub b-y">Scikit-Learn</span>
-        <span class="bub b-y">Pandas</span>
+</section>
+
+<!-- FEATURED WORK -->
+<section id="work">
+  <div class="wrap">
+    <div class="sec-head">
+      <div>
+        <span class="eyebrow">stuff I've built</span>
+        <h2 class="sec-title">Featured <span class="grad-text">work</span></h2>
       </div>
+      <a href="projects/index.html" class="sec-link reveal">See all projects →</a>
     </div>
-    <div class="reveal">
-      <div class="skill-row-label"><span class="skill-dot" style="background:var(--blue)"></span> Computer Vision</div>
-      <div class="skill-bubbles">
-        <span class="bub b-b">OpenCV</span>
-        <span class="bub b-b">MediaPipe</span>
-        <span class="bub b-b">Image Processing</span>
-        <span class="bub b-b">Video Processing</span>
-        <span class="bub b-b">Gesture Recognition</span>
-      </div>
-    </div>
-    <div class="reveal">
-      <div class="skill-row-label"><span class="skill-dot" style="background:var(--purple)"></span> Programming & Frameworks</div>
-      <div class="skill-bubbles">
-        <span class="bub b-p">Python</span>
-        <span class="bub b-p">JavaScript</span>
-        <span class="bub b-p">C++</span>
-        <span class="bub b-p">React</span>
-        <span class="bub b-p">Node.js</span>
-        <span class="bub b-p">Flutter</span>
-        <span class="bub b-p">PHP</span>
-        <span class="bub b-p">.NET / Blazor</span>
-        <span class="bub b-p">Dart</span>
-        <span class="bub b-p">Java</span>
-        <span class="bub b-p">C#</span>
-      </div>
-    </div>
-    <div class="reveal">
-      <div class="skill-row-label"><span class="skill-dot" style="background:var(--green)"></span> Databases & Tools</div>
-      <div class="skill-bubbles">
-        <span class="bub b-g">MongoDB</span>
-        <span class="bub b-g">SQL</span>
-        <span class="bub b-g">Firebase</span>
-        <span class="bub b-g">Git / GitHub</span>
-        <span class="bub b-g">Linux</span>
-        <span class="bub b-g">Jupyter</span>
-        <span class="bub b-g">Google Colab</span>
-      </div>
+    <div class="projects-list">
+
+      <a href="projects/gesture-music.html" class="pcard-l reveal" data-cursor="note">
+        <div class="pcard-l-top"></div>
+        <div class="pcard-l-body">
+          <div class="pcard-l-head">
+            <div>
+              <div class="pcard-l-category">Computer Vision · Music</div>
+              <h3 class="pcard-l-title">Gesture-Controlled Music System</h3>
+            </div>
+            <span class="pcard-l-feat">★ Flagship — live demo</span>
+          </div>
+          <p class="pcard-l-desc">Real-time hand tracking turns finger movement into MIDI signals — wave at your camera right now and hear it happen. My favorite project by a mile.</p>
+          <div class="pcard-l-footer">
+            <div class="pcard-l-tags"><span class="ptag">Python</span><span class="ptag">OpenCV</span><span class="ptag">MediaPipe</span><span class="ptag">MIDI</span></div>
+            <span class="pcard-l-link">Try it live →</span>
+          </div>
+        </div>
+      </a>
+
+      <a href="projects/ai-chatbot.html" class="pcard-l reveal">
+        <div class="pcard-l-top"></div>
+        <div class="pcard-l-body">
+          <div class="pcard-l-head">
+            <div>
+              <div class="pcard-l-category">AI · Prompt Engineering</div>
+              <h3 class="pcard-l-title">Multi-Persona AI Chatbot</h3>
+            </div>
+          </div>
+          <p class="pcard-l-desc">One engine, five personalities. Corporate, Friendly, Empathetic, Direct, Luxury — switched entirely through prompt engineering, no code changes.</p>
+          <div class="pcard-l-footer">
+            <div class="pcard-l-tags"><span class="ptag">Python</span><span class="ptag">Streamlit</span><span class="ptag">Claude API</span></div>
+            <span class="pcard-l-link">View project →</span>
+          </div>
+        </div>
+      </a>
+
+      <a href="projects/videocrypt.html" class="pcard-l reveal">
+        <div class="pcard-l-top"></div>
+        <div class="pcard-l-body">
+          <div class="pcard-l-head">
+            <div>
+              <div class="pcard-l-category">Full-Stack · MERN</div>
+              <h3 class="pcard-l-title">VideoCrypt</h3>
+            </div>
+          </div>
+          <p class="pcard-l-desc">A secure video streaming platform with role-based auth, built end-to-end with the MERN stack as part of a collaborative team.</p>
+          <div class="pcard-l-footer">
+            <div class="pcard-l-tags"><span class="ptag">MongoDB</span><span class="ptag">Express</span><span class="ptag">React</span><span class="ptag">Node.js</span></div>
+            <span class="pcard-l-link">View project →</span>
+          </div>
+        </div>
+      </a>
+
     </div>
   </div>
 </section>
 
-<div class="wavy"><svg viewBox="0 0 1440 40" xmlns="http://www.w3.org/2000/svg"><path d="M0,10 C360,40 720,0 1080,20 C1260,30 1380,15 1440,10 L1440,40 L0,40 Z" fill="#FFFBF0"/><path d="M0,10 C360,40 720,0 1080,20 C1260,30 1380,15 1440,10" fill="none" stroke="#1A1A2E" stroke-width="3"/></svg></div>
-
-<!-- PROJECTS -->
-<section class="projects" id="projects">
-  <div class="sec-head">
-    <div class="sec-tag">stuff I built</div>
-    <h2 class="sec-title">My <span>Projects</span></h2>
-    <div class="sec-squiggle"></div>
-  </div>
-  <div class="projects-list">
-
-    <a href="projects/gesture-music.html" class="pcard-l reveal" style="text-decoration:none;color:inherit;">
-      <div class="pcard-l-accent" style="background:linear-gradient(180deg,#FF6B9D,#A855F7)"></div>
-      <div class="pcard-l-body">
-        <div class="pcard-l-top">
-          <div>
-            <div class="pcard-l-category">Computer Vision · Music</div>
-            <h3 class="pcard-l-title">Gesture-Controlled Music System</h3>
-          </div>
-          <div class="pcard-l-feat">★ Featured</div>
-        </div>
-        <p class="pcard-l-desc">Real-time hand tracking translates gestures into MIDI signals. Control a full DAW without touching anything — fingers become the instrument.</p>
-        <div class="pcard-l-preview">
-          <svg width="100%" height="130" viewBox="0 0 800 130" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg">
-            <g transform="translate(110,65)">
-              <ellipse cx="0" cy="20" rx="38" ry="32" fill="#FFD93D" stroke="#fff" stroke-width="1.5"/>
-              <rect x="-30" y="-30" width="13" height="46" rx="6" fill="#FFD93D" stroke="#fff" stroke-width="1.5"/>
-              <rect x="-14" y="-42" width="13" height="55" rx="6" fill="#FF6B9D" stroke="#fff" stroke-width="1.5"/>
-              <rect x="2"   y="-46" width="13" height="58" rx="6" fill="#FF6B9D" stroke="#fff" stroke-width="1.5"/>
-              <rect x="18"  y="-36" width="13" height="48" rx="6" fill="#FFD93D" stroke="#fff" stroke-width="1.5"/>
-              <ellipse cx="-42" cy="8" rx="11" ry="18" fill="#FFD93D" stroke="#fff" stroke-width="1.5" transform="rotate(-15,-42,8)"/>
-              <circle cx="-23" cy="-28" r="4" fill="#4ECDC4"/>
-              <circle cx="-7"  cy="-40" r="4" fill="#4ECDC4"/>
-              <circle cx="9"   cy="-44" r="4" fill="#A855F7"/>
-              <circle cx="25"  cy="-34" r="4" fill="#4ECDC4"/>
-            </g>
-            <text x="210" y="72" fill="#FFD93D" font-size="26" font-family="sans-serif">→</text>
-            <g transform="translate(255,18)">
-              <rect width="175" height="30" rx="7" fill="#0D1117" stroke="#4ECDC4" stroke-width="1.5"/>
-              <text x="10" y="20" fill="#50FA7B" font-size="12" font-family="monospace">note_on  C4  vel=87</text>
-            </g>
-            <g transform="translate(255,56)">
-              <rect width="175" height="30" rx="7" fill="#0D1117" stroke="#FF6B9D" stroke-width="1.5"/>
-              <text x="10" y="20" fill="#FF79C6" font-size="12" font-family="monospace">fingers_up [1,1,1,0]</text>
-            </g>
-            <g transform="translate(255,94)">
-              <rect width="175" height="24" rx="7" fill="#0D1117" stroke="#FFD93D" stroke-width="1.5"/>
-              <text x="10" y="16" fill="#F1FA8C" font-size="11" font-family="monospace">latency  ~18ms</text>
-            </g>
-            <text x="450" y="72" fill="#FFD93D" font-size="26" font-family="sans-serif">→</text>
-            <g transform="translate(496,22)">
-              <rect width="120" height="86" rx="10" fill="#1A1A2E" stroke="#FFD93D" stroke-width="2"/>
-              <text x="12" y="18" fill="#FFD93D" font-size="11" font-family="sans-serif">DAW</text>
-              <rect x="10" y="26" width="62" height="7" rx="3" fill="#FF6B9D"/>
-              <rect x="10" y="38" width="46" height="7" rx="3" fill="#4ECDC4"/>
-              <rect x="10" y="50" width="74" height="7" rx="3" fill="#A855F7"/>
-              <rect x="10" y="62" width="36" height="7" rx="3" fill="#FFD93D"/>
-              <rect x="10" y="74" width="55" height="7" rx="3" fill="#6BCB77"/>
-            </g>
-          </svg>
-        </div>
-        <div class="pcard-l-footer">
-          <div class="pcard-l-tags"><span class="ptag">Python</span><span class="ptag">OpenCV</span><span class="ptag">MediaPipe</span><span class="ptag">MIDI</span><span class="ptag">DAW</span></div>
-          <span class="pcard-l-link">View Project →</span>
-        </div>
-      </div>
-    </a>
-
-    <a href="projects/ai-chatbot.html" class="pcard-l reveal" style="text-decoration:none;color:inherit;">
-      <div class="pcard-l-accent" style="background:linear-gradient(180deg,#FFD93D,#FF9F43)"></div>
-      <div class="pcard-l-body">
-        <div class="pcard-l-top">
-          <div>
-            <div class="pcard-l-category">AI · Prompt Engineering</div>
-            <h3 class="pcard-l-title">Multi-Persona AI Chatbot</h3>
-          </div>
-        </div>
-        <p class="pcard-l-desc">One chatbot, five distinct personalities. Corporate, Friendly, Empathetic, Direct, Luxury — switches instantly via engineered system prompts with full conversation memory.</p>
-        <div class="pcard-l-preview">
-          <svg width="100%" height="130" viewBox="0 0 800 130" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg">
-            <g transform="translate(30,16)">
-              <rect width="100" height="26" rx="13" fill="#E8F4FF" stroke="#fff" stroke-width="1.5"/>
-              <text x="50" y="17" text-anchor="middle" fill="#1A1A2E" font-size="12" font-family="sans-serif">Corporate</text>
-            </g>
-            <g transform="translate(144,16)">
-              <rect width="88" height="26" rx="13" fill="#FFF0F5" stroke="#FF6B9D" stroke-width="2"/>
-              <text x="44" y="17" text-anchor="middle" fill="#FF6B9D" font-size="12" font-family="sans-serif">Friendly</text>
-            </g>
-            <g transform="translate(246,16)">
-              <rect width="108" height="26" rx="13" fill="#F0FFF4" stroke="#fff" stroke-width="1.5"/>
-              <text x="54" y="17" text-anchor="middle" fill="#1A1A2E" font-size="12" font-family="sans-serif">Empathetic</text>
-            </g>
-            <g transform="translate(368,16)">
-              <rect width="76" height="26" rx="13" fill="#FFF8E1" stroke="#fff" stroke-width="1.5"/>
-              <text x="38" y="17" text-anchor="middle" fill="#1A1A2E" font-size="12" font-family="sans-serif">Direct</text>
-            </g>
-            <g transform="translate(458,16)">
-              <rect width="76" height="26" rx="13" fill="#F5F0FF" stroke="#fff" stroke-width="1.5"/>
-              <text x="38" y="17" text-anchor="middle" fill="#1A1A2E" font-size="12" font-family="sans-serif">Luxury</text>
-            </g>
-            <g transform="translate(30,54)">
-              <rect width="310" height="28" rx="6" fill="#FFD93D" stroke="#1A1A2E" stroke-width="1.5"/>
-              <text x="12" y="18" fill="#1A1A2E" font-size="11" font-family="monospace">User: Can you help with my order?</text>
-            </g>
-            <g transform="translate(60,90)">
-              <rect width="360" height="28" rx="6" fill="#fff" stroke="#1A1A2E" stroke-width="1.5"/>
-              <text x="12" y="18" fill="#1A1A2E" font-size="11" font-family="monospace">Bot (Friendly): Of course! Drop your order #</text>
-            </g>
-            <g transform="translate(560,50)">
-              <rect width="130" height="38" rx="10" fill="#F0FFF4" stroke="#6BCB77" stroke-width="2"/>
-              <text x="65" y="16" text-anchor="middle" fill="#1A1A2E" font-size="10" font-family="sans-serif">Full memory</text>
-              <text x="65" y="30" text-anchor="middle" fill="#555" font-size="10" font-family="sans-serif">Session analytics</text>
-            </g>
-          </svg>
-        </div>
-        <div class="pcard-l-footer">
-          <div class="pcard-l-tags"><span class="ptag">Python</span><span class="ptag">Streamlit</span><span class="ptag">Claude API</span><span class="ptag">Prompts</span></div>
-          <span class="pcard-l-link">View Project →</span>
-        </div>
-      </div>
-    </a>
-
-    <a href="projects/sign-language.html" class="pcard-l reveal" style="text-decoration:none;color:inherit;">
-      <div class="pcard-l-accent" style="background:linear-gradient(180deg,#4ECDC4,#6BCB77)"></div>
-      <div class="pcard-l-body">
-        <div class="pcard-l-top">
-          <div>
-            <div class="pcard-l-category">Assistive Technology · CV</div>
-            <h3 class="pcard-l-title">Sign Language → Speech</h3>
-          </div>
-        </div>
-        <p class="pcard-l-desc">Real-time gesture recognition that converts sign language into spoken audio. No interpreter needed — built to make communication more accessible for everyone.</p>
-        <div class="pcard-l-preview">
-          <svg width="100%" height="130" viewBox="0 0 800 130" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg">
-            <rect x="30" y="18" width="140" height="92" rx="10" fill="#111" stroke="#4ECDC4" stroke-width="2"/>
-            <text x="100" y="75" text-anchor="middle" fill="#4ECDC4" font-size="34" font-family="sans-serif">✋</text>
-            <rect x="40" y="102" width="120" height="5" rx="2" fill="#4ECDC4" opacity="0.5"/>
-            <text x="100" y="118" text-anchor="middle" fill="#4ECDC4" font-size="9" font-family="sans-serif">TRACKING ACTIVE</text>
-            <text x="192" y="72" fill="#FFD93D" font-size="24" font-family="sans-serif">→</text>
-            <rect x="228" y="28" width="155" height="36" rx="8" fill="#0D1117" stroke="#4ECDC4" stroke-width="1.5"/>
-            <text x="238" y="46" fill="#50FA7B" font-size="14" font-family="monospace">✋ "HELLO"</text>
-            <text x="238" y="58" fill="#888" font-size="10" font-family="monospace">conf: 94.2%</text>
-            <rect x="228" y="72" width="155" height="28" rx="8" fill="#0D1117" stroke="#FFD93D" stroke-width="1.5"/>
-            <text x="305" y="90" text-anchor="middle" fill="#FFD93D" font-size="11" font-family="sans-serif">Speaking...</text>
-            <text x="405" y="72" fill="#FFD93D" font-size="24" font-family="sans-serif">→</text>
-            <rect x="443" y="18" width="82" height="92" rx="14" fill="#0D1117" stroke="#6BCB77" stroke-width="2"/>
-            <rect x="458" y="26" width="52" height="5" rx="2" fill="#333"/>
-            <text x="484" y="64" text-anchor="middle" fill="#fff" font-size="22" font-family="sans-serif">📱</text>
-            <text x="484" y="80" text-anchor="middle" fill="#6BCB77" font-size="9" font-family="sans-serif">Flutter App</text>
-            <rect x="452" y="88" width="64" height="14" rx="4" fill="#1A3A2A" stroke="#6BCB77" stroke-width="1"/>
-            <text x="484" y="98" text-anchor="middle" fill="#6BCB77" font-size="9" font-family="monospace">"Hello" ✓</text>
-          </svg>
-        </div>
-        <div class="pcard-l-footer">
-          <div class="pcard-l-tags"><span class="ptag">Python</span><span class="ptag">OpenCV</span><span class="ptag">Flutter</span><span class="ptag">Flask</span></div>
-          <span class="pcard-l-link">View Project →</span>
-        </div>
-      </div>
-    </a>
-
-    <a href="projects/videocrypt.html" class="pcard-l reveal" style="text-decoration:none;color:inherit;">
-      <div class="pcard-l-accent" style="background:linear-gradient(180deg,#A855F7,#4ECDC4)"></div>
-      <div class="pcard-l-body">
-        <div class="pcard-l-top">
-          <div>
-            <div class="pcard-l-category">Full-Stack · MERN</div>
-            <h3 class="pcard-l-title">VideoCrypt</h3>
-          </div>
-        </div>
-        <p class="pcard-l-desc">Production-grade secure video streaming platform with role-based auth, SQL integration, and collaborative team delivery. Built end-to-end with the MERN stack.</p>
-        <div class="pcard-l-preview">
-          <svg width="100%" height="130" viewBox="0 0 800 130" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg">
-            <rect x="30" y="15" width="160" height="100" rx="10" fill="#111" stroke="#A855F7" stroke-width="2"/>
-            <text x="50" y="36" fill="#A855F7" font-size="11" font-family="sans-serif">VideoCrypt</text>
-            <rect x="40" y="44" width="90" height="18" rx="5" fill="#A855F7"/>
-            <text x="85" y="56" text-anchor="middle" fill="#fff" font-size="9" font-family="sans-serif">My Videos</text>
-            <rect x="40" y="66" width="70" height="14" rx="4" fill="#222"/>
-            <text x="75" y="76" text-anchor="middle" fill="#888" font-size="9" font-family="sans-serif">Browse</text>
-            <rect x="40" y="84" width="70" height="14" rx="4" fill="#222"/>
-            <text x="75" y="94" text-anchor="middle" fill="#888" font-size="9" font-family="sans-serif">Upload</text>
-            <rect x="210" y="18" width="110" height="38" rx="8" fill="#1A1A2E" stroke="#333"/>
-            <text x="220" y="34" fill="#fff" font-size="9" font-family="sans-serif">Intro.mp4</text>
-            <text x="220" y="46" fill="#888" font-size="8" font-family="sans-serif">2.3MB · Private</text>
-            <rect x="332" y="18" width="110" height="38" rx="8" fill="#2A1A3E" stroke="#A855F7" stroke-width="2"/>
-            <text x="342" y="34" fill="#A855F7" font-size="9" font-family="sans-serif">Demo.mp4</text>
-            <text x="342" y="46" fill="#888" font-size="8" font-family="sans-serif">5.1MB · Public</text>
-            <rect x="210" y="64" width="110" height="38" rx="8" fill="#1A1A2E" stroke="#333"/>
-            <text x="220" y="80" fill="#fff" font-size="9" font-family="sans-serif">Secret.mp4</text>
-            <text x="220" y="92" fill="#888" font-size="8" font-family="sans-serif">8.7MB · Encrypted</text>
-            <rect x="460" y="30" width="130" height="70" rx="10" fill="#1A1A2E" stroke="#4ECDC4" stroke-width="1.5"/>
-            <text x="525" y="50" text-anchor="middle" fill="#4ECDC4" font-size="10" font-family="sans-serif">JWT Auth</text>
-            <rect x="472" y="58" width="106" height="12" rx="4" fill="#0D2A1A"/>
-            <text x="525" y="68" text-anchor="middle" fill="#50FA7B" font-size="8" font-family="monospace">token valid ✓</text>
-            <rect x="472" y="74" width="106" height="12" rx="4" fill="#2A0D1A"/>
-            <text x="525" y="84" text-anchor="middle" fill="#FF79C6" font-size="8" font-family="monospace">role: admin</text>
-          </svg>
-        </div>
-        <div class="pcard-l-footer">
-          <div class="pcard-l-tags"><span class="ptag">MongoDB</span><span class="ptag">Express</span><span class="ptag">React</span><span class="ptag">Node.js</span><span class="ptag">SQL</span></div>
-          <span class="pcard-l-link">View Project →</span>
-        </div>
-      </div>
-    </a>
-
-    <a href="projects/student-predictor.html" class="pcard-l reveal" style="text-decoration:none;color:inherit;">
-      <div class="pcard-l-accent" style="background:linear-gradient(180deg,#6BCB77,#FFD93D)"></div>
-      <div class="pcard-l-body">
-        <div class="pcard-l-top">
-          <div>
-            <div class="pcard-l-category">Machine Learning · Education</div>
-            <h3 class="pcard-l-title">Student Performance Predictor</h3>
-          </div>
-        </div>
-        <p class="pcard-l-desc">ML pipeline predicting academic performance from historical data. Full workflow from preprocessing and feature engineering through to model evaluation and results.</p>
-        <div class="pcard-l-preview">
-          <svg width="100%" height="130" viewBox="0 0 800 130" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg">
-            <text x="30" y="20" fill="#6BCB77" font-size="11" font-family="sans-serif">Model Accuracy</text>
-            <rect x="30"  y="71" width="36" height="42" rx="4" fill="#FF9F43"/>
-            <text x="48"  y="67" text-anchor="middle" fill="#fff" font-size="10" font-family="sans-serif">72%</text>
-            <text x="48"  y="122" text-anchor="middle" fill="#aaa" font-size="9" font-family="sans-serif">LR</text>
-            <rect x="76"  y="40" width="36" height="73" rx="4" fill="#6BCB77"/>
-            <text x="94"  y="36" text-anchor="middle" fill="#6BCB77" font-size="10" font-family="sans-serif">87%</text>
-            <text x="94"  y="122" text-anchor="middle" fill="#6BCB77" font-size="9" font-family="sans-serif">RF ★</text>
-            <rect x="122" y="52" width="36" height="61" rx="4" fill="#4ECDC4"/>
-            <text x="140" y="48" text-anchor="middle" fill="#fff" font-size="10" font-family="sans-serif">81%</text>
-            <text x="140" y="122" text-anchor="middle" fill="#aaa" font-size="9" font-family="sans-serif">SVM</text>
-            <rect x="168" y="46" width="36" height="67" rx="4" fill="#A855F7"/>
-            <text x="186" y="42" text-anchor="middle" fill="#fff" font-size="10" font-family="sans-serif">84%</text>
-            <text x="186" y="122" text-anchor="middle" fill="#aaa" font-size="9" font-family="sans-serif">XGB</text>
-            <text x="260" y="20" fill="#6BCB77" font-size="11" font-family="sans-serif">Feature Importance</text>
-            <text x="260" y="44" fill="#fff" font-size="10" font-family="monospace">attendance</text>
-            <rect x="370" y="34" width="62" height="10" rx="3" fill="#6BCB77"/>
-            <text x="438" y="44" fill="#6BCB77" font-size="10" font-family="monospace">0.31</text>
-            <text x="260" y="60" fill="#fff" font-size="10" font-family="monospace">prev_grades</text>
-            <rect x="370" y="50" width="56" height="10" rx="3" fill="#FFD93D"/>
-            <text x="438" y="60" fill="#FFD93D" font-size="10" font-family="monospace">0.28</text>
-            <text x="260" y="76" fill="#fff" font-size="10" font-family="monospace">study_hours</text>
-            <rect x="370" y="66" width="42" height="10" rx="3" fill="#FF9F43"/>
-            <text x="438" y="76" fill="#FF9F43" font-size="10" font-family="monospace">0.21</text>
-            <text x="260" y="92" fill="#fff" font-size="10" font-family="monospace">assignments</text>
-            <rect x="370" y="82" width="28" height="10" rx="3" fill="#4ECDC4"/>
-            <text x="438" y="92" fill="#4ECDC4" font-size="10" font-family="monospace">0.14</text>
-            <rect x="530" y="20" width="180" height="90" rx="12" fill="#1A1A2E" stroke="#6BCB77" stroke-width="1.5"/>
-            <text x="620" y="40" text-anchor="middle" fill="#6BCB77" font-size="11" font-family="sans-serif">Pipeline</text>
-            <text x="544" y="58" fill="#aaa" font-size="10" font-family="monospace">1. Preprocess</text>
-            <text x="544" y="72" fill="#aaa" font-size="10" font-family="monospace">2. Feature Eng.</text>
-            <text x="544" y="86" fill="#aaa" font-size="10" font-family="monospace">3. Train</text>
-            <text x="544" y="100" fill="#50FA7B" font-size="10" font-family="monospace">4. Evaluate ✓</text>
-          </svg>
-        </div>
-        <div class="pcard-l-footer">
-          <div class="pcard-l-tags"><span class="ptag">Python</span><span class="ptag">Pandas</span><span class="ptag">Scikit-Learn</span><span class="ptag">ML</span></div>
-          <span class="pcard-l-link">View Project →</span>
-        </div>
-      </div>
-    </a>
-
-  </div>
-</section>
-
-<div class="wavy" style="background:#FFFBF0"><svg viewBox="0 0 1440 40" xmlns="http://www.w3.org/2000/svg"><path d="M0,20 C180,0 360,40 540,20 C720,0 900,40 1080,20 C1260,0 1380,30 1440,20 L1440,40 L0,40 Z" fill="#FFFBF0"/><path d="M0,20 C180,0 360,40 540,20 C720,0 900,40 1080,20 C1260,0 1380,30 1440,20" fill="none" stroke="#1A1A2E" stroke-width="3"/></svg></div>
-
-<!-- EXPERIENCE -->
+<!-- EXPERIENCE TEASER -->
 <section id="experience">
-  <div class="sec-head">
-    <div class="sec-tag">experience</div>
-    <h2 class="sec-title">Where I've <span>Worked</span></h2>
-    <div class="sec-squiggle"></div>
-  </div>
-  <div class="exp-wrap">
-    <div class="exp-item reveal">
-      <div class="exp-date">Feb 2026<br>Now</div>
-      <div class="exp-dot" style="background:var(--yellow)">✦</div>
-      <div class="exp-content">
-        <div class="exp-role">Web Developer Intern</div>
-        <div class="exp-co" style="background:var(--yellow)">Trendsoft Technologies</div>
-        <ul class="exp-points">
-          <li>Led solo end-to-end UI/UX redesign of the company's primary consultancy website.</li>
-          <li>Built responsive modules with PHP, JavaScript, and CSS — cross-browser ready.</li>
-          <li>Contributed to .NET and Blazor components for scalable web apps.</li>
-          <li>Testing, debugging, and iterative improvements for system stability.</li>
-        </ul>
+  <div class="wrap">
+    <div class="sec-head">
+      <div>
+        <span class="eyebrow">where I've worked</span>
+        <h2 class="sec-title">Experience <span class="grad-text">timeline</span></h2>
+      </div>
+      <a href="experience/index.html" class="sec-link reveal">Read the full story →</a>
+    </div>
+    <div class="exp-wrap">
+      <div class="exp-item reveal">
+        <div class="exp-date">Feb 2026<br>Jul 2026</div>
+        <div class="exp-dot"></div>
+        <div class="exp-content">
+          <div class="exp-role">Web Developer Intern</div>
+          <div class="exp-co">Trendsoft Technologies</div>
+          <ul class="exp-points">
+            <li>Independently led an end-to-end UI/UX redesign of the company's flagship consultancy website.</li>
+          </ul>
+          <a href="experience/trendsoft.html" class="exp-link">Read the story →</a>
+        </div>
+      </div>
+      <div class="exp-item reveal">
+        <div class="exp-date">Jun 2025<br>Aug 2025</div>
+        <div class="exp-dot"></div>
+        <div class="exp-content">
+          <div class="exp-role">MERN Stack Developer Intern</div>
+          <div class="exp-co">CodeSquadz (AppSquadz)</div>
+          <ul class="exp-points">
+            <li>Built VideoCrypt, a secure video streaming platform, as part of a collaborative team.</li>
+          </ul>
+          <a href="experience/codesquadz.html" class="exp-link">Read the story →</a>
+        </div>
+      </div>
+      <div class="exp-item reveal">
+        <div class="exp-date">Jul 2024<br>Aug 2024</div>
+        <div class="exp-dot"></div>
+        <div class="exp-content">
+          <div class="exp-role">Flutter Mobile Developer Intern</div>
+          <div class="exp-co">Brain Mentors</div>
+          <ul class="exp-points">
+            <li>Built a quiz app end-to-end — UI, state management, and app logic.</li>
+          </ul>
+          <a href="experience/brainmentors.html" class="exp-link">Read the story →</a>
+        </div>
       </div>
     </div>
-    <div class="exp-item reveal">
-      <div class="exp-date">2022<br>2026</div>
-      <div class="exp-dot" style="background:#E9D5FF">✦</div>
-      <div class="exp-content">
-        <div class="exp-role">B.Tech — Computer Science & Engineering</div>
-        <div class="exp-co" style="background:#E9D5FF">VIPS, GGSIPU · New Delhi</div>
-        <ul class="exp-points">
-          <li>Focused on AI/ML, computer vision, and full-stack development.</li>
-          <li>Built 5+ real-world projects from gesture music systems to LLM chatbots.</li>
-        </ul>
+  </div>
+</section>
+
+<!-- MORE: certifications + extracurricular -->
+<section id="more">
+  <div class="wrap">
+    <div class="sec-head">
+      <div>
+        <span class="eyebrow">the rest of me</span>
+        <h2 class="sec-title">Beyond the <span class="grad-text">résumé</span></h2>
       </div>
+    </div>
+    <div class="cards-grid">
+      <a href="certifications.html" class="job-card reveal" style="text-decoration:none;">
+        <span class="eyebrow">credentials</span>
+        <h3>Certifications</h3>
+        <p>Courses and credentials I've picked up along the way — being added soon.</p>
+        <span class="pcard-l-link">Take a look →</span>
+      </a>
+      <a href="extracurricular.html" class="job-card reveal" style="text-decoration:none;">
+        <span class="eyebrow">off the clock</span>
+        <h3>Extracurricular</h3>
+        <p>Music, hobbies, and the things I do when I'm not staring at a terminal — being added soon.</p>
+        <span class="pcard-l-link">Take a look →</span>
+      </a>
     </div>
   </div>
 </section>
 
 <!-- CONTACT -->
-<section class="contact" id="contact">
-  <div class="contact-box">
-    <div class="sec-tag">let's connect</div>
-    <h2 class="contact-big reveal">Want to build something<br>awesome together?</h2>
-    <p class="contact-sub reveal">Open to internships, collaborations, and full-time roles. Drop a message — I respond fast.</p>
+<section id="contact">
+  <div class="wrap">
+    <span class="eyebrow">let's connect</span>
+    <h2 class="sec-title reveal">Want to build something<br>awesome <span class="grad-text">together?</span></h2>
+    <p class="sec-sub reveal">Open to internships, collaborations, and full-time roles. Drop a message — I respond fast.</p>
     <div class="contact-links reveal">
-      <a href="mailto:Adityak.mehra0@gmail.com" class="clink clink-y">
-        <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
-        Email Me
+      <a href="mailto:Adityak.mehra0@gmail.com" class="clink magnetic">
+        <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
+        Email me
       </a>
-      <a href="tel:+919318301878" class="clink clink-g">
-        <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.36 13 19.79 19.79 0 0 1 1.27 4.36 2 2 0 0 1 3.24 2.18h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.09 9.91a16 16 0 0 0 5.99 5.99l1.21-1.21a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 21 16.92Z"/></svg>
-        Call Me
+      <a href="tel:+919318301878" class="clink magnetic">
+        <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.36 13 19.79 19.79 0 0 1 1.27 4.36 2 2 0 0 1 3.24 2.18h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.09 9.91a16 16 0 0 0 5.99 5.99l1.21-1.21a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 21 16.92Z"/></svg>
+        Call me
       </a>
-      <a href="https://www.linkedin.com/in/adityakmehra/" target="_blank" class="clink clink-b">
-        <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect width="4" height="12" x="2" y="9"/><circle cx="4" cy="4" r="2"/></svg>
+      <a href="https://www.linkedin.com/in/adityakmehra/" target="_blank" rel="noopener" class="clink magnetic">
+        <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect width="4" height="12" x="2" y="9"/><circle cx="4" cy="4" r="2"/></svg>
         LinkedIn
       </a>
     </div>
   </div>
 </section>
 
-<footer>
-  <div>Made with <em>♥</em> by Aditya Kumar Mehra · New Delhi, India</div>
-  <div class="fnotes"><span>♩</span> <span>♪</span> <span>♫</span></div>
+<footer class="site-footer">
+  <div class="wrap">
+    <div class="footer-top">
+      <div class="footer-cta">Let's make something<br>that feels alive.</div>
+      <div class="footer-links">
+        <a href="projects/index.html" class="tag">Projects</a>
+        <a href="experience/index.html" class="tag">Experience</a>
+        <a href="certifications.html" class="tag">Certifications</a>
+        <a href="extracurricular.html" class="tag">Extracurricular</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>Made with <em>♥</em> by Aditya Kumar Mehra · New Delhi, India</span>
+      <span>© 2026</span>
+    </div>
+  </div>
 </footer>
 
 <script src="main.js"></script>

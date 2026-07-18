@@ -4,200 +4,171 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Multi-Persona AI Chatbot — Aditya Kumar Mehra</title>
-<link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet">
-<style>
-:root{--accent:#FFD93D;--accent2:#FF9F43;--cream:#FFFBF0;--ink:#1A1A2E;--shadow:5px 5px 0 var(--ink);--shadow-lg:8px 8px 0 var(--ink);}
-*{margin:0;padding:0;box-sizing:border-box;}html{scroll-behavior:smooth;}
-body{background:var(--cream);color:var(--ink);font-family:'Nunito',sans-serif;overflow-x:hidden;cursor:none;}
-#cursor{width:22px;height:22px;background:var(--accent);border:3px solid var(--ink);border-radius:50%;position:fixed;top:0;left:0;pointer-events:none;z-index:9999;transition:transform 0.1s,background 0.2s;}
-#cursor.hov{transform:scale(1.8);background:#FF6B9D;}
-canvas{position:fixed;inset:0;pointer-events:none;z-index:0;}
-nav{position:fixed;top:0;left:0;right:0;z-index:200;background:var(--accent);border-bottom:3px solid var(--ink);padding:0.8rem 2.5rem;display:flex;align-items:center;gap:1rem;}
-.back-btn{font-family:'Fredoka One',cursive;font-size:0.95rem;color:var(--ink);text-decoration:none;background:#fff;border:2px solid var(--ink);border-radius:100px;padding:0.35rem 1rem;box-shadow:3px 3px 0 var(--ink);transition:transform 0.15s,box-shadow 0.15s;cursor:none;}
-.back-btn:hover{transform:translate(-2px,-2px);box-shadow:5px 5px 0 var(--ink);}
-.nav-title{font-family:'Fredoka One',cursive;font-size:1.1rem;}
-.proj-hero{min-height:55vh;padding:7rem 3rem 3rem;display:flex;align-items:center;position:relative;z-index:1;overflow:hidden;}
-.proj-hero::before{content:'';position:absolute;top:-100px;right:-100px;width:500px;height:500px;background:var(--accent);opacity:0.2;border-radius:40% 60% 55% 45%/55% 45% 60% 40%;animation:morph 9s ease-in-out infinite;border:3px solid var(--ink);}
-@keyframes morph{0%,100%{border-radius:40% 60% 55% 45%/55% 45% 60% 40%}50%{border-radius:60% 40% 45% 55%/40% 55% 45% 60%}}
-.proj-hero-inner{max-width:900px;position:relative;z-index:2;}
-.proj-tag{display:inline-block;font-family:'Fredoka One',cursive;font-size:0.85rem;background:var(--accent);color:var(--ink);border:2px solid var(--ink);border-radius:100px;padding:0.2rem 0.9rem;box-shadow:2px 2px 0 var(--ink);margin-bottom:1rem;}
-.proj-title{font-family:'Fredoka One',cursive;font-size:clamp(2.5rem,6vw,4.5rem);line-height:1.05;margin-bottom:1rem;}
-.proj-title span{-webkit-text-stroke:3px var(--ink);color:var(--accent);}
-.proj-subtitle{font-size:1.1rem;color:#555;max-width:600px;line-height:1.7;margin-bottom:1.5rem;}
-.proj-links{display:flex;gap:1rem;flex-wrap:wrap;}
-.plink{font-family:'Fredoka One',cursive;font-size:0.95rem;padding:0.6rem 1.4rem;border-radius:100px;border:3px solid var(--ink);text-decoration:none;cursor:none;transition:transform 0.15s,box-shadow 0.15s;box-shadow:var(--shadow);display:inline-flex;align-items:center;gap:0.5rem;}
-.plink:hover{transform:translate(-3px,-3px);box-shadow:var(--shadow-lg);}
-.plink-a{background:var(--ink);color:#fff;}.plink-b{background:#fff;color:var(--ink);}
-.content{padding:4rem 3rem;max-width:1000px;margin:0 auto;position:relative;z-index:1;}
-.visual-box{background:#fff;border:3px solid var(--ink);border-radius:20px;box-shadow:var(--shadow-lg);overflow:hidden;margin-bottom:3rem;}
-.visual-bar{background:var(--ink);padding:0.6rem 1rem;display:flex;gap:0.5rem;align-items:center;}
-.vdot{width:12px;height:12px;border-radius:50%;}
-.visual-screen{padding:2rem;background:#F8F9FA;min-height:320px;}
-.sec{margin-bottom:3rem;}
-.sec-title{font-family:'Fredoka One',cursive;font-size:1.6rem;margin-bottom:1rem;display:flex;align-items:center;gap:0.5rem;}
-.sec-title::before{content:'';display:block;width:6px;height:28px;background:var(--accent);border:2px solid var(--ink);border-radius:3px;}
-.cards-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:1rem;}
-.info-card{background:#fff;border:3px solid var(--ink);border-radius:16px;padding:1.2rem;box-shadow:var(--shadow);transition:transform 0.2s,box-shadow 0.2s;}
-.info-card:hover{transform:translate(-3px,-3px);box-shadow:var(--shadow-lg);}
-.info-card .ic-emoji{font-size:2rem;margin-bottom:0.5rem;}
-.info-card h4{font-family:'Fredoka One',cursive;font-size:1rem;margin-bottom:0.3rem;}
-.info-card p{font-size:0.84rem;color:#555;line-height:1.6;}
-.cl-grid{display:grid;grid-template-columns:1fr 1fr;gap:1.5rem;}
-.cl-card{border:3px solid var(--ink);border-radius:16px;padding:1.4rem;box-shadow:var(--shadow);}
-.cl-card h4{font-family:'Fredoka One',cursive;font-size:1.05rem;margin-bottom:0.8rem;}
-.cl-card li{font-size:0.88rem;line-height:1.65;color:#444;list-style:none;padding-left:1.4rem;position:relative;margin-bottom:0.4rem;}
-.cl-card li::before{position:absolute;left:0;}
-.challenge{background:#FFF0F5;}.challenge li::before{content:'⚡';}
-.learning{background:#F0FFF4;}.learning li::before{content:'💡';}
-.stack-wrap{display:flex;flex-wrap:wrap;gap:0.6rem;}
-.stag{font-family:'Fredoka One',cursive;font-size:0.88rem;padding:0.4rem 1.1rem;border-radius:100px;border:2.5px solid var(--ink);box-shadow:3px 3px 0 var(--ink);transition:transform 0.15s;}
-.stag:hover{transform:translate(-2px,-2px) rotate(-2deg);}
-.next-bar{background:var(--ink);padding:2rem 3rem;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:1rem;position:relative;z-index:1;}
-.next-label{font-family:'Fredoka One',cursive;color:#888;font-size:0.85rem;}
-.next-title{font-family:'Fredoka One',cursive;color:#fff;font-size:1.3rem;}
-.next-btn{font-family:'Fredoka One',cursive;font-size:0.95rem;background:var(--accent);color:var(--ink);border:3px solid var(--accent);border-radius:100px;padding:0.6rem 1.4rem;text-decoration:none;box-shadow:3px 3px 0 rgba(255,255,255,0.2);transition:transform 0.15s;cursor:none;display:inline-flex;align-items:center;gap:0.5rem;}
-.next-btn:hover{transform:translate(-2px,-2px);}
-.reveal{opacity:0;transform:translateY(24px);transition:opacity 0.5s,transform 0.5s;}
-.reveal.on{opacity:1;transform:none;}
-@media(max-width:768px){.proj-hero,.content{padding-left:1.5rem;padding-right:1.5rem;}.cl-grid{grid-template-columns:1fr;}.next-bar{flex-direction:column;text-align:center;}}
-
-/* PERSONA CARDS */
-.persona-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:0.8rem;}
-.persona-card{border:3px solid var(--ink);border-radius:16px;padding:1rem 0.8rem;text-align:center;box-shadow:var(--shadow);transition:transform 0.2s,box-shadow 0.2s;cursor:default;}
-.persona-card:hover{transform:translate(-3px,-3px) rotate(-1deg);box-shadow:var(--shadow-lg);}
-.persona-emoji{font-size:2rem;display:block;margin-bottom:0.4rem;}
-.persona-name{font-family:'Fredoka One',cursive;font-size:0.85rem;display:block;margin-bottom:0.3rem;}
-.persona-desc{font-size:0.72rem;color:#666;line-height:1.4;}
-
-/* CHAT MOCKUP */
-.chat-ui{background:#fff;border:3px solid var(--ink);border-radius:16px;overflow:hidden;box-shadow:var(--shadow-lg);}
-.chat-header{background:var(--accent);border-bottom:3px solid var(--ink);padding:0.7rem 1rem;display:flex;align-items:center;gap:0.6rem;}
-.chat-header .bot-dot{width:10px;height:10px;background:#28CA41;border-radius:50%;border:2px solid var(--ink);animation:blink 1.5s ease-in-out infinite;}
-@keyframes blink{0%,100%{opacity:1}50%{opacity:0.3}}
-.chat-header span{font-family:'Fredoka One',cursive;font-size:0.9rem;}
-.chat-body{padding:1.2rem;display:flex;flex-direction:column;gap:0.8rem;background:#F8F9FA;min-height:180px;}
-.msg{max-width:75%;padding:0.7rem 1rem;border-radius:14px;border:2px solid var(--ink);font-size:0.85rem;line-height:1.5;}
-.msg-bot{background:#fff;align-self:flex-start;border-radius:4px 14px 14px 14px;}
-.msg-user{background:var(--accent);align-self:flex-end;border-radius:14px 4px 14px 14px;}
-.msg-label{font-family:'Fredoka One',cursive;font-size:0.7rem;color:#999;margin-bottom:0.2rem;}
-</style>
+<meta name="description" content="A customer-facing AI chatbot that switches between five distinct personas — Corporate, Friendly, Empathetic, Direct, Luxury — entirely through prompt engineering.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../style.css">
 </head>
 <body>
-<canvas id="noteCanvas"></canvas>
+
+<canvas id="ambientCanvas"></canvas>
 <div id="cursor"></div>
+<div id="cursorRing"></div>
 
-<nav>
-  <a href="../index.html" class="back-btn">← Back</a>
-  <span class="nav-title">🤖 Multi-Persona AI Chatbot</span>
-</nav>
+<header class="nav">
+  <a href="../index.html" class="nav-logo">[ak]</a>
+  <div class="nav-right">
+    <span class="nav-clock" id="clock"></span>
+    <a href="../index.html#contact" class="nav-cta magnetic">say hi</a>
+    <button class="nav-burger" id="navBurger" aria-label="Open menu" aria-expanded="false"><span></span><span></span></button>
+  </div>
+</header>
 
+<div class="nav-overlay" id="navOverlay">
+  <button class="nav-close" id="navClose" aria-label="Close menu">&times;</button>
+  <nav class="nav-overlay-links">
+    <a href="../index.html"><span class="idx">01</span>Home</a>
+    <a href="index.html" class="current"><span class="idx">02</span>Projects</a>
+    <a href="../experience/index.html"><span class="idx">03</span>Experience</a>
+    <a href="../certifications.html"><span class="idx">04</span>Certifications</a>
+    <a href="../extracurricular.html"><span class="idx">05</span>Extracurricular</a>
+    <a href="../index.html#contact"><span class="idx">06</span>Contact</a>
+  </nav>
+  <div class="nav-overlay-foot">
+    <a href="mailto:Adityak.mehra0@gmail.com">Email</a>
+    <a href="https://www.linkedin.com/in/adityakmehra/" target="_blank" rel="noopener">LinkedIn</a>
+    <a href="tel:+919318301878">+91 93183 01878</a>
+  </div>
+</div>
+
+<!-- HERO -->
 <section class="proj-hero">
   <div class="proj-hero-inner">
-    <div><span class="proj-tag">AI / Prompt Engineering</span></div>
-    <h1 class="proj-title">Multi-Persona<br><span>AI Chatbot</span></h1>
-    <p class="proj-subtitle">One chatbot engine. Five completely different personalities. Switch between Corporate, Friendly, Empathetic, Direct, and Luxury modes instantly — no code changes required.</p>
+    <a href="index.html" class="back-btn magnetic">← All projects</a>
+    <div style="margin-top:1.6rem;">
+      <span class="eyebrow proj-tag"><span class="dot"></span> AI · Prompt Engineering</span>
+    </div>
+    <h1 class="proj-title">Multi-Persona<br><span class="grad-text">AI Chatbot</span></h1>
+    <p class="proj-subtitle">One chatbot engine. Five completely different personalities. Corporate, Friendly, Empathetic, Direct, and Luxury — switched entirely through prompt engineering, no code changes required.</p>
     <div class="proj-links">
-      <a href="https://github.com" target="_blank" class="plink plink-a">
+      <a href="https://github.com/Aditya-mp4" target="_blank" rel="noopener" class="plink plink-a">
         <svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z"/></svg>
         GitHub
       </a>
-      <a href="#" class="plink plink-b">🚀 Live Demo</a>
     </div>
   </div>
 </section>
 
 <div class="content">
 
-  <!-- PERSONA SHOWCASE -->
-  <div class="visual-box reveal">
-    <div class="visual-bar">
-      <div class="vdot" style="background:#FF5F57"></div>
-      <div class="vdot" style="background:#FFBD2E"></div>
-      <div class="vdot" style="background:#28CA41"></div>
-      <span style="color:#888;font-size:0.75rem;margin-left:0.5rem;font-family:'Courier New',monospace;">persona_chatbot.py — streamlit app</span>
-    </div>
-    <div class="visual-screen">
-      <div style="margin-bottom:1.2rem;">
-        <div style="font-family:'Fredoka One',cursive;font-size:0.85rem;color:#888;margin-bottom:0.6rem;">Select Persona:</div>
-        <div class="persona-grid">
-          <div class="persona-card" style="background:#E8F4FF;">
-            <span class="persona-emoji">👔</span>
-            <span class="persona-name">Corporate</span>
-            <span class="persona-desc">Formal, precise, professional tone</span>
-          </div>
-          <div class="persona-card" style="background:#FFF0F5;border-color:#FF6B9D;">
-            <span class="persona-emoji">😊</span>
-            <span class="persona-name" style="color:#FF6B9D;">Friendly</span>
-            <span class="persona-desc">Warm, casual, conversational</span>
-          </div>
-          <div class="persona-card" style="background:#F0FFF4;">
-            <span class="persona-emoji">💚</span>
-            <span class="persona-name">Empathetic</span>
-            <span class="persona-desc">Caring, supportive, gentle</span>
-          </div>
-          <div class="persona-card" style="background:#FFF8E1;">
-            <span class="persona-emoji">⚡</span>
-            <span class="persona-name">Direct</span>
-            <span class="persona-desc">Blunt, concise, no fluff</span>
-          </div>
-          <div class="persona-card" style="background:#F5F0FF;">
-            <span class="persona-emoji">💎</span>
-            <span class="persona-name">Luxury</span>
-            <span class="persona-desc">Refined, elegant, premium</span>
-          </div>
-        </div>
+  <!-- PERSONA MOCKUP -->
+  <div class="sec reveal">
+    <h2 class="sec-title">Same engine, five different bots</h2>
+    <div class="visual-box">
+      <div class="visual-bar">
+        <div class="vdot" style="background:#FF5F57"></div>
+        <div class="vdot" style="background:#FFBD2E"></div>
+        <div class="vdot" style="background:#28CA41"></div>
+        <span style="color:#888;font-size:0.75rem;margin-left:0.5rem;font-family:'Space Mono',monospace;">persona_chatbot.py — streamlit app</span>
       </div>
-      <!-- Active chat for "Friendly" -->
-      <div class="chat-ui">
-        <div class="chat-header">
-          <div class="bot-dot"></div>
-          <span>😊 Friendly Mode — Active</span>
-        </div>
-        <div class="chat-body">
-          <div>
-            <div class="msg-label">You</div>
-            <div class="msg msg-user">Can you help me track my order?</div>
+      <div class="visual-screen">
+        <div style="margin-bottom:1.4rem;">
+          <div style="font-family:'Space Mono',monospace;font-size:0.78rem;color:#888;margin-bottom:0.8rem;">select persona:</div>
+          <div style="display:grid;grid-template-columns:repeat(5,1fr);gap:0.7rem;">
+            <div style="background:rgba(124,92,255,0.12);border:1px solid rgba(124,92,255,0.4);border-radius:12px;padding:0.8rem 0.5rem;text-align:center;">
+              <div style="font-size:1.5rem;">👔</div>
+              <div style="font-family:'Space Grotesk',sans-serif;font-size:0.75rem;color:#fff;margin-top:0.3rem;">Corporate</div>
+            </div>
+            <div style="background:rgba(47,230,199,0.16);border:1px solid rgba(47,230,199,0.5);border-radius:12px;padding:0.8rem 0.5rem;text-align:center;">
+              <div style="font-size:1.5rem;">😊</div>
+              <div style="font-family:'Space Grotesk',sans-serif;font-size:0.75rem;color:#2FE6C7;margin-top:0.3rem;">Friendly</div>
+            </div>
+            <div style="background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.14);border-radius:12px;padding:0.8rem 0.5rem;text-align:center;">
+              <div style="font-size:1.5rem;">💚</div>
+              <div style="font-family:'Space Grotesk',sans-serif;font-size:0.75rem;color:#fff;margin-top:0.3rem;">Empathetic</div>
+            </div>
+            <div style="background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.14);border-radius:12px;padding:0.8rem 0.5rem;text-align:center;">
+              <div style="font-size:1.5rem;">⚡</div>
+              <div style="font-family:'Space Grotesk',sans-serif;font-size:0.75rem;color:#fff;margin-top:0.3rem;">Direct</div>
+            </div>
+            <div style="background:rgba(255,217,61,0.1);border:1px solid rgba(255,217,61,0.4);border-radius:12px;padding:0.8rem 0.5rem;text-align:center;">
+              <div style="font-size:1.5rem;">💎</div>
+              <div style="font-family:'Space Grotesk',sans-serif;font-size:0.75rem;color:#FFD93D;margin-top:0.3rem;">Luxury</div>
+            </div>
           </div>
-          <div>
-            <div class="msg-label">Bot (Friendly)</div>
-            <div class="msg msg-bot">Hey there! 😄 Of course I can help! Just drop your order number and I'll look it up right away for you!</div>
+        </div>
+        <div style="background:#000;border:1px solid rgba(47,230,199,0.3);border-radius:12px;overflow:hidden;">
+          <div style="background:rgba(47,230,199,0.1);border-bottom:1px solid rgba(47,230,199,0.3);padding:0.6rem 1rem;display:flex;align-items:center;gap:0.6rem;">
+            <span style="width:8px;height:8px;border-radius:50%;background:#2FE6C7;animation:blink 1.4s ease-in-out infinite;"></span>
+            <span style="font-family:'Space Mono',monospace;font-size:0.78rem;color:#2FE6C7;">Friendly mode — active</span>
+          </div>
+          <div style="padding:1rem 1.2rem;display:flex;flex-direction:column;gap:0.7rem;">
+            <div style="align-self:flex-end;max-width:70%;background:rgba(255,255,255,0.08);border-radius:12px 3px 12px 12px;padding:0.6rem 0.9rem;font-size:0.85rem;color:#fff;">Can you help me track my order?</div>
+            <div style="align-self:flex-start;max-width:75%;background:rgba(47,230,199,0.1);border:1px solid rgba(47,230,199,0.25);border-radius:3px 12px 12px 12px;padding:0.6rem 0.9rem;font-size:0.85rem;color:#fff;">Hey! 😊 Of course — just drop your order number and I'll look it up right away.</div>
           </div>
         </div>
       </div>
     </div>
   </div>
 
-  <!-- OVERVIEW -->
+  <!-- WHAT IT DOES -->
   <div class="sec reveal">
-    <h2 class="sec-title">What It Does</h2>
+    <h2 class="sec-title">What it does</h2>
     <div class="cards-grid">
-      <div class="info-card"><div class="ic-emoji">🎭</div><h4>5 Distinct Personas</h4><p>Each persona has unique tone, vocabulary rules, sentence structure, and emotional register engineered into the system prompt.</p></div>
-      <div class="info-card"><div class="ic-emoji">💬</div><h4>Full Memory</h4><p>Maintains complete conversation history across switches so context is never lost when changing persona mid-chat.</p></div>
-      <div class="info-card"><div class="ic-emoji">📊</div><h4>Session Analytics</h4><p>Tracks message count, persona usage, and response patterns per session for analysis and improvement.</p></div>
-      <div class="info-card"><div class="ic-emoji">⚡</div><h4>Zero Code Switches</h4><p>Operators switch persona via a simple dropdown — no config changes, no restart, no code edits required.</p></div>
+      <div class="info-card"><div class="ic-emoji">🎭</div><h4>5 distinct personas</h4><p>Corporate, Friendly, Empathetic, Direct, and Luxury — each with its own tone, vocabulary, and response structure, engineered entirely through system prompts.</p></div>
+      <div class="info-card"><div class="ic-emoji">💬</div><h4>Full conversation memory</h4><p>The chatbot keeps complete conversation history across persona switches, so context is never lost mid-chat.</p></div>
+      <div class="info-card"><div class="ic-emoji">📊</div><h4>Session analytics</h4><p>Tracks message counts and persona usage per session so behavior can be reviewed and improved.</p></div>
+      <div class="info-card"><div class="ic-emoji">⚡</div><h4>Zero code switches</h4><p>Every persona is a prompt, not a build — swapping personality happens through selection, not a redeploy.</p></div>
+    </div>
+  </div>
+
+  <!-- WHY I BUILT THIS -->
+  <div class="sec reveal">
+    <h2 class="sec-title">Why I built this</h2>
+    <div class="about-text">
+      <p>What pulled me into this project was a simple question: how far can you actually push a single model's behavior using nothing but instructions? No fine-tuning, no separate models, no code branching per persona — just five very different system prompts sitting in front of the same Claude API call. I wanted to see if prompt engineering alone could hold up under real conversational pressure, not just a one-off demo answer.</p>
+      <p>The hardest part turned out to be persona "bleed" — the model quietly reverting to a neutral, default tone a few turns into a conversation, especially once things got more complex or the user asked something slightly off-script. I ended up treating the system prompt almost like a spec document: explicit vocabulary rules, sentence-length constraints, and just as important, a list of things the persona should <em>never</em> do. Negative constraints did more work than I expected.</p>
+      <p>Luxury was, weirdly, the hardest persona to get right. My first instinct was to just crank up the formality — longer words, more elaborate phrasing — and it read as stiff and robotic instead of refined. Real luxury tone is more about restraint and confidence than decoration, and it took a few rewrites of that prompt before it stopped sounding like a thesaurus had taken over the conversation.</p>
+      <p>QA-ing this thing was its own lesson. Testing one chatbot is one job; testing five personalities layered on the same engine is five jobs happening at once, and it forced me to actually think about what "correct" meant for each one instead of testing a single flat standard of quality.</p>
+    </div>
+  </div>
+
+  <!-- HOW PERSONA SWITCHING WORKS -->
+  <div class="sec reveal">
+    <h2 class="sec-title">How persona switching works</h2>
+    <div class="flow">
+      <div class="flow-step"><span class="fs-emoji">💬</span><span class="fs-label">User<br>message</span></div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-step"><span class="fs-emoji">🎭</span><span class="fs-label">Persona<br>selected</span></div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-step"><span class="fs-emoji">📝</span><span class="fs-label">System prompt<br>injected</span></div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-step"><span class="fs-emoji">🤖</span><span class="fs-label">Claude API<br>call</span></div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-step"><span class="fs-emoji">✅</span><span class="fs-label">In-persona<br>response</span></div>
     </div>
   </div>
 
   <!-- CHALLENGES & LEARNINGS -->
   <div class="sec reveal">
-    <h2 class="sec-title">Challenges & Learnings</h2>
+    <h2 class="sec-title">Challenges &amp; learnings</h2>
     <div class="cl-grid">
       <div class="cl-card challenge">
         <h4>😤 Challenges</h4>
         <ul>
-          <li>Preventing persona "bleed" — the model reverting to a default style mid-conversation.</li>
-          <li>Balancing strong persona constraints with response helpfulness and accuracy.</li>
-          <li>Luxury persona required subtle vocabulary curation — overly formal felt robotic.</li>
-          <li>Testing all edge cases across 5 personas multiplied QA effort by 5x.</li>
+          <li>Preventing persona bleed — the model drifting back to a default, neutral tone mid-conversation.</li>
+          <li>Balancing strong persona constraints against staying genuinely helpful and accurate.</li>
+          <li>Luxury persona needed careful vocabulary curation — over-formal read as robotic, not refined.</li>
+          <li>QA-ing five personas at once effectively multiplied the testing surface by five.</li>
         </ul>
       </div>
       <div class="cl-card learning">
         <h4>💡 Learnings</h4>
         <ul>
-          <li>System prompt structure matters as much as content — ordering affects model behaviour.</li>
-          <li>Adding explicit negative constraints ("never use slang") is as important as positive ones.</li>
-          <li>Claude API's conversation memory handling made multi-turn context seamless.</li>
-          <li>Real user testing revealed persona gaps that prompt iteration alone couldn't predict.</li>
+          <li>System prompt structure matters as much as content — ordering shapes how strongly the model holds a persona.</li>
+          <li>Explicit negative constraints ("never use slang") did as much work as positive ones.</li>
+          <li>Claude's conversation memory made multi-turn context handling straightforward across switches.</li>
+          <li>Session analytics surfaced which personas needed the most prompt iteration.</li>
         </ul>
       </div>
     </div>
@@ -205,37 +176,43 @@ nav{position:fixed;top:0;left:0;right:0;z-index:200;background:var(--accent);bor
 
   <!-- TECH STACK -->
   <div class="sec reveal">
-    <h2 class="sec-title">Tech Stack</h2>
+    <h2 class="sec-title">Tech stack</h2>
     <div class="stack-wrap">
-      <span class="stag" style="background:#FFD93D">Python</span>
-      <span class="stag" style="background:#FFF0F5">Streamlit</span>
-      <span class="stag" style="background:#E9D5FF">Claude API</span>
-      <span class="stag" style="background:#DCFCE7">Prompt Engineering</span>
-      <span class="stag" style="background:#FED7AA">Session State</span>
+      <span class="stag">Python</span><span class="stag">Streamlit</span><span class="stag">Claude API</span>
+      <span class="stag">Prompt Engineering</span><span class="stag">Session State</span>
     </div>
   </div>
 
 </div>
 
 <div class="next-bar">
-  <div>
-    <div class="next-label">Next Project →</div>
-    <div class="next-title">🤟 Sign Language to Speech</div>
+  <div class="next-bar-inner">
+    <div>
+      <div class="next-label">Next project →</div>
+      <div class="next-title">Sign Language to Speech</div>
+    </div>
+    <a href="sign-language.html" class="next-btn">View project →</a>
   </div>
-  <a href="sign-language.html" class="next-btn">View Project →</a>
 </div>
 
-<script>
-const cur=document.getElementById('cursor');
-document.addEventListener('mousemove',e=>{cur.style.left=e.clientX-11+'px';cur.style.top=e.clientY-11+'px';});
-document.querySelectorAll('a,button,.stag,.info-card,.persona-card').forEach(el=>{el.addEventListener('mouseenter',()=>cur.classList.add('hov'));el.addEventListener('mouseleave',()=>cur.classList.remove('hov'));});
-const canvas=document.getElementById('noteCanvas');const ctx=canvas.getContext('2d');
-function resize(){canvas.width=innerWidth;canvas.height=innerHeight;}resize();window.addEventListener('resize',resize);
-const NOTES=['♩','♪','♫','♬'],COLS=['#FFD93D','#FF9F43','#FF6B9D','#A855F7'];
-const notes=Array.from({length:16},()=>({x:Math.random()*innerWidth,y:Math.random()*innerHeight,sz:12+Math.random()*14,sp:0.25+Math.random()*0.4,t:Math.random()*Math.PI*2,ch:NOTES[Math.floor(Math.random()*4)],cl:COLS[Math.floor(Math.random()*4)],op:0.08+Math.random()*0.12,rot:(Math.random()-.5)*0.3}));
-(function draw(){ctx.clearRect(0,0,canvas.width,canvas.height);notes.forEach(n=>{n.t+=0.01;n.y-=n.sp;n.x+=Math.sin(n.t)*0.3;if(n.y<-30){n.y=canvas.height+10;n.x=Math.random()*canvas.width;}ctx.save();ctx.globalAlpha=n.op;ctx.font=n.sz+'px serif';ctx.fillStyle=n.cl;ctx.translate(n.x,n.y);ctx.rotate(Math.sin(n.t)*n.rot);ctx.fillText(n.ch,0,0);ctx.restore();});requestAnimationFrame(draw);})();
-const obs=new IntersectionObserver(entries=>{entries.forEach((e,i)=>{if(e.isIntersecting)setTimeout(()=>e.target.classList.add('on'),i*80);});},{threshold:0.1});
-document.querySelectorAll('.reveal').forEach(r=>obs.observe(r));
-</script>
+<footer class="site-footer">
+  <div class="wrap">
+    <div class="footer-top">
+      <div class="footer-cta">Let's make something<br>that feels alive.</div>
+      <div class="footer-links">
+        <a href="index.html" class="tag">Projects</a>
+        <a href="../experience/index.html" class="tag">Experience</a>
+        <a href="../certifications.html" class="tag">Certifications</a>
+        <a href="../extracurricular.html" class="tag">Extracurricular</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>Made with <em>♥</em> by Aditya Kumar Mehra · New Delhi, India</span>
+      <span>© 2026</span>
+    </div>
+  </div>
+</footer>
+
+<script src="../main.js"></script>
 </body>
 </html>

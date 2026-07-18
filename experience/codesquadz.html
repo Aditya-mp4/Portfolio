@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MERN Stack Developer Intern at CodeSquadz — Aditya Kumar Mehra</title>
+<meta name="description" content="What it was like building VideoCrypt as part of a collaborative MERN team during my internship at CodeSquadz (AppSquadz) — role-based auth, SQL alongside MongoDB, and working on a real deadline with other people.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../style.css">
+</head>
+<body>
+
+<canvas id="ambientCanvas"></canvas>
+<div id="cursor"></div>
+<div id="cursorRing"></div>
+
+<header class="nav">
+  <a href="../index.html" class="nav-logo">[ak]</a>
+  <div class="nav-right">
+    <span class="nav-clock" id="clock"></span>
+    <a href="../index.html#contact" class="nav-cta magnetic">say hi</a>
+    <button class="nav-burger" id="navBurger" aria-label="Open menu" aria-expanded="false"><span></span><span></span></button>
+  </div>
+</header>
+
+<div class="nav-overlay" id="navOverlay">
+  <button class="nav-close" id="navClose" aria-label="Close menu">&times;</button>
+  <nav class="nav-overlay-links">
+    <a href="../index.html"><span class="idx">01</span>Home</a>
+    <a href="../projects/index.html"><span class="idx">02</span>Projects</a>
+    <a href="index.html" class="current"><span class="idx">03</span>Experience</a>
+    <a href="../certifications.html"><span class="idx">04</span>Certifications</a>
+    <a href="../extracurricular.html"><span class="idx">05</span>Extracurricular</a>
+    <a href="../index.html#contact"><span class="idx">06</span>Contact</a>
+  </nav>
+  <div class="nav-overlay-foot">
+    <a href="mailto:Adityak.mehra0@gmail.com">Email</a>
+    <a href="https://www.linkedin.com/in/adityakmehra/" target="_blank" rel="noopener">LinkedIn</a>
+    <a href="tel:+919318301878">+91 93183 01878</a>
+  </div>
+</div>
+
+<!-- HERO -->
+<section class="proj-hero">
+  <div class="proj-hero-inner">
+    <a href="index.html" class="back-btn magnetic">← All experience</a>
+    <div style="margin-top:1.6rem;">
+      <span class="eyebrow proj-tag"><span class="dot"></span> Jun 2025 – Aug 2025</span>
+    </div>
+    <h1 class="proj-title">MERN Stack Developer Intern<br><span class="grad-text">CodeSquadz</span></h1>
+    <p class="proj-subtitle">Building VideoCrypt, a full-stack secure video streaming platform, as part of a collaborative team — my first real experience of shipping software with other people, on a shared deadline.</p>
+    <div class="proj-links">
+      <a href="../projects/videocrypt.html" class="plink plink-a">See the project →</a>
+    </div>
+  </div>
+</section>
+
+<div class="content">
+
+  <!-- WHAT IT INVOLVED -->
+  <div class="sec reveal">
+    <h2 class="sec-title">What it involved</h2>
+    <div class="cards-grid">
+      <div class="info-card"><div class="ic-emoji">🎥</div><h4>VideoCrypt</h4><p>A full-stack secure video streaming platform, built with MongoDB, Express, React, and Node.js.</p></div>
+      <div class="info-card"><div class="ic-emoji">🔐</div><h4>Role-based auth</h4><p>Access control so different user roles could only do what they were meant to.</p></div>
+      <div class="info-card"><div class="ic-emoji">🗄️</div><h4>SQL + MongoDB</h4><p>Integrated SQL alongside MongoDB within the same system.</p></div>
+      <div class="info-card"><div class="ic-emoji">🤝</div><h4>Team collaboration</h4><p>Built as part of a small team, working toward shared deadlines rather than solo.</p></div>
+    </div>
+  </div>
+
+  <!-- MY STORY -->
+  <div class="sec reveal">
+    <h2 class="sec-title">The story</h2>
+    <div class="about-text">
+      <p>CodeSquadz (AppSquadz) was my first real taste of building software as part of a team rather than alone at 1am chasing a side-project idea. We built VideoCrypt, a full-stack secure video streaming platform, and my corner of it was the MERN stack — MongoDB, Express, React, and Node — while the rest of the team owned other pieces of the same system in parallel.</p>
+      <p>Role-based authentication was the part that made me slow down and actually think about security instead of just shipping a feature. Getting SQL integration to sit alongside MongoDB meant reconciling two very different ways of thinking about data, and role-based access meant every part of the system needed to ask "who's allowed to do this" before it did anything at all.</p>
+      <p>What this internship really taught me, though, was the difference between building something solo and building something with a team on a deadline. A solo project lives and dies by whatever I decide to prioritize that week. Here, my code had to integrate cleanly with everyone else's, on a schedule none of us fully controlled on our own. Communication became as much a part of the job as the code itself — syncing on what an endpoint should return, agreeing on how auth roles were structured, staying out of each other's way in the same codebase.</p>
+      <p>VideoCrypt is still the project I point to when someone asks what "collaborative" actually means in practice, past a resume bullet point. This page is really about what the internship itself taught me — for what we actually built, the project page has the rest.</p>
+    </div>
+  </div>
+
+  <!-- CHALLENGES & LEARNINGS -->
+  <div class="sec reveal">
+    <h2 class="sec-title">Challenges &amp; learnings</h2>
+    <div class="cl-grid">
+      <div class="cl-card challenge">
+        <h4>😤 Challenges</h4>
+        <ul>
+          <li>Reconciling role-based access rules with a MongoDB-first schema.</li>
+          <li>Coordinating features with teammates on a shared deadline without stepping on each other's work.</li>
+          <li>Integrating SQL alongside MongoDB within the same platform.</li>
+        </ul>
+      </div>
+      <div class="cl-card learning">
+        <h4>💡 Learnings</h4>
+        <ul>
+          <li>Security has to be designed in from the start, not bolted on after.</li>
+          <li>Clear communication about what an endpoint returns matters as much as the code behind it.</li>
+          <li>Team deadlines force different tradeoffs than a solo project ever does.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- TECH STACK -->
+  <div class="sec reveal">
+    <h2 class="sec-title">Tech stack</h2>
+    <div class="stack-wrap">
+      <span class="stag">MongoDB</span><span class="stag">Express</span><span class="stag">React</span>
+      <span class="stag">Node.js</span><span class="stag">SQL</span><span class="stag">Role-Based Auth</span>
+    </div>
+  </div>
+
+</div>
+
+<div class="next-bar">
+  <div class="next-bar-inner">
+    <div>
+      <div class="next-label">Before this →</div>
+      <div class="next-title">Flutter Mobile Developer Intern — Brain Mentors</div>
+    </div>
+    <a href="brainmentors.html" class="next-btn">Read the story →</a>
+  </div>
+</div>
+
+<footer class="site-footer">
+  <div class="wrap">
+    <div class="footer-top">
+      <div class="footer-cta">Let's make something<br>that feels alive.</div>
+      <div class="footer-links">
+        <a href="../projects/index.html" class="tag">Projects</a>
+        <a href="index.html" class="tag">Experience</a>
+        <a href="../certifications.html" class="tag">Certifications</a>
+        <a href="../extracurricular.html" class="tag">Extracurricular</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>Made with <em>♥</em> by Aditya Kumar Mehra · New Delhi, India</span>
+      <span>© 2026</span>
+    </div>
+  </div>
+</footer>
+
+<script src="../main.js"></script>
+</body>
+</html>

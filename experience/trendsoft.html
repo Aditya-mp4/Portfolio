@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Web Developer Intern at Trendsoft Technologies — Aditya Kumar Mehra</title>
+<meta name="description" content="How I independently led a full UI/UX redesign as a Web Developer Intern at Trendsoft Technologies — PHP, JavaScript, a foray into .NET and Blazor, and the discipline of shipping something people depend on.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../style.css">
+</head>
+<body>
+
+<canvas id="ambientCanvas"></canvas>
+<div id="cursor"></div>
+<div id="cursorRing"></div>
+
+<header class="nav">
+  <a href="../index.html" class="nav-logo">[ak]</a>
+  <div class="nav-right">
+    <span class="nav-clock" id="clock"></span>
+    <a href="../index.html#contact" class="nav-cta magnetic">say hi</a>
+    <button class="nav-burger" id="navBurger" aria-label="Open menu" aria-expanded="false"><span></span><span></span></button>
+  </div>
+</header>
+
+<div class="nav-overlay" id="navOverlay">
+  <button class="nav-close" id="navClose" aria-label="Close menu">&times;</button>
+  <nav class="nav-overlay-links">
+    <a href="../index.html"><span class="idx">01</span>Home</a>
+    <a href="../projects/index.html"><span class="idx">02</span>Projects</a>
+    <a href="index.html" class="current"><span class="idx">03</span>Experience</a>
+    <a href="../certifications.html"><span class="idx">04</span>Certifications</a>
+    <a href="../extracurricular.html"><span class="idx">05</span>Extracurricular</a>
+    <a href="../index.html#contact"><span class="idx">06</span>Contact</a>
+  </nav>
+  <div class="nav-overlay-foot">
+    <a href="mailto:Adityak.mehra0@gmail.com">Email</a>
+    <a href="https://www.linkedin.com/in/adityakmehra/" target="_blank" rel="noopener">LinkedIn</a>
+    <a href="tel:+919318301878">+91 93183 01878</a>
+  </div>
+</div>
+
+<!-- HERO -->
+<section class="proj-hero">
+  <div class="proj-hero-inner">
+    <a href="index.html" class="back-btn magnetic">← All experience</a>
+    <div style="margin-top:1.6rem;">
+      <span class="eyebrow proj-tag"><span class="dot"></span> Feb 2026 – Jul 2026</span>
+    </div>
+    <h1 class="proj-title">Web Developer Intern<br><span class="grad-text">Trendsoft Technologies</span></h1>
+    <p class="proj-subtitle">Independently leading an end-to-end UI/UX redesign of the company's flagship consultancy website — under supervisor review, but with the decisions genuinely mine to make.</p>
+  </div>
+</section>
+
+<div class="content">
+
+  <!-- WHAT IT INVOLVED -->
+  <div class="sec reveal">
+    <h2 class="sec-title">What it involves</h2>
+    <div class="cards-grid">
+      <div class="info-card"><div class="ic-emoji">🎨</div><h4>Leading the redesign</h4><p>Independently owning the end-to-end UI/UX overhaul of the company's flagship consultancy site.</p></div>
+      <div class="info-card"><div class="ic-emoji">🧩</div><h4>Responsive modules</h4><p>Built with PHP, JavaScript, and CSS, tuned for consistent behavior across browsers.</p></div>
+      <div class="info-card"><div class="ic-emoji">🔷</div><h4>.NET &amp; Blazor</h4><p>Contributing to building and maintaining scalable components on a separate stack.</p></div>
+      <div class="info-card"><div class="ic-emoji">🐞</div><h4>Testing &amp; debugging</h4><p>Iterative fixes and stability checks to keep a live site dependable.</p></div>
+    </div>
+  </div>
+
+  <!-- MY STORY -->
+  <div class="sec reveal">
+    <h2 class="sec-title">The story so far</h2>
+    <div class="about-text">
+      <p>Coming into Trendsoft, most of what I'd built before was against someone else's spec — a clear brief, a defined scope, follow the lines. Here I was handed something different: independently lead a full UI/UX redesign of the company's main consultancy website, under supervisor review rather than under a strict brief. That's a small-sounding shift, but it changed how I thought about my own work. Every layout choice, every interaction pattern, was now a decision I had to be able to defend, not a checkbox someone else had already ticked.</p>
+      <p>The redesign itself was a grind in the best way. Turning a legacy interface into something modern and responsive meant writing PHP, JavaScript, and CSS modules that had to look and behave the same regardless of what browser someone happened to open the site in — you can't assume everyone's on the same setup. Cross-browser quirks I'd mostly just read about before became my problem to actually solve, one inconsistency at a time.</p>
+      <p>Alongside the redesign, I got pulled into some of the company's .NET and Blazor work, helping build and maintain scalable components on an entirely different stack. Jumping between the PHP-driven front end I owned outright and a C#/Blazor codebase I was still learning meant holding two different mental models at once — which turned out to be its own kind of useful skill.</p>
+      <p>The part that's stuck with me most, though, is the testing and debugging discipline that comes with owning something end-to-end. When you're the one who led the redesign, "it works on my machine" isn't good enough — there's real time spent chasing down edge cases and iterating until the thing is stable enough for people who actually use the site to depend on it. That's a different kind of pressure than any solo side project gives you.</p>
+    </div>
+  </div>
+
+  <!-- CHALLENGES & LEARNINGS -->
+  <div class="sec reveal">
+    <h2 class="sec-title">Challenges &amp; learnings</h2>
+    <div class="cl-grid">
+      <div class="cl-card challenge">
+        <h4>😤 Challenges</h4>
+        <ul>
+          <li>Rebuilding a legacy interface without breaking functionality people already relied on.</li>
+          <li>Cross-browser inconsistencies in layout, spacing, and font rendering.</li>
+          <li>Balancing redesign work with .NET/Blazor contributions on a completely different stack.</li>
+        </ul>
+      </div>
+      <div class="cl-card learning">
+        <h4>💡 Learnings</h4>
+        <ul>
+          <li>Owning a project end-to-end means every decision needs a reason, not just a preference.</li>
+          <li>Testing across browsers early saves far more time than fixing it all at the end.</li>
+          <li>Working across PHP and Blazor at once sharpened how quickly I can context-switch between stacks.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- TECH STACK -->
+  <div class="sec reveal">
+    <h2 class="sec-title">Tech stack</h2>
+    <div class="stack-wrap">
+      <span class="stag">PHP</span><span class="stag">JavaScript</span><span class="stag">CSS</span>
+      <span class="stag">HTML</span><span class="stag">.NET</span><span class="stag">Blazor</span>
+      <span class="stag">Responsive Design</span><span class="stag">Cross-Browser Testing</span>
+    </div>
+  </div>
+
+</div>
+
+<div class="next-bar">
+  <div class="next-bar-inner">
+    <div>
+      <div class="next-label">Before this →</div>
+      <div class="next-title">MERN Stack Developer Intern — CodeSquadz</div>
+    </div>
+    <a href="codesquadz.html" class="next-btn">Read the story →</a>
+  </div>
+</div>
+
+<footer class="site-footer">
+  <div class="wrap">
+    <div class="footer-top">
+      <div class="footer-cta">Let's make something<br>that feels alive.</div>
+      <div class="footer-links">
+        <a href="../projects/index.html" class="tag">Projects</a>
+        <a href="index.html" class="tag">Experience</a>
+        <a href="../certifications.html" class="tag">Certifications</a>
+        <a href="../extracurricular.html" class="tag">Extracurricular</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>Made with <em>♥</em> by Aditya Kumar Mehra · New Delhi, India</span>
+      <span>© 2026</span>
+    </div>
+  </div>
+</footer>
+
+<script src="../main.js"></script>
+</body>
+</html>

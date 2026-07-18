@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Flutter Mobile Developer Intern at Brain Mentors — Aditya Kumar Mehra</title>
+<meta name="description" content="My first internship — building a Flutter quiz app end-to-end at Brain Mentors, and what it felt like the first time something I built was going to ship to real users.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../style.css">
+</head>
+<body>
+
+<canvas id="ambientCanvas"></canvas>
+<div id="cursor"></div>
+<div id="cursorRing"></div>
+
+<header class="nav">
+  <a href="../index.html" class="nav-logo">[ak]</a>
+  <div class="nav-right">
+    <span class="nav-clock" id="clock"></span>
+    <a href="../index.html#contact" class="nav-cta magnetic">say hi</a>
+    <button class="nav-burger" id="navBurger" aria-label="Open menu" aria-expanded="false"><span></span><span></span></button>
+  </div>
+</header>
+
+<div class="nav-overlay" id="navOverlay">
+  <button class="nav-close" id="navClose" aria-label="Close menu">&times;</button>
+  <nav class="nav-overlay-links">
+    <a href="../index.html"><span class="idx">01</span>Home</a>
+    <a href="../projects/index.html"><span class="idx">02</span>Projects</a>
+    <a href="index.html" class="current"><span class="idx">03</span>Experience</a>
+    <a href="../certifications.html"><span class="idx">04</span>Certifications</a>
+    <a href="../extracurricular.html"><span class="idx">05</span>Extracurricular</a>
+    <a href="../index.html#contact"><span class="idx">06</span>Contact</a>
+  </nav>
+  <div class="nav-overlay-foot">
+    <a href="mailto:Adityak.mehra0@gmail.com">Email</a>
+    <a href="https://www.linkedin.com/in/adityakmehra/" target="_blank" rel="noopener">LinkedIn</a>
+    <a href="tel:+919318301878">+91 93183 01878</a>
+  </div>
+</div>
+
+<!-- HERO -->
+<section class="proj-hero">
+  <div class="proj-hero-inner">
+    <a href="index.html" class="back-btn magnetic">← All experience</a>
+    <div style="margin-top:1.6rem;">
+      <span class="eyebrow proj-tag"><span class="dot"></span> Jul 2024 – Aug 2024</span>
+    </div>
+    <h1 class="proj-title">Flutter Mobile Developer Intern<br><span class="grad-text">Brain Mentors</span></h1>
+    <p class="proj-subtitle">My first internship — building a quiz app in Flutter end-to-end, and getting my first real taste of working on a team and shipping something other people would actually use.</p>
+  </div>
+</section>
+
+<div class="content">
+
+  <!-- WHAT IT INVOLVED -->
+  <div class="sec reveal">
+    <h2 class="sec-title">What it involved</h2>
+    <div class="cards-grid">
+      <div class="info-card"><div class="ic-emoji">📱</div><h4>Flutter quiz app</h4><p>Designed and built end-to-end, from UI to scoring logic.</p></div>
+      <div class="info-card"><div class="ic-emoji">🧠</div><h4>State management</h4><p>Handled quiz progress, scoring, and navigation state across screens.</p></div>
+      <div class="info-card"><div class="ic-emoji">🧪</div><h4>Testing &amp; refinement</h4><p>Worked with the team to catch edge cases before release.</p></div>
+      <div class="info-card"><div class="ic-emoji">🌱</div><h4>First internship</h4><p>The first time I built something knowing someone else would actually use it.</p></div>
+    </div>
+  </div>
+
+  <!-- MY STORY -->
+  <div class="sec reveal">
+    <h2 class="sec-title">The story</h2>
+    <div class="about-text">
+      <p>Brain Mentors was my first internship, full stop — the first time anyone handed me something real and said "build this, and other people are going to use it." That one sentence made the stakes feel different from any class project I'd done up to that point.</p>
+      <p>The task was a quiz application in Flutter, and I built it end-to-end — the UI, the state management, the logic that actually decided whether an answer was right and kept score across questions. I remember getting noticeably more careful about edge cases once it hit me that this wasn't going into a folder to be graded once and forgotten — it was going to ship.</p>
+      <p>Being new to working on an actual team, I leaned a lot on testing and refinement alongside the people around me before anything went out the door — catching the small stuff, like a state that didn't reset properly or a score that didn't update the way it should, that's obvious in hindsight but easy to miss when you're building something like this for the first time.</p>
+      <p>Looking back, Brain Mentors is where I first felt that specific mix of nerves and pride that comes from shipping something real alongside a team, and it's a feeling I kept chasing in every internship since.</p>
+    </div>
+  </div>
+
+  <!-- CHALLENGES & LEARNINGS -->
+  <div class="sec reveal">
+    <h2 class="sec-title">Challenges &amp; learnings</h2>
+    <div class="cl-grid">
+      <div class="cl-card challenge">
+        <h4>😤 Challenges</h4>
+        <ul>
+          <li>Keeping quiz state — score, progress, current question — consistent across screens.</li>
+          <li>Being new to real team workflows and figuring out how to ask for and give feedback.</li>
+          <li>Catching edge cases that only showed up once other people started testing it.</li>
+        </ul>
+      </div>
+      <div class="cl-card learning">
+        <h4>💡 Learnings</h4>
+        <ul>
+          <li>Building for someone else changes how carefully you think through edge cases.</li>
+          <li>Testing and refinement with a team catches things solo testing misses.</li>
+          <li>This first internship shaped what I looked for in every internship after it.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- TECH STACK -->
+  <div class="sec reveal">
+    <h2 class="sec-title">Tech stack</h2>
+    <div class="stack-wrap">
+      <span class="stag">Flutter</span><span class="stag">Dart</span>
+      <span class="stag">State Management</span><span class="stag">UI Design</span><span class="stag">Testing &amp; QA</span>
+    </div>
+  </div>
+
+</div>
+
+<div class="next-bar">
+  <div class="next-bar-inner">
+    <div>
+      <div class="next-label">Where to next →</div>
+      <div class="next-title">See my projects</div>
+    </div>
+    <a href="../projects/index.html" class="next-btn">View projects →</a>
+  </div>
+</div>
+
+<footer class="site-footer">
+  <div class="wrap">
+    <div class="footer-top">
+      <div class="footer-cta">Let's make something<br>that feels alive.</div>
+      <div class="footer-links">
+        <a href="../projects/index.html" class="tag">Projects</a>
+        <a href="index.html" class="tag">Experience</a>
+        <a href="../certifications.html" class="tag">Certifications</a>
+        <a href="../extracurricular.html" class="tag">Extracurricular</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>Made with <em>♥</em> by Aditya Kumar Mehra · New Delhi, India</span>
+      <span>© 2026</span>
+    </div>
+  </div>
+</footer>
+
+<script src="../main.js"></script>
+</body>
+</html>
