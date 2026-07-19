@@ -43,6 +43,12 @@
 
 <!-- HERO -->
 <section class="hero" id="home">
+  <div class="hero-video-bg">
+    <video autoplay muted loop playsinline>
+      <source src="assets/hero-bg.mp4" type="video/mp4">
+    </video>
+    <div class="hero-video-fade"></div>
+  </div>
   <div class="hero-inner">
     <div class="hero-mega-top">
       <div class="eyebrow"><span class="dot"></span> New Delhi, India · open to internships &amp; roles</div>
@@ -59,12 +65,6 @@
         <a href="projects/index.html" class="btn btn-primary magnetic">See my work →</a>
         <a href="#about" class="btn btn-ghost magnetic">More about me</a>
       </div>
-    </div>
-    <div class="hero-stats">
-      <div class="stat"><b>5+</b><span>projects shipped</span></div>
-      <div class="stat"><b>3</b><span>internships</span></div>
-      <div class="stat"><b>B.Tech</b><span>CSE · GGSIPU</span></div>
-      <div class="stat"><b>2026</b><span>graduating</span></div>
     </div>
   </div>
   <div class="hero-scroll"><span>scroll</span><span class="line"></span></div>
@@ -87,17 +87,7 @@
         <h2 class="sec-title">A bit about <span class="grad-text">me</span></h2>
       </div>
     </div>
-    <div class="about-grid">
-      <div class="reveal">
-        <!--
-          PHOTO SLOT — swap this placeholder for a real headshot once you share the file:
-          replace the inner markup with <img src="assets/your-photo.jpg" alt="Aditya Kumar Mehra">
-          (drop the image in an /assets folder alongside index.html).
-        -->
-        <div class="photo-slot">
-          <div class="ph-label">📷<br>photo coming soon —<br>drop a headshot in<br><code>/assets</code> to replace this</div>
-        </div>
-      </div>
+    <div class="about-grid about-grid-full">
       <div class="about-text reveal">
         <p>I'm <strong>Aditya</strong>, a computer science student in New Delhi, graduating in 2026 — creative at heart who just happens to write code.</p>
         <p>What gets me excited is the space where <strong>art, music, and technology collide</strong>. I think code and AI can be a creative medium just as much as a paintbrush or a piano, and I'm endlessly drawn to <strong>human-computer interaction</strong> — making machines feel a little more alive, a little more expressive.</p>
@@ -108,74 +98,6 @@
           <div class="fact"><b>VIPS-TC</b><span>GGSIPU · CSE</span></div>
           <div class="fact"><b>Trendsoft</b><span>currently at</span></div>
           <div class="fact"><b>music + CV</b><span>favorite intersection</span></div>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- SKILLS -->
-<section id="skills">
-  <div class="wrap">
-    <div class="sec-head">
-      <div>
-        <span class="eyebrow">toolbox</span>
-        <h2 class="sec-title">What I <span class="grad-text">build with</span></h2>
-      </div>
-    </div>
-    <div class="bento-grid">
-      <div class="bento-tile featured reveal">
-        <div class="bento-head">
-          <span class="bento-icon">🤖</span>
-          <span class="bento-count">6 tools</span>
-        </div>
-        <div class="bento-title">AI / Machine Learning</div>
-        <div class="skill-bubbles">
-          <span class="bub">Pandas</span><span class="bub">Model Training &amp; Evaluation</span><span class="bub">LLM App Design</span>
-          <span class="bub">Prompt Engineering</span><span class="bub">Claude API</span><span class="bub">Scikit-Learn</span>
-        </div>
-      </div>
-      <div class="bento-tile featured reveal">
-        <div class="bento-head">
-          <span class="bento-icon">👁️</span>
-          <span class="bento-count">5 tools</span>
-        </div>
-        <div class="bento-title">Computer Vision</div>
-        <div class="skill-bubbles">
-          <span class="bub">OpenCV</span><span class="bub">MediaPipe</span><span class="bub">Real-Time Hand Tracking</span>
-          <span class="bub">Gesture Recognition</span><span class="bub">Image &amp; Video Processing</span>
-        </div>
-      </div>
-      <div class="bento-tile span-1 reveal">
-        <div class="bento-head">
-          <span class="bento-icon">🌐</span>
-          <span class="bento-count">7 tools</span>
-        </div>
-        <div class="bento-title">Full-Stack / Web</div>
-        <div class="skill-bubbles">
-          <span class="bub">MongoDB</span><span class="bub">Express</span><span class="bub">React</span><span class="bub">Node.js</span>
-          <span class="bub">PHP</span><span class="bub">JavaScript</span><span class="bub">HTML / CSS</span>
-        </div>
-      </div>
-      <div class="bento-tile span-1 reveal">
-        <div class="bento-head">
-          <span class="bento-icon">📱</span>
-          <span class="bento-count">5 tools</span>
-        </div>
-        <div class="bento-title">Mobile &amp; Design</div>
-        <div class="skill-bubbles">
-          <span class="bub">Flutter</span><span class="bub">Dart</span><span class="bub">Firebase</span><span class="bub">UI/UX Design</span><span class="bub">Figma</span>
-        </div>
-      </div>
-      <div class="bento-tile span-2 reveal">
-        <div class="bento-head">
-          <span class="bento-icon">🛠️</span>
-          <span class="bento-count">9 tools</span>
-        </div>
-        <div class="bento-title">Languages &amp; Tools</div>
-        <div class="skill-bubbles">
-          <span class="bub">Python</span><span class="bub">C++</span><span class="bub">Java</span><span class="bub">C#</span><span class="bub">SQL</span>
-          <span class="bub">Git / GitHub</span><span class="bub">Linux</span><span class="bub">Jupyter</span><span class="bub">Google Colab</span>
         </div>
       </div>
     </div>
@@ -194,7 +116,7 @@
     </div>
     <div class="projects-list">
 
-      <a href="projects/gesture-music.html" class="pcard-l reveal" data-cursor="note">
+      <a href="projects/gesture-music.html" class="pcard-l reveal">
         <div class="pcard-l-top"></div>
         <div class="pcard-l-body">
           <div class="pcard-l-head">

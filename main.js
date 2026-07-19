@@ -31,15 +31,176 @@ document.addEventListener('DOMContentLoaded', () => {
       requestAnimationFrame(followRing);
     })();
 
-    document.querySelectorAll('a, button, .bub, .card, .pcard-l, .job-card, .info-card, .stag').forEach(el => {
-      el.addEventListener('mouseenter', () => ring.classList.add('hov'));
-      el.addEventListener('mouseleave', () => ring.classList.remove('hov'));
+    /* ── DETECTION-BOX CURSOR ── */
+    const CV_SELECTOR = 'a, button, .bub, .card, .pcard-l, .job-card, .info-card, .stag, .acard, ' +
+      '.nav-logo, .nav-cta, .placeholder-card, .exp-item, .fact, .clink';
+    const CV_COLORS = ['#7C5CFF', '#2FE6C7', '#FF6B6B', '#FFD93D'];
+
+    const cvBox = document.createElement('div');
+    cvBox.className = 'cv-box';
+    const cvLabel = document.createElement('div');
+    cvLabel.className = 'cv-label';
+    cvBox.appendChild(cvLabel);
+    document.body.appendChild(cvBox);
+
+    let cvActive = null;
+
+    function cvColorFor(label) {
+      let h = 0;
+      for (let i = 0; i < label.length; i++) h = (h * 31 + label.charCodeAt(i)) >>> 0;
+      return CV_COLORS[h % CV_COLORS.length];
+    }
+
+    function cvLabelFor(el) {
+      if (el.dataset.cvLabel) return el.dataset.cvLabel;
+      const titled = el.querySelector('.pcard-l-title, h3, h4, .bento-title');
+      let text = (titled ? titled.textContent : el.textContent) || '';
+      text = text.replace(/[→←]/g, '').replace(/\s+/g, ' ').trim();
+      if (text.length > 26) text = text.slice(0, 24) + '…';
+      return text || el.tagName.toLowerCase();
+    }
+
+    function cvPlace(el) {
+      const r = el.getBoundingClientRect();
+      const pad = 6;
+      cvBox.style.left   = (r.left - pad) + 'px';
+      cvBox.style.top    = (r.top - pad) + 'px';
+      cvBox.style.width  = (r.width + pad * 2) + 'px';
+      cvBox.style.height = (r.height + pad * 2) + 'px';
+    }
+
+    function cvShow(el) {
+      cvPlace(el);
+      const color = cvColorFor(cvLabelFor(el));
+      cvBox.style.borderColor = color;
+      cvLabel.style.background = color;
+      cvLabel.textContent = cvLabelFor(el);
+      cvBox.classList.add('show');
+      ring.style.opacity = '0';
+    }
+
+    function cvHide() {
+      cvBox.classList.remove('show');
+      ring.style.opacity = '';
+    }
+
+    document.addEventListener('mousemove', e => {
+      const target = e.target.closest ? e.target.closest(CV_SELECTOR) : null;
+      if (target !== cvActive) {
+        cvActive = target;
+        target ? cvShow(target) : cvHide();
+      } else if (target) {
+        cvPlace(target);
+      }
     });
 
-    document.querySelectorAll('[data-cursor="note"]').forEach(el => {
-      el.addEventListener('mouseenter', () => ring.classList.add('note'));
-      el.addEventListener('mouseleave', () => ring.classList.remove('note'));
+    window.addEventListener('scroll', () => { if (cvActive) cvPlace(cvActive); }, { passive: true });
+
+    /* ── TRACE WEB (unpredictable boxes + lines trailing the cursor) ── */
+    const trace = document.createElement('canvas');
+    trace.id = 'traceCanvas';
+    trace.style.cssText = 'position:fixed;inset:0;pointer-events:none;z-index:9996;';
+    document.body.appendChild(trace);
+    const tctx = trace.getContext('2d');
+
+    function traceResize() { trace.width = innerWidth; trace.height = innerHeight; }
+    traceResize();
+    window.addEventListener('resize', traceResize);
+
+    const nodes = [];          // {x,y,w,h,label,born,life}
+    const links = [];          // {a,b} extra cross-links between random nodes
+    const MAX_NODES = 14;
+    let lastSpawnX = -1e4, lastSpawnY = -1e4;
+    let nextSpawnDist = 80;
+
+    function spawnNode(cx, cy) {
+      const node = {
+        x: cx + (Math.random() - 0.5) * 260,
+        y: cy + (Math.random() - 0.5) * 220,
+        w: 26 + Math.random() * 70,
+        h: 20 + Math.random() * 54,
+        label: (Math.random() * 2).toFixed(4),
+        born: performance.now(),
+        life: 2200 + Math.random() * 1600
+      };
+      nodes.push(node);
+      if (nodes.length > 2 && Math.random() < 0.35) {
+        links.push({ a: node, b: nodes[Math.floor(Math.random() * (nodes.length - 2))] });
+      }
+      while (nodes.length > MAX_NODES) {
+        const dead = nodes.shift();
+        for (let i = links.length - 1; i >= 0; i--) {
+          if (links[i].a === dead || links[i].b === dead) links.splice(i, 1);
+        }
+      }
+    }
+
+    document.addEventListener('mousemove', e => {
+      const dx = e.clientX - lastSpawnX, dy = e.clientY - lastSpawnY;
+      if (Math.hypot(dx, dy) > nextSpawnDist) {
+        lastSpawnX = e.clientX; lastSpawnY = e.clientY;
+        nextSpawnDist = 70 + Math.random() * 90;
+        spawnNode(e.clientX, e.clientY);
+      }
     });
+
+    function nodeAlpha(n, now) {
+      const age = now - n.born;
+      if (age >= n.life) return 0;
+      const fadeIn  = Math.min(age / 140, 1);
+      const fadeOut = Math.min((n.life - age) / 650, 1);
+      return Math.min(fadeIn, fadeOut);
+    }
+
+    function drawLink(x1, y1, x2, y2, alpha) {
+      tctx.strokeStyle = `rgba(16,16,26,${0.35 * alpha})`;
+      tctx.beginPath();
+      tctx.moveTo(x1, y1);
+      tctx.lineTo(x2, y2);
+      tctx.stroke();
+    }
+
+    (function traceDraw() {
+      const now = performance.now();
+      tctx.clearRect(0, 0, trace.width, trace.height);
+      tctx.lineWidth = 1;
+      tctx.font = '9px "Space Mono", monospace';
+
+      for (let i = nodes.length - 1; i >= 0; i--) {
+        if (nodeAlpha(nodes[i], now) === 0) {
+          const dead = nodes[i];
+          nodes.splice(i, 1);
+          for (let j = links.length - 1; j >= 0; j--) {
+            if (links[j].a === dead || links[j].b === dead) links.splice(j, 1);
+          }
+        }
+      }
+
+      // chain lines between consecutive nodes + newest node → cursor
+      for (let i = 1; i < nodes.length; i++) {
+        const p = nodes[i - 1], n = nodes[i];
+        drawLink(p.x + p.w / 2, p.y + p.h / 2, n.x + n.w / 2, n.y + n.h / 2,
+          Math.min(nodeAlpha(p, now), nodeAlpha(n, now)));
+      }
+      if (nodes.length) {
+        const n = nodes[nodes.length - 1];
+        drawLink(n.x + n.w / 2, n.y + n.h / 2, mx, my, nodeAlpha(n, now));
+      }
+      links.forEach(l => {
+        drawLink(l.a.x + l.a.w / 2, l.a.y + l.a.h / 2, l.b.x + l.b.w / 2, l.b.y + l.b.h / 2,
+          Math.min(nodeAlpha(l.a, now), nodeAlpha(l.b, now)) * 0.7);
+      });
+
+      nodes.forEach(n => {
+        const a = nodeAlpha(n, now);
+        tctx.strokeStyle = `rgba(16,16,26,${0.5 * a})`;
+        tctx.strokeRect(n.x, n.y, n.w, n.h);
+        tctx.fillStyle = `rgba(16,16,26,${0.65 * a})`;
+        tctx.fillText(n.label, n.x + 2, n.y - 4);
+      });
+
+      requestAnimationFrame(traceDraw);
+    })();
   } else {
     if (dot) dot.style.display = 'none';
     if (ring) ring.style.display = 'none';
