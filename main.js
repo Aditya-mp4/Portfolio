@@ -246,6 +246,43 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
 
+  /* ── SMOOTH SCROLL (damped wheel scrolling) ── */
+  if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    const maxScroll = () => document.documentElement.scrollHeight - window.innerHeight;
+    let current = window.scrollY;
+    let target  = window.scrollY;
+    let ticking = false;
+
+    function smoothTick() {
+      current += (target - current) * 0.22;
+      if (Math.abs(target - current) < 0.5) current = target;
+      window.scrollTo(0, current);
+      if (current !== target) {
+        requestAnimationFrame(smoothTick);
+      } else {
+        ticking = false;
+      }
+    }
+
+    window.addEventListener('wheel', e => {
+      if (document.body.classList.contains('nav-locked')) return;
+      e.preventDefault();
+      target += e.deltaY;
+      target = Math.max(0, Math.min(target, maxScroll()));
+      if (!ticking) { ticking = true; requestAnimationFrame(smoothTick); }
+    }, { passive: false });
+
+    window.addEventListener('resize', () => {
+      target = Math.max(0, Math.min(target, maxScroll()));
+    });
+
+    // keep in sync with programmatic / anchor / keyboard scrolls
+    window.addEventListener('scroll', () => {
+      if (!ticking) { current = window.scrollY; target = window.scrollY; }
+    }, { passive: true });
+  }
+
+
   /* ── SCROLL REVEAL ── */
   const obs = new IntersectionObserver(entries => {
     entries.forEach((e, i) => {
@@ -318,4 +355,35 @@ document.addEventListener('DOMContentLoaded', () => {
     })();
   }
 
+  /* ── ROBUST SMOOTH SCROLL FOR HASH LINKS ── */
+  // CSS already sets html { scroll-behavior: smooth; }, but this makes behavior consistent
+  // when navigating via hash links and across different browsers.
+  document.addEventListener('click', (e) => {
+    const a = e.target && e.target.closest ? e.target.closest('a[href^="#"]') : null;
+    if (!a) return;
+
+    const href = a.getAttribute('href');
+    if (!href || href === '#' || href.length < 2) return;
+
+    // If the link is for another page, don’t intercept.
+    // (We only handle same-page hash links like href="#contact".)
+    // href^="#" already guarantees that, but keep logic explicit.
+    const id = href.slice(1);
+    const el = document.getElementById(id);
+    if (!el || el === document.body || el === document.documentElement) return;
+
+    // Allow default browser behavior for modified clicks / new tab.
+    if (e.metaKey || e.ctrlKey || e.shiftKey || e.altKey || a.target === '_blank') return;
+
+    e.preventDefault();
+    el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+
+    // Accessibility: move focus without additional scrolling.
+    if (typeof el.focus === 'function') {
+      el.setAttribute('tabindex', '-1');
+      el.focus({ preventScroll: true });
+    }
+  }, { passive: false });
+
 });
+
