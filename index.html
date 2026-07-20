@@ -8,10 +8,19 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="style.css">
+
 </head>
 <body>
 
-<canvas id="ambientCanvas"></canvas>
+<!-- SPLASH -->
+<div class="splash" id="splash">
+  <div class="splash-box" id="splashBox">
+    <span class="splash-label" id="splashLabel">Portfolio</span>
+    <div class="splash-logo">[ak]</div>
+    <span class="splash-pct" id="splashPct">0%</span>
+  </div>
+</div>
+
 <div id="cursor"></div>
 <div id="cursorRing"></div>
 
@@ -76,20 +85,17 @@
 <!-- ABOUT -->
 <section id="about">
   <div class="wrap">
-    <div class="sec-head">
-      <div>
-        <span class="eyebrow">who's this</span>
-        <h2 class="sec-title">A bit about <span class="grad-text">me</span></h2>
-      </div>
-    </div>
-    <div class="about-grid about-grid-full">
-      <div class="about-text reveal">
-        <p>I'm Aditya, a computer science student in New Delhi, creative at heart who just happens to write code.</p>
-        <p>What gets me excited is the space where art, music, and technology collide. 
-        
-        <div class="about-facts">
-        
+    <div class="about-photo-layout">
+      <div class="about-photo-frame reveal">
+        <div class="photo-slot photo-slot-halftone">
+          <img src="assets/about-photo.png" alt="Aditya Kumar Mehra — halftone portrait">
         </div>
+      </div>
+      <div class="about-photo-text reveal">
+        <span class="eyebrow">a bit about me</span>
+        <p>a media enthusiast turned engineer.</p>
+        <p>aiming to make ai feel like art, i design, and i write code.</p>
+        <p>combining art with technology</p>
       </div>
     </div>
   </div>

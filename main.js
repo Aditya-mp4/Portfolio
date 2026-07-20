@@ -5,6 +5,40 @@
 
 document.addEventListener('DOMContentLoaded', () => {
 
+  /* ── SPLASH SCREEN (detection-box intro) ── */
+  const splash = document.getElementById('splash');
+  if (splash) {
+    document.body.classList.add('splash-lock');
+    const box   = document.getElementById('splashBox');
+    const label = document.getElementById('splashLabel');
+    const pctEl = document.getElementById('splashPct');
+
+    const DURATION = 1700;
+    const start = performance.now();
+
+    function tick(now) {
+      const elapsed = now - start;
+      const pct = Math.min(100, Math.round((elapsed / DURATION) * 100));
+      pctEl.textContent = pct + '%';
+      if (pct < 100) {
+        requestAnimationFrame(tick);
+      } else {
+        label.textContent = 'portfolio detected ✓';
+        box.classList.add('detected');
+        setTimeout(() => {
+          box.classList.add('expand');
+          setTimeout(() => {
+            splash.classList.add('fade-out');
+            document.body.classList.remove('splash-lock');
+            setTimeout(() => splash.remove(), 550);
+          }, 700);
+        }, 550);
+      }
+    }
+    requestAnimationFrame(tick);
+  }
+
+
   /* ── CUSTOM CURSOR ── */
   const dot  = document.getElementById('cursor');
   const ring = document.getElementById('cursorRing');
@@ -295,6 +329,34 @@ document.addEventListener('DOMContentLoaded', () => {
   document.querySelectorAll('.reveal').forEach(r => obs.observe(r));
 
 
+  /* ── SCROLL PARALLAX (revealed elements drift as you scroll past them) ── */
+  if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    const parallaxTargets = document.querySelectorAll('.reveal');
+    let parallaxTicking = false;
+
+    function applyParallax() {
+      const vh = window.innerHeight;
+      const vCenter = vh / 2;
+      parallaxTargets.forEach(el => {
+        if (!el.classList.contains('on')) return;
+        const r = el.getBoundingClientRect();
+        if (r.bottom < -200 || r.top > vh + 200) return; // skip far-offscreen elements
+        const elCenter = r.top + r.height / 2;
+        const offset = (elCenter - vCenter) * -0.05;
+        el.style.transform = `translateY(${offset}px)`;
+      });
+      parallaxTicking = false;
+    }
+
+    window.addEventListener('scroll', () => {
+      if (!parallaxTicking) {
+        parallaxTicking = true;
+        requestAnimationFrame(applyParallax);
+      }
+    }, { passive: true });
+  }
+
+
   /* ── KINETIC TYPE DRIFT (hero lines shear apart on scroll) ── */
   const drifters = document.querySelectorAll('[data-drift]');
   if (drifters.length) {
@@ -318,42 +380,6 @@ document.addEventListener('DOMContentLoaded', () => {
     el.addEventListener('mouseleave', () => { el.style.transform = ''; });
   });
 
-
-  /* ── AMBIENT PARTICLE CANVAS ── */
-  const canvas = document.getElementById('ambientCanvas');
-  if (canvas) {
-    const ctx = canvas.getContext('2d');
-    function resize() { canvas.width = innerWidth; canvas.height = innerHeight; }
-    resize();
-    window.addEventListener('resize', resize);
-
-    const COLORS = ['#7C5CFF', '#2FE6C7', '#FF6B6B'];
-    const particles = Array.from({ length: 34 }, () => ({
-      x: Math.random() * innerWidth,
-      y: Math.random() * innerHeight,
-      r: 1 + Math.random() * 1.8,
-      sp: 0.12 + Math.random() * 0.22,
-      t: Math.random() * Math.PI * 2,
-      cl: COLORS[Math.floor(Math.random() * COLORS.length)],
-      op: 0.15 + Math.random() * 0.25
-    }));
-
-    (function draw() {
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-      particles.forEach(p => {
-        p.t += 0.006;
-        p.y -= p.sp;
-        p.x += Math.sin(p.t) * 0.25;
-        if (p.y < -10) { p.y = canvas.height + 10; p.x = Math.random() * canvas.width; }
-        ctx.beginPath();
-        ctx.globalAlpha = p.op;
-        ctx.fillStyle = p.cl;
-        ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
-        ctx.fill();
-      });
-      requestAnimationFrame(draw);
-    })();
-  }
 
   /* ── ROBUST SMOOTH SCROLL FOR HASH LINKS ── */
   // CSS already sets html { scroll-behavior: smooth; }, but this makes behavior consistent
