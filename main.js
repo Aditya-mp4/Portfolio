@@ -5,9 +5,12 @@
 
 document.addEventListener('DOMContentLoaded', () => {
 
-  /* ── SPLASH SCREEN (detection-box intro) ── */
+  /* ── SPLASH SCREEN (detection-box intro, once per session) ── */
   const splash = document.getElementById('splash');
-  if (splash) {
+  if (splash && sessionStorage.getItem('splashShown')) {
+    splash.remove();
+  } else if (splash) {
+    sessionStorage.setItem('splashShown', '1');
     document.body.classList.add('splash-lock');
     const box   = document.getElementById('splashBox');
     const label = document.getElementById('splashLabel');
@@ -68,7 +71,7 @@ document.addEventListener('DOMContentLoaded', () => {
     /* ── DETECTION-BOX CURSOR ── */
     const CV_SELECTOR = 'a, button, .bub, .card, .pcard-l, .job-card, .info-card, .stag, .acard, ' +
       '.nav-logo, .nav-cta, .placeholder-card, .exp-item, .fact, .clink';
-    const CV_COLORS = ['#7C5CFF', '#2FE6C7', '#FF6B6B', '#FFD93D'];
+    const CV_COLORS = ['#0064FF', '#2FE6C7', '#FF6B6B', '#FFD93D'];
 
     const cvBox = document.createElement('div');
     cvBox.className = 'cv-box';
@@ -280,17 +283,28 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
 
-  /* ── SMOOTH SCROLL (damped wheel scrolling) ── */
-  if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+  /* ── SMOOTH SCROLL (yeqq-style damped wheel scrolling, custom-eased) ── */
+  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (!reduceMotion) {
+    // Custom easing rate: how fast the page "catches up" to the wheel target each frame.
+    // Lower = heavier/glidier (yeqq-like momentum). Higher = snappier, closer to native.
+    const SMOOTH_EASE = 0.12;
+    // Per-tick delta cap: keeps a single aggressive trackpad fling or a "line/page" mode
+    // mouse from producing one huge, jarring jump.
+    const MAX_WHEEL_STEP = 140;
+
     const maxScroll = () => document.documentElement.scrollHeight - window.innerHeight;
     let current = window.scrollY;
     let target  = window.scrollY;
     let ticking = false;
 
     function smoothTick() {
-      current += (target - current) * 0.22;
+      current += (target - current) * SMOOTH_EASE;
       if (Math.abs(target - current) < 0.5) current = target;
-      window.scrollTo(0, current);
+      // Explicit 'instant' behavior — without this, the CSS `scroll-behavior:smooth`
+      // on <html> makes the browser ALSO smooth-animate every scrollTo() call, which
+      // fights our own per-frame easing and is what made scrolling feel broken/laggy.
+      window.scrollTo({ top: current, left: 0, behavior: 'instant' });
       if (current !== target) {
         requestAnimationFrame(smoothTick);
       } else {
@@ -298,10 +312,17 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     }
 
+    function normalizedDelta(e) {
+      let d = e.deltaY;
+      if (e.deltaMode === 1) d *= 18;              // line mode → approx px/line
+      else if (e.deltaMode === 2) d *= window.innerHeight; // page mode
+      return Math.max(-MAX_WHEEL_STEP, Math.min(MAX_WHEEL_STEP, d));
+    }
+
     window.addEventListener('wheel', e => {
       if (document.body.classList.contains('nav-locked')) return;
       e.preventDefault();
-      target += e.deltaY;
+      target += normalizedDelta(e);
       target = Math.max(0, Math.min(target, maxScroll()));
       if (!ticking) { ticking = true; requestAnimationFrame(smoothTick); }
     }, { passive: false });
