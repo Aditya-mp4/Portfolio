@@ -38,41 +38,24 @@ body {
   color:var(--ink);
   font-family:'Inter',sans-serif;
   overflow-x:hidden;
-  cursor:none;
+ 
 }
 img { max-width:100%; display:block; }
 a { color:inherit; }
 ul { list-style:none; }
 
-@media (pointer:coarse) {
-  body { cursor:auto; }
-  #cursor, #cursorRing { display:none !important; }
-}
-
-/* ── CUSTOM CURSOR ── */
-#cursor {
-  width:8px; height:8px; background:var(--ink); border-radius:50%;
-  position:fixed; top:-100px; left:-100px; z-index:9999; pointer-events:none;
-  transform:translate(-50%,-50%); opacity:0; transition:opacity .2s;
-}
-#cursor.seen { opacity:1; }
-#cursorRing {
-  width:34px; height:34px; border:1.5px solid var(--violet); border-radius:50%;
-  position:fixed; top:-100px; left:-100px; z-index:9998; pointer-events:none;
-  transform:translate(-50%,-50%); opacity:0;
-  transition:width .25s var(--ease), height .25s var(--ease), border-color .25s var(--ease), opacity .25s var(--ease);
-  display:flex; align-items:center; justify-content:center;
-  font-size:0; color:var(--violet);
-}
-#cursorRing.seen { opacity:0.55; }
-
-/* ── DETECTION-BOX CURSOR ── */
+/* ── DETECTION-BOX CURSOR ──
+   Position is transform-only (updates on every mousemove/scroll); width and
+   height only change when the hovered target's size actually differs (see
+   cvPlace in main.js), so they still get a short transition without being
+   rewritten — and forcing layout — on every single tracking tick. */
 .cv-box {
-  position:fixed; top:-100px; left:-100px; width:0; height:0;
+  position:fixed; top:0; left:0; width:0; height:0;
   z-index:9997; pointer-events:none; box-sizing:border-box;
   border:2px solid var(--violet); border-radius:2px; opacity:0;
   transition:opacity .12s ease, border-color .12s ease,
-    top .12s var(--ease), left .12s var(--ease), width .12s var(--ease), height .12s var(--ease);
+    transform .12s var(--ease), width .12s var(--ease), height .12s var(--ease);
+  will-change:transform;
 }
 .cv-box.show { opacity:1; }
 .cv-label {
@@ -120,6 +103,21 @@ body.splash-lock { overflow:hidden; }
   transition:opacity .3s ease;
 }
 .splash-box.expand .splash-logo, .splash-box.expand .splash-pct { opacity:0; }
+
+/* ── ACCESSIBILITY ── */
+.skip-link {
+  position:absolute; top:-100%; left:1rem; z-index:10001;
+  background:var(--ink); color:#fff; font-family:'Space Mono',monospace; font-size:0.85rem;
+  padding:0.7rem 1.2rem; border-radius:0 0 8px 8px; text-decoration:none;
+  transition:top .2s var(--ease);
+}
+.skip-link:focus { top:0; }
+a:focus-visible, button:focus-visible, [tabindex]:focus-visible {
+  outline:2px solid var(--violet); outline-offset:3px;
+}
+@media (pointer:coarse) {
+  a:focus-visible, button:focus-visible { outline:2px solid var(--violet); }
+}
 
 /* ── NAV ── */
 .nav {
@@ -236,7 +234,7 @@ section { padding:6rem 2rem; position:relative; z-index:1; }
 /* ── BUTTONS ── */
 .btn {
   font-family:'Space Grotesk',sans-serif; font-weight:600; font-size:0.95rem;
-  padding:0.9rem 1.7rem; border-radius:100px; text-decoration:none; cursor:none;
+  padding:0.9rem 1.7rem; border-radius:100px; text-decoration:none;
   display:inline-flex; align-items:center; gap:0.55rem; border:1px solid transparent;
   transition:transform .3s var(--ease), box-shadow .3s var(--ease), background .3s var(--ease);
 }
@@ -467,6 +465,38 @@ section { padding:6rem 2rem; position:relative; z-index:1; }
 .exp-points li::before { content:'→'; position:absolute; left:0; color:var(--violet); }
 .exp-link { display:inline-block; margin-top:0.9rem; font-family:'Space Mono',monospace; font-size:0.8rem; color:var(--ink); border-bottom:1px solid var(--ink); text-decoration:none; }
 
+/* ── EXPERIENCE (home, photo mockup, full-screen) ── */
+#experience { min-height:100vh; display:flex; align-items:center; }
+#experience .wrap { width:100%; }
+.exp-mock-label {
+  text-align:center; font-family:'Space Mono',monospace; font-size:1rem; color:#000; margin-bottom:2rem;
+}
+.exp-mock-layout {
+  position:relative; max-width:900px; margin:0 auto; min-height:64vh;
+  display:flex; align-items:center; justify-content:center;
+}
+.exp-mock-photo { width:220px; aspect-ratio:5/6; overflow:hidden; }
+.exp-mock-photo img { width:100%; height:100%; object-fit:cover; }
+.exp-mock-role {
+  position:absolute; font-family:'Inter',sans-serif; font-size:0.95rem; color:#000;
+  line-height:1.6; display:flex; flex-direction:column;
+}
+.exp-mock-role span:last-child { color:#666; font-size:0.85rem; }
+.exp-mock-tl { top:4%; left:0; text-align:left; }
+.exp-mock-tr { top:46%; right:0; text-align:left; }
+.exp-mock-bl { bottom:4%; left:0; text-align:left; }
+.exp-mock-btn {
+  display:block; width:max-content; margin:3rem auto 0; font-family:'Inter',sans-serif; font-size:0.9rem;
+  color:#000; text-decoration:none; border:1px solid #000; border-radius:100px; padding:0.6rem 1.6rem;
+  transition:transform .2s var(--ease);
+}
+.exp-mock-btn:hover { transform:translateY(-2px); }
+@media(max-width:768px){
+  #experience { min-height:0; }
+  .exp-mock-layout { min-height:0; flex-direction:column; gap:1.6rem; padding:2rem 0; }
+  .exp-mock-role { position:static; text-align:center !important; }
+}
+
 /* ── EXPERIENCE / CERT CARDS (index pages) ── */
 .job-card {
   background:var(--glass-strong); border:1px solid var(--line); border-radius:var(--radius);
@@ -503,7 +533,7 @@ section { padding:6rem 2rem; position:relative; z-index:1; }
 .back-btn {
   font-family:'Space Mono',monospace; font-size:0.85rem; color:var(--ink); text-decoration:none;
   border:1px solid var(--line-strong); border-radius:100px; padding:0.4rem 1.1rem;
-  transition:all .25s var(--ease); cursor:none;
+  transition:all .25s var(--ease);
 }
 .back-btn:hover { background:var(--ink); color:#fff; border-color:var(--ink); }
 
@@ -526,7 +556,7 @@ section { padding:6rem 2rem; position:relative; z-index:1; }
 .proj-links { display:flex; gap:1rem; flex-wrap:wrap; }
 .plink {
   font-family:'Space Grotesk',sans-serif; font-weight:600; font-size:0.92rem; padding:0.7rem 1.4rem;
-  border-radius:100px; text-decoration:none; cursor:none; display:inline-flex; align-items:center; gap:0.5rem;
+  border-radius:100px; text-decoration:none; display:inline-flex; align-items:center; gap:0.5rem;
   border:1px solid var(--line-strong); transition:transform .25s var(--ease), box-shadow .25s var(--ease);
 }
 .plink:hover { transform:translateY(-3px); box-shadow:var(--glow-soft); }
@@ -594,26 +624,35 @@ section { padding:6rem 2rem; position:relative; z-index:1; }
 .next-title { font-family:'Space Grotesk',sans-serif; color:#fff; font-size:1.3rem; margin-top:0.2rem; }
 .next-btn {
   font-family:'Space Grotesk',sans-serif; font-weight:600; font-size:0.92rem; background:#fff; color:var(--ink);
-  border-radius:100px; padding:0.7rem 1.4rem; text-decoration:none; cursor:none;
+  border-radius:100px; padding:0.7rem 1.4rem; text-decoration:none;
   display:inline-flex; align-items:center; gap:0.5rem; transition:transform .25s var(--ease);
 }
 .next-btn:hover { transform:translateY(-3px); }
 
 /* ── RESONA PAGE ── */
 .resona-hero {
-  min-height:78vh; display:flex; align-items:center; justify-content:center;
-  text-align:center; background:#fff; padding:9rem 2rem 3rem;
+  position:sticky; top:0; z-index:0; min-height:100vh;
+  display:flex; align-items:center; justify-content:center; text-align:center;
+  padding:9rem 2rem 3rem; overflow:hidden;
+  background:#000 url('../assets/projects-music.webp') center/cover no-repeat;
 }
-.resona-hero-inner { max-width:640px; }
+.resona-hero::before {
+  content:''; position:absolute; inset:0; background:rgba(0,0,0,0.6); z-index:0;
+}
+.resona-hero-inner { max-width:640px; position:relative; z-index:1; }
 .resona-title {
   font-family:'Inter',sans-serif; font-weight:700; font-size:2.4rem;
-  color:#000; letter-spacing:-0.5px;
+  color:#fff; letter-spacing:-0.5px; transition:transform .1s linear, opacity .1s linear;
 }
-.resona-subtitle { font-family:'Inter',sans-serif; font-weight:400; font-size:1rem; color:#555; margin-top:0.3rem; }
+.resona-subtitle {
+  font-family:'Inter',sans-serif; font-weight:400; font-size:1rem; color:rgba(255,255,255,0.75);
+  margin-top:0.3rem; transition:transform .1s linear, opacity .1s linear;
+}
 .resona-desc {
   font-family:'Inter',sans-serif; font-weight:400; font-size:1.2rem; line-height:1.55;
-  color:#000; margin-top:3.5rem;
+  color:#fff; margin-top:3.5rem; transition:opacity .1s linear;
 }
+.content { background:var(--bg); }
 .resona-demo-head {
   display:flex; align-items:baseline; justify-content:space-between; margin-bottom:1.5rem;
 }
@@ -627,7 +666,7 @@ section { padding:6rem 2rem; position:relative; z-index:1; }
 .resona-demo-btn {
   font-family:'Inter',sans-serif; font-weight:600; font-size:0.9rem; color:#000;
   background:#fff; border:1px solid #000; border-radius:100px; padding:0.6rem 1.4rem;
-  cursor:none; transition:transform .2s var(--ease);
+  transition:transform .2s var(--ease);
 }
 .resona-demo-btn:hover { transform:translateY(-2px); }
 
@@ -653,7 +692,7 @@ section { padding:6rem 2rem; position:relative; z-index:1; }
 .clink {
   display:flex; align-items:center; gap:0.65rem; background:var(--glass-strong); border:1px solid var(--line);
   border-radius:var(--radius-sm); padding:0.9rem 1.5rem; text-decoration:none; color:var(--ink);
-  font-family:'Space Grotesk',sans-serif; font-weight:600; font-size:0.92rem; cursor:none;
+  font-family:'Space Grotesk',sans-serif; font-weight:600; font-size:0.92rem;
   transition:transform .25s var(--ease), box-shadow .25s var(--ease), border-color .25s var(--ease);
 }
 .clink:hover { transform:translateY(-4px); box-shadow:var(--glow-violet); border-color:rgba(0,100,255,0.3); }
@@ -681,15 +720,17 @@ section { padding:6rem 2rem; position:relative; z-index:1; }
   text-transform:lowercase;
 }
 
-/* ── REVEAL ── */
-.reveal {
-  opacity:0; transform:translateY(46px) scale(0.96);
-  transition:opacity .8s var(--ease), transform .8s var(--ease);
-  will-change:transform, opacity;
-}
+/* ── REVEAL ──
+   Lightweight, dependency-free entrance: elements start slightly offset and
+   transparent, and a small IntersectionObserver in main.js adds `.on` once each
+   element scrolls into view (see the REVEAL block there). No smooth-scroll
+   library and no scroll-linked animation loop — the page uses the browser's
+   native scrolling. Reduced-motion users get the content immediately with no
+   transition, and the observer also reveals anything already on screen at load. */
+.reveal { opacity:0; transform:translateY(30px); transition:opacity .7s var(--ease), transform .7s var(--ease); }
 .reveal.on { opacity:1; transform:none; }
-@media(prefers-reduced-motion:reduce){
-  .reveal { transition:opacity .3s ease; transform:none !important; }
+@media (prefers-reduced-motion: reduce) {
+  .reveal { opacity:1; transform:none; transition:none; }
 }
 
 /* ── RESPONSIVE ── */

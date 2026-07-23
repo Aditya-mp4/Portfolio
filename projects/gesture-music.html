@@ -5,6 +5,16 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Gesture-Controlled Music System — Aditya Kumar Mehra</title>
 <meta name="description" content="A real-time computer vision system that turns hand gestures into MIDI-style music — with a live in-browser demo you can play with your own webcam.">
+<link rel="canonical" href="https://adityakumarmehra.example/projects/gesture-music.html"> <!-- TODO: replace adityakumarmehra.example with the real deployed domain -->
+<meta property="og:type" content="website">
+<meta property="og:title" content="Gesture-Controlled Music System — Aditya Kumar Mehra">
+<meta property="og:description" content="A real-time computer vision system that turns hand gestures into MIDI-style music — with a live in-browser demo you can play with your own webcam.">
+<meta property="og:url" content="https://adityakumarmehra.example/projects/gesture-music.html">
+<meta property="og:image" content="https://adityakumarmehra.example/../assets/about-photo.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Gesture-Controlled Music System — Aditya Kumar Mehra">
+<meta name="twitter:description" content="A real-time computer vision system that turns hand gestures into MIDI-style music — with a live in-browser demo you can play with your own webcam.">
+
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
 <link rel="icon" type="image/svg+xml" href="../assets/favicon.svg">
@@ -12,9 +22,8 @@
 
 </head>
 <body>
+<a href="#main" class="skip-link">Skip to content</a>
 
-<div id="cursor"></div>
-<div id="cursorRing"></div>
 
 <header class="nav">
   <a href="../index.html" class="nav-logo">[ak]</a>
@@ -29,7 +38,7 @@
   <button class="nav-close" id="navClose" aria-label="Close menu">&times;</button>
   <nav class="nav-overlay-links">
     <a href="../index.html"><span class="idx">01</span>Home</a>
-    <a href="index.html" class="current"><span class="idx">02</span>Projects</a>
+    <a href="index.html" class="current" aria-current="page"><span class="idx">02</span>Projects</a>
     <a href="../experience/index.html"><span class="idx">03</span>Experience</a>
     <a href="../certifications.html"><span class="idx">04</span>Certifications</a>
     <a href="../extracurricular.html"><span class="idx">05</span>Extracurricular</a>
@@ -41,6 +50,8 @@
     <a href="tel:+919318301878">+91 93183 01878</a>
   </div>
 </div>
+
+<main id="main">
 
 <!-- HERO -->
 <section class="resona-hero">
@@ -225,6 +236,8 @@
   </div>
 </div>
 
+</main>
+
 <footer class="site-footer">
   <div class="wrap">
     <div class="footer-top">
@@ -243,6 +256,7 @@
   </div>
 </footer>
 
+<script src="https://cdn.jsdelivr.net/npm/lenis@1.1.20/dist/lenis.min.js"></script>
 <script src="../main.js"></script>
 <script nomodule>
   document.getElementById('demoOverlayTitle').textContent = 'unavailable';
@@ -250,7 +264,8 @@
   document.getElementById('demoStart').style.display = 'none';
 </script>
 <script type="module">
-import { HandLandmarker, FilesetResolver } from "https://cdn.jsdelivr.net/npm/@mediapipe/tasks-vision@0.10.14";
+// MediaPipe is loaded lazily (code-split) inside initModel() below — it only
+// downloads once the user actually clicks "Start live demo", not on page load.
 
 const video    = document.getElementById('demoVideo');
 const canvas   = document.getElementById('demoCanvas');
@@ -347,6 +362,9 @@ function drawLandmarks(lm) {
 }
 
 async function initModel() {
+  const { HandLandmarker, FilesetResolver } = await import(
+    "https://cdn.jsdelivr.net/npm/@mediapipe/tasks-vision@0.10.14"
+  );
   const vision = await FilesetResolver.forVisionTasks(
     "https://cdn.jsdelivr.net/npm/@mediapipe/tasks-vision@0.10.14/wasm"
   );

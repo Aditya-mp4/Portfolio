@@ -1,0 +1,442 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Resona — An Interactive Research Story · Aditya Kumar Mehra</title>
+<meta name="description" content="The story of Resona: turning hand gestures into music with nothing but a webcam. An interactive research narrative on real-time hand-gesture recognition.">
+<link rel="canonical" href="https://adityakumarmehra.example/projects/resona-research.html"> <!-- TODO: replace with real domain -->
+<meta property="og:type" content="article">
+<meta property="og:title" content="Resona — An Interactive Research Story">
+<meta property="og:description" content="A hand in the air becomes an instrument. The research behind real-time, hardware-free gesture-to-music.">
+<meta property="og:url" content="https://adityakumarmehra.example/projects/resona-research.html">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Resona — An Interactive Research Story">
+<meta name="twitter:description" content="A hand in the air becomes an instrument. The research behind real-time, hardware-free gesture-to-music.">
+<link rel="icon" type="image/svg+xml" href="../assets/favicon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600&family=Inter:wght@300;400;500&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+
+<style>
+  /* Same tokens as the homepage (style.css :root) — this page reuses the
+     site's own light theme, Space Grotesk/Inter/Space Mono type system,
+     and violet/cyan accent instead of a bespoke dark palette. */
+  :root {
+    --bg:#F7F7FB;
+    --ink:#10101A;
+    --muted:#5B5B6B;
+    --faint:#8A8A9A;
+    --line:rgba(16,16,26,0.10);
+    --line-strong:rgba(16,16,26,0.22);
+    --violet:#0064FF;
+    --cyan:#2FE6C7;
+    --glow-violet:0 14px 40px rgba(0,100,255,0.22);
+    --ease:cubic-bezier(.2,.8,.2,1);
+  }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  html { scroll-behavior:smooth; -webkit-font-smoothing:antialiased; text-rendering:optimizeLegibility; }
+  body {
+    background:var(--bg); color:var(--ink);
+    font-family:'Inter',sans-serif; font-weight:400;
+    overflow-x:hidden; line-height:1.6;
+  }
+  a { color:inherit; text-decoration:none; }
+  ::selection { background:var(--violet); color:#fff; }
+
+  @media (pointer:coarse) {
+    .cv-box { display:none !important; }
+  }
+
+  /* ── DETECTION-BOX CURSOR ── */
+  .cv-box {
+    position:fixed; top:0; left:0; width:0; height:0;
+    z-index:9997; pointer-events:none; box-sizing:border-box;
+    border:2px solid var(--violet); border-radius:2px; opacity:0;
+    transition:opacity .12s ease, border-color .12s ease,
+      transform .12s var(--ease), width .12s var(--ease), height .12s var(--ease);
+    will-change:transform;
+  }
+  .cv-box.show { opacity:1; }
+  .cv-label {
+    position:absolute; top:-1.5rem; left:-2px; z-index:9998;
+    font-family:'Space Mono',monospace; font-weight:700; font-size:0.66rem;
+    letter-spacing:0.03em; text-transform:uppercase; color:#fff;
+    padding:0.2rem 0.55rem; white-space:nowrap; border-radius:2px 4px 0 0;
+    background:var(--violet);
+  }
+
+  /* ── progress rail ── */
+  .rr-rail { position:fixed; top:0; left:0; right:0; height:2px; z-index:50; background:transparent; }
+  #rr-progress {
+    height:100%; width:100%; transform:scaleX(0); transform-origin:left center;
+    background:linear-gradient(90deg, var(--violet), var(--cyan));
+  }
+
+  /* ── top bar ── */
+  .rr-top {
+    position:fixed; top:0; left:0; right:0; z-index:40;
+    display:flex; align-items:center; justify-content:space-between;
+    padding:1.5rem clamp(1.5rem,5vw,4rem);
+  }
+  .rr-top .rr-mark { font-family:'Space Grotesk',sans-serif; font-weight:700; letter-spacing:-0.02em; color:var(--ink); font-size:1.1rem; }
+  .rr-top .rr-back {
+    font-family:'Space Mono',monospace; font-size:0.75rem; letter-spacing:0.05em; color:var(--ink);
+    opacity:0.7; transition:opacity .3s var(--ease);
+  }
+  .rr-top .rr-back:hover { opacity:1; }
+
+  /* ── generic chapter ── */
+  .rr-chapter {
+    position:relative; z-index:1;
+    min-height:100vh; display:flex; align-items:center;
+    padding:14vh clamp(1.5rem,8vw,10rem);
+    background:var(--bg);
+  }
+  .rr-left   { justify-content:flex-start; text-align:left; }
+  .rr-right  { justify-content:flex-end;  text-align:right; }
+  .rr-center { justify-content:center;    text-align:center; }
+  .rr-inner { max-width:820px; width:100%; }
+  .rr-center .rr-inner { max-width:900px; }
+
+  /* eyebrow, matching the homepage's [ bracket ] label style */
+  .rr-num {
+    font-family:'Space Mono',monospace; font-size:0.8rem; color:var(--violet);
+    letter-spacing:0.5px; text-transform:lowercase; margin-bottom:1.8rem; display:block;
+  }
+  .rr-num::before { content:'['; }
+  .rr-num::after { content:']'; }
+  .rr-num span { color:var(--muted); }
+
+  .rr-statement {
+    font-family:'Space Grotesk',sans-serif; font-weight:700;
+    font-size:clamp(2rem,5.6vw,4.6rem); line-height:1.06; letter-spacing:-0.02em;
+    color:var(--ink);
+  }
+  .rr-statement em { font-style:normal; color:var(--violet); }
+  .rr-statement .grad { color:var(--violet); }
+  .rr-sub {
+    margin-top:1.8rem; font-size:clamp(1.05rem,2.1vw,1.5rem); font-weight:400;
+    color:var(--muted); line-height:1.65; max-width:40ch;
+  }
+  .rr-right .rr-sub { margin-left:auto; }
+  .rr-center .rr-sub { margin-left:auto; margin-right:auto; }
+
+  .rr-line {
+    font-family:'Space Grotesk',sans-serif; font-weight:500;
+    font-size:clamp(1.3rem,3vw,2.2rem); line-height:1.3; letter-spacing:-0.01em;
+    color:var(--ink); margin-top:1.5rem;
+  }
+  .rr-line.muted { color:var(--muted); font-weight:400; }
+  .rr-line.key { color:var(--ink); font-family:'Space Grotesk',sans-serif; font-size:clamp(1.15rem,2.2vw,1.6rem); }
+
+  /* ── hero, styled after the homepage's giant kinetic name ── */
+  .rr-hero {
+    min-height:100vh; display:flex; flex-direction:column; align-items:center; justify-content:center;
+    text-align:center; padding:2rem; position:relative; z-index:1; background:var(--bg);
+  }
+  .rr-hero .over {
+    font-family:'Space Mono',monospace; font-size:0.8rem; letter-spacing:0.5px; color:var(--violet);
+    margin-bottom:2rem;
+  }
+  .rr-hero .over::before { content:'['; }
+  .rr-hero .over::after { content:']'; }
+  .rr-hero h1 {
+    font-family:'Space Grotesk',sans-serif; font-weight:700; text-transform:uppercase;
+    font-size:clamp(3.5rem,16vw,11rem); line-height:0.88; letter-spacing:-0.04em;
+    color:var(--ink);
+  }
+  .rr-hero .tag {
+    margin-top:2rem; font-size:clamp(1.1rem,2.4vw,1.6rem); font-weight:400; color:var(--muted);
+  }
+  .rr-hero .by {
+    margin-top:3rem; font-family:'Space Mono',monospace; font-size:0.8rem;
+    letter-spacing:0.5px; color:var(--faint);
+  }
+  .rr-scroll {
+    position:absolute; bottom:2.5rem; left:50%; transform:translateX(-50%);
+    font-family:'Space Mono',monospace; font-size:0.72rem; letter-spacing:0.5px; color:var(--muted);
+    display:flex; flex-direction:column; align-items:center; gap:0.6rem;
+  }
+  .rr-scroll .bar { width:1px; height:34px; background:var(--line-strong); animation:rrPulse 1.8s ease-in-out infinite; }
+  @keyframes rrPulse { 0%,100%{ opacity:0.3; transform:scaleY(0.6);} 50%{ opacity:1; transform:scaleY(1);} transform-origin:top; }
+
+  /* ── methodology split (hand) ── */
+  .rr-split { display:flex; align-items:center; gap:6vw; width:100%; max-width:1100px; }
+  .rr-split .rr-steps { flex:1; }
+  .rr-split .rr-fig { flex:0 0 40%; display:flex; justify-content:center; }
+  .rr-step {
+    font-family:'Space Grotesk',sans-serif; font-weight:500;
+    font-size:clamp(1.2rem,2.4vw,1.9rem); line-height:1.3; color:var(--ink);
+    padding:1.1rem 0; border-top:1px solid var(--line);
+  }
+  .rr-step:first-child { border-top:none; }
+  .rr-step b { color:var(--violet); font-weight:700; }
+
+  .rr-hand-svg { width:min(38vw,360px); height:auto; overflow:visible; }
+  .rr-hand-line { stroke:var(--violet); stroke-width:1.6; stroke-linecap:round; opacity:0.4; }
+  .rr-hand-dot  { fill:var(--violet); }
+
+  /* ── pinned insight (gap) — single big beats ── */
+  .rr-beats { max-width:900px; width:100%; }
+  .rr-beats .rr-step {
+    border:none; padding:0; margin:0; font-weight:500;
+    position:absolute; left:0; right:0; top:50%; transform:translateY(-50%);
+    padding:0 clamp(1.5rem,8vw,10rem);
+    font-size:clamp(1.8rem,4.6vw,3.6rem); line-height:1.12; letter-spacing:-0.02em;
+    text-align:center;
+  }
+  .rr-beats { position:relative; min-height:44vh; }
+  .rr-beats .rr-step.key { color:var(--ink); font-weight:700; }
+  .rr-beats .rr-step.key em { font-style:normal; color:var(--violet); }
+
+  /* ── architecture pipeline ── */
+  .rr-pipe { display:flex; flex-direction:column; align-items:center; gap:0; width:100%; max-width:520px; margin:0 auto; }
+  .rr-node {
+    position:relative; width:100%; text-align:center;
+    padding:1.05rem 1.4rem; border:1px solid var(--line); border-radius:14px;
+    background:#fff;
+    font-family:'Space Mono',monospace; font-size:0.9rem; letter-spacing:0.02em; color:var(--ink);
+  }
+  .rr-node small { display:block; font-family:'Inter',sans-serif; font-size:0.72rem; color:var(--muted); margin-top:0.25rem; letter-spacing:0; }
+  .rr-node.accent { border-color:rgba(0,100,255,0.35); box-shadow:var(--glow-violet); }
+  .rr-node.accent .k { color:var(--violet); }
+  .rr-connector { width:1px; height:34px; background:linear-gradient(var(--violet), var(--cyan)); opacity:0.5; }
+
+  /* ── vocabulary rows (implementation) ── */
+  .rr-map { width:100%; max-width:760px; }
+  .rr-row {
+    display:flex; align-items:baseline; justify-content:space-between; gap:2rem;
+    padding:1.4rem 0; border-top:1px solid var(--line);
+  }
+  .rr-row .g { font-family:'Space Grotesk',sans-serif; font-weight:600; font-size:clamp(1.2rem,2.6vw,1.9rem); color:var(--ink); }
+  .rr-row .a { font-family:'Space Mono',monospace; font-size:0.8rem; letter-spacing:0.5px; color:var(--violet); white-space:nowrap; }
+
+  /* ── results stats ── */
+  .rr-stat {
+    font-family:'Space Grotesk',sans-serif; font-weight:700;
+    font-size:clamp(2.4rem,8vw,6.5rem); line-height:1; letter-spacing:-0.03em; color:var(--ink);
+    margin-bottom:0.4rem;
+  }
+  .rr-stat b { font-weight:700; color:var(--violet); }
+  .rr-stat .u { font-size:0.32em; color:var(--muted); font-weight:400; letter-spacing:0; }
+  .rr-stat + .rr-statcap { color:var(--muted); font-size:clamp(0.95rem,1.8vw,1.25rem); margin-bottom:2.6rem; }
+  .rr-results .rr-step { border:none; padding:0; }
+
+  /* ── closing links, matching the homepage's pill buttons ── */
+  .rr-end-links { margin-top:3rem; display:flex; gap:1rem; flex-wrap:wrap; justify-content:center; }
+  .rr-end-links a {
+    font-family:'Space Grotesk',sans-serif; font-weight:600; font-size:0.95rem;
+    padding:0.9rem 1.7rem; border-radius:100px;
+    border:1px solid var(--line-strong); color:var(--ink); background:transparent;
+    transition:transform .3s var(--ease), box-shadow .3s var(--ease), border-color .3s var(--ease);
+  }
+  .rr-end-links a:hover { transform:translateY(-3px); border-color:var(--ink); }
+  .rr-end-links a.primary { background:var(--ink); color:#fff; border-color:var(--ink); }
+  .rr-end-links a.primary:hover { box-shadow:var(--glow-violet); }
+
+  .rr-foot {
+    text-align:center; padding:4rem 2rem; color:var(--faint);
+    font-family:'Space Mono',monospace; font-size:0.75rem; letter-spacing:0.5px;
+    border-top:1px solid var(--line); position:relative; z-index:1; background:var(--bg);
+  }
+
+  @media (max-width:820px) {
+    .rr-split { flex-direction:column; gap:3rem; }
+    .rr-split .rr-fig { flex:none; }
+    .rr-right { text-align:left; justify-content:flex-start; }
+    .rr-right .rr-sub { margin-left:0; }
+    .rr-beats .rr-step { position:static; transform:none; padding:0; }
+    .rr-beats { min-height:0; display:flex; flex-direction:column; gap:1.6rem; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .rr-scroll .bar { animation:none; }
+    .rr-beats .rr-step { position:static; transform:none; text-align:center; }
+    .rr-beats { min-height:0; display:flex; flex-direction:column; gap:1.4rem; }
+  }
+</style>
+</head>
+<body>
+
+<div class="rr-rail"><div id="rr-progress"></div></div>
+
+<div class="rr-top">
+  <a href="../index.html" class="rr-mark">[ak]</a>
+  <a href="../index.html" class="rr-back">← back to work</a>
+</div>
+
+<main>
+
+  <!-- OPENING -->
+  <header class="rr-hero">
+    <div class="over">An interactive research story</div>
+    <h1>Resona</h1>
+    <p class="tag">A hand in the air becomes an instrument.</p>
+    <p class="by">Aditya Kumar Mehra · Yash Rajvansh · Saakshi Verma</p>
+    <div class="rr-scroll"><span>scroll</span><span class="bar"></span></div>
+  </header>
+
+  <!-- 01 — RESEARCH QUESTION -->
+  <section class="rr-chapter rr-center" data-mode="reveal">
+    <div class="rr-inner">
+      <span class="rr-num" data-reveal>01 <span>/ the question</span></span>
+      <h2 class="rr-statement" data-reveal>Can a hand in the air become a <span class="grad">musical instrument?</span></h2>
+      <p class="rr-sub" data-reveal>No keys. No controller. No touch — only motion.</p>
+    </div>
+  </section>
+
+  <!-- 02 — WHY IT MATTERS -->
+  <section class="rr-chapter rr-left" data-mode="reveal">
+    <div class="rr-inner">
+      <span class="rr-num" data-reveal>02 <span>/ why it matters</span></span>
+      <h2 class="rr-statement" data-reveal>Making music is locked behind hardware.</h2>
+      <p class="rr-sub" data-reveal>MIDI keyboards, control surfaces, years of practice — a wall between people and sound.</p>
+      <p class="rr-line muted" data-reveal>For beginners, and for anyone with limited mobility, that wall stands higher still.</p>
+    </div>
+  </section>
+
+  <!-- 03 — CURRENT LIMITATIONS -->
+  <section class="rr-chapter rr-right" data-mode="reveal">
+    <div class="rr-inner">
+      <span class="rr-num" data-reveal>03 <span>/ what came before</span></span>
+      <h2 class="rr-statement" data-reveal>Touchless music already existed — but never <em>freely.</em></h2>
+      <p class="rr-line muted" data-reveal>The Theremin and data gloves — antennas and wearables.</p>
+      <p class="rr-line muted" data-reveal>Leap Motion, Myo, Kinect — proprietary, bulky, costly.</p>
+      <p class="rr-line muted" data-reveal>Plain webcam vision — undone by light and clutter.</p>
+    </div>
+  </section>
+
+  <!-- 04 — RESEARCH GAP (pinned, dim previous) -->
+  <section class="rr-chapter rr-center" data-mode="pin" data-dim="true">
+    <div class="rr-beats">
+      <span class="rr-num" style="position:absolute;top:0;left:50%;transform:translateX(-50%);">04 <span>/ the gap</span></span>
+      <p class="rr-step" data-step>MediaPipe can see a hand — twenty-one points, in real time, on any laptop.</p>
+      <p class="rr-step" data-step>But it doesn't know what the hand is <em style="font-style:normal;color:var(--cyan)">saying.</em></p>
+      <p class="rr-step" data-step>Deep learning could — at the cost of GPUs, datasets, and training.</p>
+      <p class="rr-step key" data-step>The gap — read the gesture live. <em>No training. No special hardware.</em></p>
+    </div>
+  </section>
+
+  <!-- 05 — PROPOSED SOLUTION -->
+  <section class="rr-chapter rr-center" data-mode="reveal">
+    <div class="rr-inner">
+      <span class="rr-num" data-reveal>05 <span>/ the proposal</span></span>
+      <h2 class="rr-statement" data-reveal>So we built <span class="grad">Resona.</span></h2>
+      <p class="rr-sub" data-reveal>A webcam reads your hand. Rules read the gesture. MIDI turns it into sound.</p>
+      <p class="rr-line" data-reveal>No wearables. No GPU. No training.</p>
+    </div>
+  </section>
+
+  <!-- 06 — METHODOLOGY (pinned + hand diagram) -->
+  <section class="rr-chapter" data-mode="pin">
+    <div class="rr-split">
+      <div class="rr-steps">
+        <span class="rr-num" style="border:none">06 <span>/ how it works</span></span>
+        <p class="rr-step" data-step><b>One</b> — the webcam watches, thirty frames a second.</p>
+        <p class="rr-step" data-step><b>Two</b> — MediaPipe maps twenty-one points across the hand.</p>
+        <p class="rr-step" data-step><b>Three</b> — geometry reads the pose: bends, distances, a pinch.</p>
+        <p class="rr-step" data-step><b>Four</b> — rules name the gesture. Eight of them.</p>
+      </div>
+      <div class="rr-fig" id="rr-hand" data-parallax="0.2" aria-hidden="true"></div>
+    </div>
+  </section>
+
+  <!-- 07 — SYSTEM ARCHITECTURE (pinned pipeline) -->
+  <section class="rr-chapter rr-center" data-mode="pin">
+    <div class="rr-inner">
+      <span class="rr-num" style="text-align:center">07 <span>/ the pipeline</span></span>
+      <div class="rr-pipe">
+        <div class="rr-node" data-step><span class="k">Your hand</span><small>motion in the air</small></div>
+        <div class="rr-connector" data-step></div>
+        <div class="rr-node" data-step><span class="k">Webcam</span><small>720p, 30 fps</small></div>
+        <div class="rr-connector" data-step></div>
+        <div class="rr-node accent" data-step><span class="k">OpenCV · MediaPipe</span><small>21 hand landmarks</small></div>
+        <div class="rr-connector" data-step></div>
+        <div class="rr-node accent" data-step><span class="k">Rule-based classifier</span><small>geometry → gesture</small></div>
+        <div class="rr-connector" data-step></div>
+        <div class="rr-node" data-step><span class="k">MIDI · python-rtmidi</span><small>note, volume, pitch</small></div>
+        <div class="rr-connector" data-step></div>
+        <div class="rr-node" data-step><span class="k">DAW</span><small>FL Studio · LMMS</small></div>
+        <div class="rr-connector" data-step></div>
+        <div class="rr-node accent" data-step><span class="k">Sound</span><small>in real time</small></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 08 — IMPLEMENTATION -->
+  <section class="rr-chapter rr-left" data-mode="reveal">
+    <div class="rr-inner">
+      <span class="rr-num" data-reveal>08 <span>/ the vocabulary</span></span>
+      <h2 class="rr-statement" data-reveal>Eight gestures. A handful of rules.</h2>
+      <div class="rr-map">
+        <div class="rr-row" data-reveal><span class="g">Open palm</span><span class="a">play · pause</span></div>
+        <div class="rr-row" data-reveal><span class="g">Pinch</span><span class="a">trigger a note</span></div>
+        <div class="rr-row" data-reveal><span class="g">Swipe up · down</span><span class="a">volume</span></div>
+        <div class="rr-row" data-reveal><span class="g">Move left · right</span><span class="a">pitch</span></div>
+      </div>
+      <p class="rr-line muted" data-reveal>A pinch is just two fingertips closer than thirty pixels.</p>
+      <p class="rr-sub" data-reveal>Built in Python — OpenCV, MediaPipe, and a thin line of MIDI.</p>
+    </div>
+  </section>
+
+  <!-- 09 — RESULTS (pinned stats) -->
+  <section class="rr-chapter rr-center rr-results" data-mode="pin">
+    <div class="rr-inner">
+      <span class="rr-num" style="text-align:center">09 <span>/ does it work?</span></span>
+      <div data-step>
+        <div class="rr-stat"><b>93.7%</b></div>
+        <div class="rr-statcap">of gestures read correctly — up to 98% on the clearest poses.</div>
+      </div>
+      <div data-step>
+        <div class="rr-stat">26–30 <span class="u">fps</span></div>
+        <div class="rr-statcap">real time, on a plain laptop — no GPU.</div>
+      </div>
+      <div data-step>
+        <div class="rr-stat">&lt;10 <span class="u">ms</span></div>
+        <div class="rr-statcap">to recognise a gesture once the hand is seen.</div>
+      </div>
+      <div data-step>
+        <div class="rr-stat">~100 <span class="u">ms</span></div>
+        <div class="rr-statcap">from motion to sound — fast enough to play.</div>
+      </div>
+      <p class="rr-line key" data-step>Fast, light, and honest — rules beat deep networks on speed and clarity.</p>
+    </div>
+  </section>
+
+  <!-- 10 — FUTURE WORK -->
+  <section class="rr-chapter rr-right" data-mode="reveal">
+    <div class="rr-inner">
+      <span class="rr-num" data-reveal>10 <span>/ what's next</span></span>
+      <p class="rr-line" data-reveal>Let it learn your own gestures.</p>
+      <p class="rr-line" data-reveal>Let it hear your mood.</p>
+      <p class="rr-line" data-reveal>Two hands. Many players.</p>
+      <p class="rr-line" data-reveal>Depth cameras. AR. The stage.</p>
+    </div>
+  </section>
+
+  <!-- 11 — CONCLUSION -->
+  <section class="rr-chapter rr-center" data-mode="reveal">
+    <div class="rr-inner">
+      <span class="rr-num" data-reveal>11 <span>/ the idea</span></span>
+      <h2 class="rr-statement" data-reveal>A standard webcam turned <span class="grad">motion into music.</span></h2>
+      <p class="rr-sub" data-reveal>Expression, unlocked — for anyone with a hand to raise.</p>
+      <p class="rr-line muted" data-reveal>A foundation for human–computer interaction, interactive art, and assistive tech.</p>
+      <div class="rr-end-links" data-reveal>
+        <a href="gesture-music.html#demo" class="primary">Experience Resona live →</a>
+        <a href="../index.html">Back to all work</a>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer class="rr-foot">
+  Resona · Real-time hand-gesture recognition · Guru Gobind Singh Indraprastha University
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/lenis@1.1.20/dist/lenis.min.js"></script>
+<script src="../main.js"></script>
+<script src="resona-research.js"></script>
+</body>
+</html>

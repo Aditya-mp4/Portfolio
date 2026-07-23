@@ -5,6 +5,16 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>AI / ML Projects — Aditya Kumar Mehra</title>
 <meta name="description" content="AI and machine learning projects by Aditya Kumar Mehra — prompt engineering, LLM applications, and applied ML.">
+<link rel="canonical" href="https://adityakumarmehra.example/projects/ai-ml.html"> <!-- TODO: replace adityakumarmehra.example with the real deployed domain -->
+<meta property="og:type" content="website">
+<meta property="og:title" content="AI / ML Projects — Aditya Kumar Mehra">
+<meta property="og:description" content="AI and machine learning projects by Aditya Kumar Mehra — prompt engineering, LLM applications, and applied ML.">
+<meta property="og:url" content="https://adityakumarmehra.example/projects/ai-ml.html">
+<meta property="og:image" content="https://adityakumarmehra.example/../assets/about-photo.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="AI / ML Projects — Aditya Kumar Mehra">
+<meta name="twitter:description" content="AI and machine learning projects by Aditya Kumar Mehra — prompt engineering, LLM applications, and applied ML.">
+
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
 <link rel="icon" type="image/svg+xml" href="../assets/favicon.svg">
@@ -12,9 +22,8 @@
 
 </head>
 <body>
+<a href="#main" class="skip-link">Skip to content</a>
 
-<div id="cursor"></div>
-<div id="cursorRing"></div>
 
 <header class="nav">
   <a href="../index.html" class="nav-logo">[ak]</a>
@@ -29,7 +38,7 @@
   <button class="nav-close" id="navClose" aria-label="Close menu">&times;</button>
   <nav class="nav-overlay-links">
     <a href="../index.html"><span class="idx">01</span>Home</a>
-    <a href="index.html" class="current"><span class="idx">02</span>Projects</a>
+    <a href="index.html" class="current" aria-current="page"><span class="idx">02</span>Projects</a>
     <a href="../experience/index.html"><span class="idx">03</span>Experience</a>
     <a href="../certifications.html"><span class="idx">04</span>Certifications</a>
     <a href="../extracurricular.html"><span class="idx">05</span>Extracurricular</a>
@@ -42,6 +51,8 @@
   </div>
 </div>
 
+<main id="main">
+
 <!-- AI/ML PROJECTS BENTO -->
 <section id="work">
   <div class="wrap">
@@ -52,29 +63,31 @@
     <div class="projects-bento list-mode reveal">
 
       <a href="gesture-music.html" class="bento-photo-tile bento-list-tile">
-        <img src="../assets/projects-ai-ml.png" alt="Resona — Gesture Driven Music System">
+        <img loading="eager" fetchpriority="high" decoding="async" src="../assets/projects-ai-ml.webp" alt="Resona — Gesture Driven Music System">
         <span class="bento-photo-label pos-bl">resona — gesture driven music system</span>
       </a>
 
       <a href="ai-chatbot.html" class="bento-photo-tile bento-list-tile">
-        <img src="../assets/ai-ml-chatbot.png" alt="Chatbot w/ Persona">
+        <img loading="lazy" decoding="async" src="../assets/ai-ml-chatbot.webp" alt="Chatbot w/ Persona">
         <span class="bento-photo-label pos-bl">chatbot-w-persona</span>
       </a>
 
       <a href="gan-mist.html" class="bento-photo-tile bento-list-tile">
-        <img src="../assets/ai-ml-gan-mist.png" alt="GAN Mist">
+        <img loading="lazy" decoding="async" src="../assets/ai-ml-gan-mist.webp" alt="GAN Mist">
         <span class="bento-photo-label pos-bl">gan mist</span>
       </a>
 
       <a href="social-pipeline.html" class="bento-photo-tile bento-list-tile">
         <!-- name this file to match the tile: assets/ai-ml-social-pipeline.jpg -->
-        <img src="../assets/ai-ml-social-pipeline.jpg" alt="Social Pipeline">
+        <img loading="lazy" decoding="async" src="../assets/ai-ml-social-pipeline.jpg" alt="Social Pipeline">
         <span class="bento-photo-label pos-bl">social pipeline</span>
       </a>
 
     </div>
   </div>
 </section>
+
+</main>
 
 <footer class="site-footer">
   <div class="wrap">
@@ -94,6 +107,7 @@
   </div>
 </footer>
 
+<script src="https://cdn.jsdelivr.net/npm/lenis@1.1.20/dist/lenis.min.js"></script>
 <script src="../main.js"></script>
 </body>
 </html>

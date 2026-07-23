@@ -5,6 +5,29 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Aditya Kumar Mehra — AI/ML Developer &amp; Creative Coder</title>
 <meta name="description" content="Portfolio of Aditya Kumar Mehra — AI/ML developer and full-stack builder exploring the space where art, music, and machines meet.">
+<link rel="canonical" href="https://adityakumarmehra.example/index.html"> <!-- TODO: replace adityakumarmehra.example with the real deployed domain -->
+<meta property="og:type" content="website">
+<meta property="og:title" content="Aditya Kumar Mehra — AI/ML Developer &amp; Creative Coder">
+<meta property="og:description" content="Portfolio of Aditya Kumar Mehra — AI/ML developer and full-stack builder exploring the space where art, music, and machines meet.">
+<meta property="og:url" content="https://adityakumarmehra.example/index.html">
+<meta property="og:image" content="https://adityakumarmehra.example/assets/about-photo.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Aditya Kumar Mehra — AI/ML Developer &amp; Creative Coder">
+<meta name="twitter:description" content="Portfolio of Aditya Kumar Mehra — AI/ML developer and full-stack builder exploring the space where art, music, and machines meet.">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Person",
+  "name": "Aditya Kumar Mehra",
+  "jobTitle": "AI/ML Developer & Full-Stack Builder",
+  "url": "https://adityakumarmehra.example/index.html",
+  "email": "mailto:Adityak.mehra0@gmail.com",
+  "telephone": "+91-93183-01878",
+  "address": { "@type": "PostalAddress", "addressLocality": "New Delhi", "addressCountry": "IN" },
+  "sameAs": ["https://www.linkedin.com/in/adityakmehra/", "https://github.com/Aditya-mp4"]
+}
+</script>
+
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
 <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
@@ -12,6 +35,7 @@
 
 </head>
 <body>
+<a href="#main" class="skip-link">Skip to content</a>
 
 <!-- SPLASH -->
 <div class="splash" id="splash">
@@ -22,8 +46,6 @@
   </div>
 </div>
 
-<div id="cursor"></div>
-<div id="cursorRing"></div>
 
 <header class="nav">
   <a href="index.html" class="nav-logo">[ak]</a>
@@ -37,7 +59,7 @@
 <div class="nav-overlay" id="navOverlay">
   <button class="nav-close" id="navClose" aria-label="Close menu">&times;</button>
   <nav class="nav-overlay-links">
-    <a href="index.html" class="current"><span class="idx">01</span>Home</a>
+    <a href="index.html" class="current" aria-current="page"><span class="idx">01</span>Home</a>
     <a href="projects/index.html"><span class="idx">02</span>Projects</a>
     <a href="experience/index.html"><span class="idx">03</span>Experience</a>
     <a href="certifications.html"><span class="idx">04</span>Certifications</a>
@@ -51,11 +73,13 @@
   </div>
 </div>
 
+<main id="main">
+
 <!-- HERO -->
 <section class="hero" id="home">
   <div class="hero-video-bg">
-    <video autoplay muted loop playsinline>
-      <source src="assets/hero-bg.mp4" type="video/mp4">
+    <video id="heroVideo" muted loop playsinline preload="none" aria-hidden="true">
+      <source data-src="assets/hero-bg.mp4" type="video/mp4">
     </video>
     <div class="hero-video-fade"></div>
   </div>
@@ -87,12 +111,12 @@
 <section id="about">
   <div class="wrap">
     <div class="about-photo-layout">
-      <div class="about-photo-frame reveal">
+      <div class="about-photo-frame">
         <div class="photo-slot photo-slot-halftone">
-          <img src="assets/about-photo.png" alt="Aditya Kumar Mehra — halftone portrait">
+          <img loading="eager" fetchpriority="high" decoding="async" src="assets/about-photo.png" alt="Aditya Kumar Mehra — halftone portrait">
         </div>
       </div>
-      <div class="about-photo-text reveal">
+      <div class="about-photo-text">
         <span class="eyebrow">a bit about me</span>
         <p>a media enthusiast turned engineer.</p>
         <p>aiming to make ai feel like art, i design, and i write code.</p>
@@ -110,26 +134,26 @@
 
       <a href="projects/ai-ml.html" class="bento-photo-tile">
         <!-- name this file to match the tile: assets/projects-ai-ml.jpg -->
-        <img src="assets/projects-ai-ml.png" alt="AI / ML projects">
+        <img loading="lazy" decoding="async" src="assets/projects-ai-ml.webp" alt="AI / ML projects">
         <span class="bento-photo-label pos-tl">ai/ml</span>
       </a>
 
       <a href="projects/videocrypt.html" class="bento-photo-tile">
         <!-- name this file to match the tile: assets/projects-web-mobile.jpg -->
-        <img src="assets/projects-web-mobile.png" alt="Web / mobile projects">
+        <img loading="lazy" decoding="async" src="assets/projects-web-mobile.webp" alt="Web / mobile projects">
         <span class="bento-photo-label pos-bl">web/mobile</span>
       </a>
 
       <div class="bento-bottom-row">
-        <a href="projects/student-predictor.html" class="bento-photo-tile tile-research">
+        <a href="projects/resona-research.html" class="bento-photo-tile tile-research">
           <!-- name this file to match the tile: assets/projects-research.jpg -->
-          <img src="assets/projects-research.png" alt="Research projects">
+          <img loading="lazy" decoding="async" src="assets/projects-research.webp" alt="Research projects">
           <span class="bento-photo-label pos-bl">research</span>
         </a>
 
         <a href="https://shobeats.vercel.app/" target="_blank" rel="noopener" class="bento-photo-tile tile-music">
           <!-- name this file to match the tile: assets/projects-music.jpg -->
-          <img src="assets/projects-music.png" alt="Music projects">
+          <img loading="lazy" decoding="async" src="assets/projects-music.webp" alt="Music projects">
           <span class="bento-photo-label pos-tr muted">music.</span>
         </a>
       </div>
@@ -138,54 +162,28 @@
   </div>
 </section>
 
-<!-- EXPERIENCE TEASER -->
+<!-- EXPERIENCE -->
 <section id="experience">
   <div class="wrap">
-    <div class="sec-head">
-      <div>
-        <span class="eyebrow">where I've worked</span>
-        <h2 class="sec-title">Experience <span class="grad-text">timeline</span></h2>
+    <div class="exp-mock-label">[my experience]</div>
+    <div class="exp-mock-layout">
+      <div class="exp-mock-role exp-mock-tl">
+        <span>web developer</span>
+        <span>@Trendsoft</span>
       </div>
-      <a href="experience/index.html" class="sec-link reveal">Read the full story →</a>
-    </div>
-    <div class="exp-wrap">
-      <div class="exp-item reveal">
-        <div class="exp-date">Feb 2026<br>Jul 2026</div>
-        <div class="exp-dot"></div>
-        <div class="exp-content">
-          <div class="exp-role">Web Developer Intern</div>
-          <div class="exp-co">Trendsoft Technologies</div>
-          <ul class="exp-points">
-            <li>Independently led an end-to-end UI/UX redesign of the company's flagship consultancy website.</li>
-          </ul>
-          <a href="experience/trendsoft.html" class="exp-link">Read the story →</a>
-        </div>
+      <div class="exp-mock-photo">
+        <img src="assets/exp.png" loading="lazy" decoding="async" alt="Aditya Kumar Mehra at work">
       </div>
-      <div class="exp-item reveal">
-        <div class="exp-date">Jun 2025<br>Aug 2025</div>
-        <div class="exp-dot"></div>
-        <div class="exp-content">
-          <div class="exp-role">MERN Stack Developer Intern</div>
-          <div class="exp-co">CodeSquadz (AppSquadz)</div>
-          <ul class="exp-points">
-            <li>Built VideoCrypt, a secure video streaming platform, as part of a collaborative team.</li>
-          </ul>
-          <a href="experience/codesquadz.html" class="exp-link">Read the story →</a>
-        </div>
+      <div class="exp-mock-role exp-mock-tr">
+        <span>MERN developer</span>
+        <span>@Codesquadz</span>
       </div>
-      <div class="exp-item reveal">
-        <div class="exp-date">Jul 2024<br>Aug 2024</div>
-        <div class="exp-dot"></div>
-        <div class="exp-content">
-          <div class="exp-role">Flutter Mobile Developer Intern</div>
-          <div class="exp-co">Brain Mentors</div>
-          <ul class="exp-points">
-            <li>Built a quiz app end-to-end — UI, state management, and app logic.</li>
-          </ul>
-          <a href="experience/brainmentors.html" class="exp-link">Read the story →</a>
-        </div>
+      <div class="exp-mock-role exp-mock-bl">
+        <span>flutter developer</span>
+        <span>@BrainMentors</span>
       </div>
     </div>
+    <a href="experience/index.html" class="exp-mock-btn">read more</a>
   </div>
 </section>
 
@@ -238,6 +236,8 @@
   </div>
 </section>
 
+</main>
+
 <footer class="site-footer">
   <div class="wrap">
     <div class="footer-top">
@@ -256,6 +256,9 @@
   </div>
 </footer>
 
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/lenis@1.1.20/dist/lenis.min.js"></script>
 <script src="main.js"></script>
 </body>
 </html>
