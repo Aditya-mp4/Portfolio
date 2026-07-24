@@ -602,6 +602,191 @@ section { padding:6rem 2rem; position:relative; z-index:1; }
 }
 .stag:hover { transform:translateY(-2px); border-color:var(--violet); }
 
+/* ── EDITORIAL SCROLLYTELLING (project & experience detail pages) ──
+   Calm, spacious, one-idea-per-screen alternative to the dense card grids
+   above — huge whitespace, light/editorial type, no cards. Reuses the site's
+   existing .reveal fade-up (IntersectionObserver, see main.js) for animation,
+   so no new JS is needed. Not used on the homepage. */
+.ed-hero {
+  min-height:70vh; display:flex; flex-direction:column; justify-content:center;
+  padding:10rem 2rem 4rem; position:relative;
+}
+.ed-hero-inner { max-width:760px; margin:0 auto; width:100%; }
+.ed-kicker { display:flex; align-items:center; gap:0.8rem; flex-wrap:wrap; margin-bottom:2.2rem; }
+.ed-title {
+  font-family:'Space Grotesk',sans-serif; font-weight:700;
+  font-size:clamp(2.4rem,7vw,5rem); line-height:1.02; letter-spacing:-0.02em; margin:0 0 1.6rem;
+}
+.ed-lede {
+  font-family:'Space Grotesk',sans-serif; font-weight:400; font-size:clamp(1.15rem,2.2vw,1.5rem);
+  color:var(--muted); line-height:1.5; max-width:36ch;
+}
+.ed-links { display:flex; gap:1rem; flex-wrap:wrap; margin-top:2.4rem; }
+
+.ed-chapter {
+  min-height:56vh; display:flex; align-items:center;
+  padding:8vh clamp(1.5rem,7vw,7rem); max-width:1100px; margin:0 auto;
+}
+.ed-left { justify-content:flex-start; text-align:left; }
+.ed-right { justify-content:flex-end; text-align:right; }
+.ed-center { justify-content:center; text-align:center; }
+.ed-inner { max-width:600px; width:100%; }
+.ed-center .ed-inner { max-width:680px; margin:0 auto; }
+.ed-right .ed-inner { margin-left:auto; }
+
+.ed-num {
+  font-family:'Space Mono',monospace; font-size:0.8rem; color:var(--violet);
+  letter-spacing:0.5px; margin-bottom:1.4rem; display:block;
+}
+.ed-num::before { content:'['; }
+.ed-num::after { content:']'; }
+
+.ed-statement {
+  font-family:'Space Grotesk',sans-serif; font-weight:700;
+  font-size:clamp(1.6rem,4vw,2.5rem); line-height:1.2; letter-spacing:-0.01em; color:var(--ink);
+}
+.ed-statement .grad { color:var(--violet); }
+.ed-sub {
+  margin-top:1.1rem; font-family:'Inter',sans-serif; font-weight:400;
+  font-size:clamp(1rem,1.6vw,1.15rem); color:var(--muted); line-height:1.65; max-width:40ch;
+}
+.ed-right .ed-sub { margin-left:auto; }
+.ed-center .ed-sub { margin-left:auto; margin-right:auto; }
+
+.ed-stackline { font-family:'Space Mono',monospace; font-size:0.9rem; color:var(--muted); letter-spacing:0.3px; }
+.ed-stackline b { color:var(--ink); font-weight:600; }
+
+@media(max-width:700px){
+  .ed-right { text-align:left; justify-content:flex-start; }
+  .ed-right .ed-sub, .ed-right .ed-inner { margin-left:0; }
+  .ed-chapter { min-height:0; padding:6vh 1.4rem; }
+  .ed-hero { padding:8rem 1.4rem 3rem; min-height:0; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .ed-chapter { min-height:0; }
+}
+
+/* ── MY STORY (my-story.html) — Inter Regular 20px, matching the Figma draft
+   exactly: plain body-weight type (no bold headline treatment), generous
+   line-height, blocks alternating left/right/center. Reuses .ed-chapter/
+   .ed-left/.ed-right/.ed-center above for whitespace and positioning. */
+.story-eyebrow {
+  font-family:'Space Mono',monospace; font-size:0.8rem; color:var(--ink);
+  letter-spacing:0.5px; text-align:center;
+}
+.story-eyebrow::before { content:'['; }
+.story-eyebrow::after { content:']'; }
+
+.story-line {
+  font-family:'Inter',sans-serif; font-weight:400; font-size:1.25rem; /* 20px */
+  line-height:1.6; color:var(--ink); max-width:46ch;
+}
+.ed-right .story-line { margin-left:auto; }
+.ed-center .story-line { margin-left:auto; margin-right:auto; }
+
+.story-emphasis {
+  font-family:'Inter',sans-serif; font-weight:600; font-size:1.6rem;
+  letter-spacing:0.06em; color:var(--ink); text-transform:uppercase;
+}
+
+/* ── YOLO DETECTION BOX (my-story.html, "AI IS ART") ──
+   A live-object-detector-style bounding box: jittery, snapping between
+   frames rather than gliding, and cycling through the site's accent colors
+   as if still deciding what class the text belongs to. Fill stays transparent
+   so the text underneath stays fully legible. */
+.yolo-target { position:relative; display:inline-block; }
+.yolo-box {
+  position:absolute; inset:-0.9rem -1.6rem; pointer-events:none;
+  border:3px solid; border-radius:2px; box-sizing:border-box;
+  animation:yoloJitter 0.5s steps(8) infinite, yoloBorderColor 1.6s steps(4) infinite;
+}
+.yolo-label {
+  position:absolute; top:-1.9rem; left:-2px;
+  font-family:'Space Mono',monospace; font-weight:700; font-size:0.68rem;
+  letter-spacing:0.03em; text-transform:uppercase; color:#fff;
+  padding:0.22rem 0.6rem; white-space:nowrap; border-radius:2px 4px 0 0;
+  animation:yoloBgColor 1.6s steps(4) infinite;
+}
+@keyframes yoloJitter {
+  0%   { transform:translate(0,0); }
+  12%  { transform:translate(2px,-1px); }
+  25%  { transform:translate(-2px,1px); }
+  37%  { transform:translate(1px,2px); }
+  50%  { transform:translate(-1px,-2px); }
+  62%  { transform:translate(2px,1px); }
+  75%  { transform:translate(-2px,-1px); }
+  87%  { transform:translate(1px,-1px); }
+  100% { transform:translate(0,0); }
+}
+@keyframes yoloBorderColor {
+  0%, 100% { border-color:var(--violet); }
+  33%      { border-color:var(--cyan); }
+  66%      { border-color:var(--coral); }
+}
+@keyframes yoloBgColor {
+  0%, 100% { background:var(--violet); }
+  33%      { background:var(--cyan); }
+  66%      { background:var(--coral); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .yolo-box, .yolo-label { animation:none; }
+  .yolo-box { border-color:var(--violet); }
+  .yolo-label { background:var(--violet); }
+}
+
+/* text + "learn more" link sharing one row, split to opposite edges */
+.story-row {
+  width:100%; max-width:900px; display:flex; align-items:baseline;
+  justify-content:space-between; gap:2rem; flex-wrap:wrap;
+}
+.story-link {
+  font-family:'Inter',sans-serif; font-weight:400; font-size:1.05rem;
+  color:var(--violet); white-space:nowrap; border-bottom:1px solid transparent;
+  transition:border-color .25s var(--ease);
+}
+.story-link:hover { border-color:var(--violet); }
+
+@media(max-width:700px){
+  .story-row { flex-direction:column; align-items:flex-start; gap:0.8rem; }
+}
+
+/* ── NARRATIVE SCENES (experience/index.html, my-story.html) — each card,
+   heading, image, or paragraph is its own full-width "scene", alternating
+   left/right, pulled close to the viewport edge instead of sitting in a
+   narrow centered column. Reuses the site's .reveal fade-up (see main.js)
+   for the one-scene-at-a-time scroll-in motion. */
+.scene {
+  min-height:62vh; display:flex; align-items:center;
+  padding:6vh clamp(1rem,4vw,2.5rem); width:100%;
+}
+.scene-left { justify-content:flex-start; }
+.scene-right { justify-content:flex-end; }
+.scene-center { justify-content:center; text-align:center; }
+.scene-item { max-width:520px; width:100%; }
+.scene-center .scene-item { max-width:640px; }
+
+@media(max-width:760px){
+  .scene { min-height:0; padding:5vh 1.2rem; justify-content:flex-start !important; }
+}
+
+/* ── scene-duo — two related scenes shown side by side (left column / right
+   column) instead of stacked, one pulled to each edge. ── */
+.scene-duo { justify-content:space-between; align-items:center; gap:3rem; flex-wrap:wrap; }
+.scene-duo-col { flex:1 1 320px; max-width:440px; }
+.scene-duo-col:last-child { margin-left:auto; }
+@media(max-width:760px){
+  .scene-duo { flex-direction:column; }
+  .scene-duo-col:last-child { margin-left:0; }
+}
+
+/* image beside a story line (see my-story.html scenes 01–03) */
+.story-img-col { flex:0 1 380px; max-width:380px; }
+.story-img {
+  width:100%; aspect-ratio:4/3; object-fit:cover;
+  border-radius:var(--radius-sm);
+}
+@media(max-width:760px){ .story-img-col { max-width:280px; } }
+
 .flow { display:flex; align-items:center; flex-wrap:wrap; gap:0; }
 .flow-step { background:var(--glass-strong); border:1px solid var(--line); border-radius:var(--radius-sm); padding:0.9rem 1.2rem; text-align:center; flex:1; min-width:120px; }
 .flow-step .fs-emoji { font-size:1.4rem; display:block; margin-bottom:0.3rem; }
@@ -634,7 +819,7 @@ section { padding:6rem 2rem; position:relative; z-index:1; }
   position:sticky; top:0; z-index:0; min-height:100vh;
   display:flex; align-items:center; justify-content:center; text-align:center;
   padding:9rem 2rem 3rem; overflow:hidden;
-  background:#000 url('../assets/projects-music.webp') center/cover no-repeat;
+  background:#000 url('../assets/projects-ai-ml.webp') center/cover no-repeat;
 }
 .resona-hero::before {
   content:''; position:absolute; inset:0; background:rgba(0,0,0,0.6); z-index:0;
@@ -716,7 +901,8 @@ section { padding:6rem 2rem; position:relative; z-index:1; }
 .stag, .ptag, .tag, .footer-cta,
 .placeholder-card h4, .placeholder-tag, .impact-banner p,
 .exp-role, .exp-co, .exp-link, .proj-title, .proj-tag, .proj-feat,
-.sec-link, .clink, .nav-cta {
+.sec-link, .clink, .nav-cta,
+.ed-title, .ed-lede, .ed-statement, .ed-sub, .ed-stackline {
   text-transform:lowercase;
 }
 

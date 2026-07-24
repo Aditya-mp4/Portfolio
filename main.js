@@ -96,10 +96,80 @@ function revealSequence(sectionSelector, stepSelectors, opts = {}) {
   });
 }
 
+/* ── initScrollRevealText() — per-letter gray→black scroll-scrub reveal ──
+   Applies to every element with class `.scroll-reveal`. Splits the element's
+   text into one <span class="sr-char"> per character (line breaks and other
+   child elements are preserved as-is, not flattened), starts every character
+   at #BDBDBD, and scrubs each one to the ink color left-to-right as the
+   element scrolls through view — tied directly to scroll position (scrub:
+   true), not a timer, so scrolling up smoothly un-reveals it and scrolling
+   down completes it, exactly like Awwwards/Apple-style character reveals.
+
+   No-op without GSAP or under reduced-motion: text simply stays at its
+   normal ink color instead of ever being stuck light gray. */
+function initScrollRevealText() {
+  const els = document.querySelectorAll('.scroll-reveal');
+  if (!els.length) return;
+
+  els.forEach(el => {
+    if (el.dataset.srSplit) return; // don't re-split if called more than once
+    el.dataset.srSplit = 'true';
+
+    const label = el.textContent.trim();
+    if (label) el.setAttribute('aria-label', label);
+
+    const frag = document.createDocumentFragment();
+    Array.from(el.childNodes).forEach(node => {
+      if (node.nodeType !== Node.TEXT_NODE) { frag.appendChild(node.cloneNode(true)); return; }
+      node.textContent.split('').forEach(ch => {
+        if (ch === ' ') { frag.appendChild(document.createTextNode(' ')); return; }
+        const span = document.createElement('span');
+        span.className = 'sr-char';
+        span.setAttribute('aria-hidden', 'true');
+        span.textContent = ch;
+        frag.appendChild(span);
+      });
+    });
+    el.innerHTML = '';
+    el.appendChild(frag);
+
+    if (!hasGSAP || reduceMotion) return;
+    const chars = el.querySelectorAll('.sr-char');
+    gsap.set(chars, { color: '#BDBDBD' });
+    const tween = gsap.to(chars, {
+      color: '#10101A', // matches --ink — GSAP needs a literal color to interpolate, not a CSS var
+      ease: 'none',
+      stagger: { each: 0.02, from: 'start' }, // left to right
+      scrollTrigger: { trigger: el, start: 'top 85%', end: 'top 35%', scrub: true }
+    });
+
+    /* If this text sits beside a `.story-img` in the same scene, fade the
+       image in once scroll passes the exact midpoint of THIS text's own
+       scrub range (computed from its real start/end, not a generic 'top X%'
+       — text and image are different elements with different bounding boxes,
+       so independent percentages don't line up the way raw scroll positions
+       do). That reads as "image appears once the text is half revealed". */
+    const scene = el.closest('.scene');
+    const img = scene ? scene.querySelector('.story-img') : null;
+    if (img) {
+      const st = tween.scrollTrigger;
+      const midpoint = (st.start + st.end) / 2;
+      gsap.set(img, { opacity: 0, y: 24 });
+      gsap.to(img, {
+        opacity: 1, y: 0, duration: 0.8, ease: 'power3.out',
+        scrollTrigger: { trigger: img, start: midpoint, once: true }
+      });
+    }
+  });
+}
+
 document.addEventListener('DOMContentLoaded', () => {
 
   /* ── SMOOTH SCROLL ENGINE — same feel everywhere (see useLenis above) ── */
   const lenis = useLenis();
+
+  /* ── SCROLL-DRIVEN LETTER REVEAL (.scroll-reveal) + delayed sibling images ── */
+  initScrollRevealText();
 
   /* ── DEFERRED HERO VIDEO (heavy asset — load after first paint, not blocking) ── */
   const heroVideo = document.getElementById('heroVideo');

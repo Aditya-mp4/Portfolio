@@ -40,9 +40,7 @@
     <a href="../index.html"><span class="idx">01</span>Home</a>
     <a href="index.html" class="current" aria-current="page"><span class="idx">02</span>Projects</a>
     <a href="../experience/index.html"><span class="idx">03</span>Experience</a>
-    <a href="../certifications.html"><span class="idx">04</span>Certifications</a>
-    <a href="../extracurricular.html"><span class="idx">05</span>Extracurricular</a>
-    <a href="../index.html#contact"><span class="idx">06</span>Contact</a>
+    <a href="../index.html#contact"><span class="idx">04</span>Contact</a>
   </nav>
   <div class="nav-overlay-foot">
     <a href="mailto:Adityak.mehra0@gmail.com">Email</a>
@@ -153,10 +151,10 @@
   <div class="sec reveal">
     <h2 class="sec-title">What it does</h2>
     <div class="cards-grid">
-      <div class="info-card"><div class="ic-emoji">👋</div><h4>Real-time hand tracking</h4><p>MediaPipe detects 21 hand landmarks per frame with sub-20ms latency, entirely on-device.</p></div>
-      <div class="info-card"><div class="ic-emoji">🎵</div><h4>Gesture → MIDI mapping</h4><p>Custom logic maps finger combinations and hand position to notes and control signals.</p></div>
-      <div class="info-card"><div class="ic-emoji">🎛️</div><h4>DAW integration</h4><p>MIDI output feeds directly into Ableton, FL Studio, or GarageBand — no plugins required.</p></div>
-      <div class="info-card"><div class="ic-emoji">🔄</div><h4>Iteratively refined</h4><p>Tuned across multiple test sessions to cut jitter, false triggers, and control drift.</p></div>
+      <div class="info-card"><h4>Real-time hand tracking</h4><p>MediaPipe detects 21 hand landmarks per frame with sub-20ms latency, entirely on-device.</p></div>
+      <div class="info-card"><h4>Gesture → MIDI mapping</h4><p>Custom logic maps finger combinations and hand position to notes and control signals.</p></div>
+      <div class="info-card"><h4>DAW integration</h4><p>MIDI output feeds directly into Ableton, FL Studio, or GarageBand — no plugins required.</p></div>
+      <div class="info-card"><h4>Iteratively refined</h4><p>Tuned across multiple test sessions to cut jitter, false triggers, and control drift.</p></div>
     </div>
   </div>
 
@@ -175,15 +173,15 @@
   <div class="sec reveal">
     <h2 class="sec-title">Signal flow</h2>
     <div class="flow">
-      <div class="flow-step"><span class="fs-emoji">📷</span><span class="fs-label">Camera input</span></div>
+      <div class="flow-step"><span class="fs-label">Camera input</span></div>
       <div class="flow-arrow">→</div>
-      <div class="flow-step"><span class="fs-emoji">🖐️</span><span class="fs-label">MediaPipe<br>landmark detection</span></div>
+      <div class="flow-step"><span class="fs-label">MediaPipe<br>landmark detection</span></div>
       <div class="flow-arrow">→</div>
-      <div class="flow-step"><span class="fs-emoji">🧮</span><span class="fs-label">Gesture<br>classifier</span></div>
+      <div class="flow-step"><span class="fs-label">Gesture<br>classifier</span></div>
       <div class="flow-arrow">→</div>
-      <div class="flow-step"><span class="fs-emoji">🎼</span><span class="fs-label">MIDI<br>signal</span></div>
+      <div class="flow-step"><span class="fs-label">MIDI<br>signal</span></div>
       <div class="flow-arrow">→</div>
-      <div class="flow-step"><span class="fs-emoji">🎹</span><span class="fs-label">DAW /<br>instrument</span></div>
+      <div class="flow-step"><span class="fs-label">DAW /<br>instrument</span></div>
     </div>
   </div>
 
@@ -194,7 +192,7 @@
     <h2 class="sec-title">Challenges &amp; learnings</h2>
     <div class="cl-grid">
       <div class="cl-card challenge">
-        <h4>😤 Challenges</h4>
+        <h4>Challenges</h4>
         <ul>
           <li>Gesture jitter — tiny hand tremors caused constant false MIDI triggers.</li>
           <li>Lighting variance made MediaPipe's confidence drop in low or harsh light.</li>
@@ -203,7 +201,7 @@
         </ul>
       </div>
       <div class="cl-card learning">
-        <h4>💡 Learnings</h4>
+        <h4>Learnings</h4>
         <ul>
           <li>Debounce buffers and confidence thresholds dramatically reduce jitter.</li>
           <li>Threading capture separately from MIDI output cut latency by roughly 40%.</li>
@@ -245,12 +243,10 @@
       <div class="footer-links">
         <a href="index.html" class="tag">Projects</a>
         <a href="../experience/index.html" class="tag">Experience</a>
-        <a href="../certifications.html" class="tag">Certifications</a>
-        <a href="../extracurricular.html" class="tag">Extracurricular</a>
       </div>
     </div>
     <div class="footer-bottom">
-      <span>Made with <em>♥</em> by Aditya Kumar Mehra · New Delhi, India</span>
+      <span>Made with love by Aditya Kumar Mehra · New Delhi, India</span>
       <span>© 2026</span>
     </div>
   </div>

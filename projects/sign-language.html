@@ -40,9 +40,7 @@
     <a href="../index.html"><span class="idx">01</span>Home</a>
     <a href="index.html" class="current" aria-current="page"><span class="idx">02</span>Projects</a>
     <a href="../experience/index.html"><span class="idx">03</span>Experience</a>
-    <a href="../certifications.html"><span class="idx">04</span>Certifications</a>
-    <a href="../extracurricular.html"><span class="idx">05</span>Extracurricular</a>
-    <a href="../index.html#contact"><span class="idx">06</span>Contact</a>
+    <a href="../index.html#contact"><span class="idx">04</span>Contact</a>
   </nav>
   <div class="nav-overlay-foot">
     <a href="mailto:Adityak.mehra0@gmail.com">Email</a>
@@ -74,7 +72,7 @@
 <div class="content">
 
   <div class="impact-banner reveal">
-    <p>🤟 <strong>Real-time</strong> sign-to-speech — no interpreter in the loop, no round-trip lag.</p>
+    <p><strong>Real-time</strong> sign-to-speech — no interpreter in the loop, no round-trip lag.</p>
   </div>
 
   <!-- VISUAL MOCKUP -->
@@ -109,10 +107,10 @@
           <div style="display:flex;flex-direction:column;gap:0.6rem;min-width:180px;">
             <div style="background:#000;border:1px solid rgba(47,230,199,0.4);border-radius:10px;padding:0.6rem 1rem;">
               <div style="color:#6272A4;font-family:'Space Mono',monospace;font-size:0.7rem;">// detected gesture</div>
-              <div style="color:#50FA7B;font-family:'Space Grotesk',sans-serif;font-size:1.1rem;">✋ "hello"</div>
+              <div style="color:#50FA7B;font-family:'Space Grotesk',sans-serif;font-size:1.1rem;">"hello"</div>
             </div>
             <div style="background:#000;border:1px solid rgba(255,217,61,0.4);border-radius:10px;padding:0.6rem 1rem;display:flex;align-items:center;gap:0.6rem;">
-              <span style="width:26px;height:26px;border-radius:50%;background:#FFD93D;display:flex;align-items:center;justify-content:center;font-size:0.9rem;animation:blink 1s ease-in-out infinite;">🔊</span>
+              
               <div>
                 <div style="color:#FFD93D;font-family:'Space Grotesk',sans-serif;font-size:0.82rem;">speaking…</div>
                 <div style="color:#888;font-size:0.68rem;font-family:'Space Mono',monospace;">"hello"</div>
@@ -123,9 +121,9 @@
           <div style="text-align:center;">
             <div style="background:#000;border:1px solid rgba(47,230,199,0.4);border-radius:16px;width:110px;padding:1rem 0.6rem;">
               <div style="width:28px;height:5px;background:#333;border-radius:3px;margin:0 auto 0.7rem;"></div>
-              <div style="font-size:1.4rem;">📱</div>
+              
               <div style="font-family:'Space Mono',monospace;font-size:0.62rem;color:#2FE6C7;margin:0.4rem 0;">flutter app</div>
-              <div style="background:rgba(47,230,199,0.1);border:1px solid rgba(47,230,199,0.35);border-radius:8px;padding:0.35rem;font-size:0.6rem;color:#2FE6C7;font-family:'Space Mono',monospace;">"hello" spoken ✓</div>
+              <div style="background:rgba(47,230,199,0.1);border:1px solid rgba(47,230,199,0.35);border-radius:8px;padding:0.35rem;font-size:0.6rem;color:#2FE6C7;font-family:'Space Mono',monospace;">"hello" spoken</div>
             </div>
           </div>
         </div>
@@ -137,10 +135,10 @@
   <div class="sec reveal">
     <h2 class="sec-title">What it does</h2>
     <div class="cards-grid">
-      <div class="info-card"><div class="ic-emoji">👁️</div><h4>Real-time gesture recognition</h4><p>OpenCV processes camera frames live, identifying hand signs frame by frame.</p></div>
-      <div class="info-card"><div class="ic-emoji">🔊</div><h4>Speech synthesis</h4><p>Recognized signs are mapped to text, then converted into natural-sounding spoken audio.</p></div>
-      <div class="info-card"><div class="ic-emoji">📱</div><h4>Flutter mobile app</h4><p>A clean, accessible mobile interface — live camera feed plus transcription, built in Flutter.</p></div>
-      <div class="info-card"><div class="ic-emoji">🌐</div><h4>Flask backend</h4><p>Python and Flask handle the computer vision processing, keeping the mobile client lightweight.</p></div>
+      <div class="info-card"><h4>Real-time gesture recognition</h4><p>OpenCV processes camera frames live, identifying hand signs frame by frame.</p></div>
+      <div class="info-card"><h4>Speech synthesis</h4><p>Recognized signs are mapped to text, then converted into natural-sounding spoken audio.</p></div>
+      <div class="info-card"><h4>Flutter mobile app</h4><p>A clean, accessible mobile interface — live camera feed plus transcription, built in Flutter.</p></div>
+      <div class="info-card"><h4>Flask backend</h4><p>Python and Flask handle the computer vision processing, keeping the mobile client lightweight.</p></div>
     </div>
   </div>
 
@@ -158,15 +156,15 @@
   <div class="sec reveal">
     <h2 class="sec-title">System architecture</h2>
     <div class="flow">
-      <div class="flow-step"><span class="fs-emoji">📷</span><span class="fs-label">Camera<br>frame</span></div>
+      <div class="flow-step"><span class="fs-label">Camera<br>frame</span></div>
       <div class="flow-arrow">→</div>
-      <div class="flow-step"><span class="fs-emoji">🖐️</span><span class="fs-label">OpenCV<br>detection</span></div>
+      <div class="flow-step"><span class="fs-label">OpenCV<br>detection</span></div>
       <div class="flow-arrow">→</div>
-      <div class="flow-step"><span class="fs-emoji">🧠</span><span class="fs-label">Sign<br>classifier</span></div>
+      <div class="flow-step"><span class="fs-label">Sign<br>classifier</span></div>
       <div class="flow-arrow">→</div>
-      <div class="flow-step"><span class="fs-emoji">📝</span><span class="fs-label">Text<br>output</span></div>
+      <div class="flow-step"><span class="fs-label">Text<br>output</span></div>
       <div class="flow-arrow">→</div>
-      <div class="flow-step"><span class="fs-emoji">🔊</span><span class="fs-label">Speech<br>synthesis</span></div>
+      <div class="flow-step"><span class="fs-label">Speech<br>synthesis</span></div>
     </div>
   </div>
 
@@ -175,7 +173,7 @@
     <h2 class="sec-title">Challenges &amp; learnings</h2>
     <div class="cl-grid">
       <div class="cl-card challenge">
-        <h4>😤 Challenges</h4>
+        <h4>Challenges</h4>
         <ul>
           <li>Visually similar signs were easy for the classifier to confuse with each other.</li>
           <li>Latency across the Python → Flask → Flutter pipeline was initially too high for natural use.</li>
@@ -184,7 +182,7 @@
         </ul>
       </div>
       <div class="cl-card learning">
-        <h4>💡 Learnings</h4>
+        <h4>Learnings</h4>
         <ul>
           <li>Tighter hand segmentation and landmark precision cut down misclassification significantly.</li>
           <li>Caching frequent sign-to-text mappings on the client trimmed round-trip latency.</li>
@@ -225,12 +223,10 @@
       <div class="footer-links">
         <a href="index.html" class="tag">Projects</a>
         <a href="../experience/index.html" class="tag">Experience</a>
-        <a href="../certifications.html" class="tag">Certifications</a>
-        <a href="../extracurricular.html" class="tag">Extracurricular</a>
       </div>
     </div>
     <div class="footer-bottom">
-      <span>Made with <em>♥</em> by Aditya Kumar Mehra · New Delhi, India</span>
+      <span>Made with love by Aditya Kumar Mehra · New Delhi, India</span>
       <span>© 2026</span>
     </div>
   </div>
